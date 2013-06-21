@@ -21,12 +21,14 @@ return _sharedObject; \
 
 
 
-@property (assign, nonatomic) NSNumber *breathingRate;
-@property (assign, nonatomic) NSNumber *inhaleRate;
-@property (assign, nonatomic) NSNumber *exhaleRate;
-@property (assign, nonatomic) NSNumber *maxVolume;
-@property (assign, nonatomic) NSNumber *minVolume;
-@property UInt16 sensorVal;
+@property (strong, nonatomic) NSNumber *breathingRate;
+@property (strong, nonatomic) NSNumber *inhaleRate;
+@property (strong, nonatomic) NSNumber *exhaleRate;
+@property (strong, nonatomic) NSNumber *maxVolume;
+@property (strong, nonatomic) NSNumber *minVolume;
+@property CGFloat lungVal;//sensor value between 0 and 1 representing lung volume
+@property UInt16 sensorVal; //raw sensor value as received from BLE
+
 
 //BLE Delegate
 @property (strong, nonatomic) BLE *ble;

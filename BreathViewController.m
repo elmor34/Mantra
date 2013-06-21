@@ -21,6 +21,9 @@
 @synthesize meterLevel;
 
 
+//Debug properties
+@synthesize connectionStrengthLabel, rawDataLabel;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -37,22 +40,18 @@
 }
 
 
-- (void)sensorValChanged:(NSNotification *)notification{
-    NSLog(@"ello sensorValDidChange");
-}
-
-- (IBAction)testButton:(id)sender
-{
-    
-    //THIS is how you set to an arbitrary number (or in this case the sensorval)
-    [self.shape1View setProgress:.5 animated:YES];
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self.shape1View setHidden:NO];
     [self updateProgressWithDelta:1.0 animated:YES];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sensorValueChanged:)
+     name:@"sensorValueChanged"
+     object:nil];
+    
 }
 
 
@@ -103,7 +102,19 @@
     }
 }
 
+- (void)sensorValueChanged:(NSNotification *)notification{
+    NSLog(@"sensor notifcation received, sensorValueChanged called!");
+    //Set the shape view to match the sensor value 
+    [self.shape1View setProgress:[[MantraUser shared] sensorVal] animated:YES];
+}
 
+- (IBAction)testButton:(id)sender{
+    //Post notification that sensor value changed
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"sensorValueChanged"
+     object:[MantraUser shared]];
+    NSLog(@"notification posted!");
+}
 
 - (IBAction)toggleGravity:(id)sender
 {

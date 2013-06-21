@@ -35,12 +35,17 @@
 @property (strong, nonatomic) IBOutlet UISlider *orientationSlider;
 @property (strong, nonatomic) IBOutlet UISwitch *gravitySwitch;
 
+//Debug properties
+@property (strong, nonatomic) UILabel *rawDataLabel;
+@property (strong, nonatomic) UILabel *connectionStrengthLabel;
+
+
 - (IBAction)minus:(id)sender;
 - (IBAction)add:(id)sender;
 - (IBAction)orientationHasChanged:(id)sender;
 - (IBAction)toggleGravity:(id)sender;
 - (IBAction)testButton:(id)sender;
 - (void)toggleGravity;
-- (void)sensorValChanged:(NSNotification *)notification;
+- (void)sensorValueChanged:(NSNotification *)notification;
 
 @end
