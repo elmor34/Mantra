@@ -11,7 +11,7 @@
 
 @implementation MantraUser
 
-@synthesize breathingRate, exhaleRate, inhaleRate, maxVolume, minVolume, sensorVal, ble, rawDataLabel;
+@synthesize breathingRate, exhaleRate, inhaleRate, maxVolume, minVolume, sensorVal, ble, bleConnected, connectionStrength;
 
 
 + (MantraUser *)shared
@@ -20,7 +20,7 @@
         return [[self alloc] init];
     });
     
-
+   
     
 }
 
@@ -40,15 +40,53 @@
     return YES;
 }
 
+- (void)scanForPeripherals:(id)sender
+{
+    if (ble.activePeripheral)
+        if(ble.activePeripheral.isConnected)
+        {
+            [[ble CM] cancelPeripheralConnection:[ble activePeripheral]];
+            return;
+        }
+    
+    if (ble.peripherals)
+        ble.peripherals = nil;
+    
+    [ble findBLEPeripherals:2];
+    
+    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
+}
+
+-(void) connectionTimer:(NSTimer *)timer
+{
+//    [btnConnect setEnabled:true];
+//    [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
+//    
+    if (ble.peripherals.count > 0)
+    {
+        [ble connectPeripheral:[ble.peripherals objectAtIndex:0]];
+    }
+//    else
+//    {
+//        [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
+//        [indConnecting stopAnimating];
+//    }
+}
+
 // When connected, this will be called
 -(void) bleDidConnect
 {
+    NSLog(@"BLE->Connected");
+    bleConnected = YES;
 }
 
 -(void) bleDidDisconnect{
+    NSLog(@"BLE->Disconnected");
+    bleConnected = NO;
 }
 
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi{
+    connectionStrength = rssi;
 }
 
 //not sure if this is required to start analog input
@@ -99,50 +137,22 @@
             //Filter out outliers outside absolute min and max
             if (Value > 100 && Value < 700){
                 self.sensorVal = Value;
-                lblAnalogIn.text = [NSString stringWithFormat:@"%d", self.sensorVal];
-                //maxLabel.text = [NSString stringWithFormat:@"%f", out];
-                //sliderPlotStrip.value = out;
             }
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            //self.refInMax = 300.0;//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            //self.refInMin = 530.0;//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = 300.0;//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = 530.0;//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block
             
-            //refInMax will dynamically adjust to highest value "seen" by sensor
-            if (self.sensorVal < self.refInMax) {
-                self.refInMax = self.sensorVal;
-                // maxLabel.text = [NSString stringWithFormat:@"%f", self.refInMax];
-            }
-            
-            //refInMin will dynamically adjust to lowest value "seen" by sensor
-            if (self.sensorVal > self.refInMin) {
-                self.refInMin = self.sensorVal;
-                // minLabel.text = [NSString stringWithFormat:@"%f", self.refInMin];
-            }
-            maxLabel.text = [NSString stringWithFormat:@"%f", self.refInMax];
-            minLabel.text = [NSString stringWithFormat:@"%f", self.refInMin];
             CGFloat outMax = 1.0;
             CGFloat outMin = 0;
-            
-            
-            
-            
             CGFloat in = self.sensorVal;
-            CGFloat out = outMax + (outMin - outMax) * (in - self.refInMax) / (self.refInMin - self.refInMax);
+            CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
+            self.lungVal = out;
             
-            //[self getDelta: Value];
-            
-            
-            lblAnalogIn.text = [NSString stringWithFormat:@"%d", self.sensorVal];
-            //maxLabel.text = [NSString stringWithFormat:@"%f", out];
-            sliderPlotStrip.value = out;
-            
-            
-            //sensorVal = Value
         }
     }
 }

@@ -31,21 +31,17 @@
 @property (strong, nonatomic) IBOutlet DPMeterView *shape1View;
 @property float meterLevel;
 
-@property (strong, nonatomic) IBOutlet UILabel *orientationLabel;
-@property (strong, nonatomic) IBOutlet UISlider *orientationSlider;
-@property (strong, nonatomic) IBOutlet UISwitch *gravitySwitch;
+
 
 //Debug properties
-@property (strong, nonatomic) UILabel *rawDataLabel;
-@property (strong, nonatomic) UILabel *connectionStrengthLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lungValLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sensorValLabel;
+@property (strong, nonatomic) IBOutlet UILabel *connectionStrengthLabel;
+@property (strong, nonatomic) IBOutlet UILabel *connectedLabel;
 
 
-- (IBAction)minus:(id)sender;
-- (IBAction)add:(id)sender;
-- (IBAction)orientationHasChanged:(id)sender;
-- (IBAction)toggleGravity:(id)sender;
 - (IBAction)testButton:(id)sender;
-- (void)toggleGravity;
+- (void)setGravity:(BOOL)state;
 - (void)sensorValueChanged:(NSNotification *)notification;
 
 @end

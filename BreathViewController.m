@@ -21,14 +21,16 @@
 @synthesize meterLevel;
 
 
-//Debug properties
-@synthesize connectionStrengthLabel, rawDataLabel;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    meterLevel = .0;//default meter level is 0
+    meterLevel = 0.0;//default meter level is 0
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sensorValueChanged:)
+     name:@"sensorValueChanged"
+     object:nil];
     
     // UIApperance
     [[DPMeterView appearance] setTrackTintColor:[UIColor redColor]];
@@ -37,6 +39,8 @@
     // shape 1 -- Lungs
     [self.shape1View setShape:[UIBezierPath heartShape:self.shape1View.frame].CGPath];
     self.shape1View.progressTintColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.f];
+    
+    [[MantraUser shared] scanForPeripherals:self];
 }
 
 
@@ -46,11 +50,7 @@
     [super viewDidAppear:animated];
     [self.shape1View setHidden:NO];
     [self updateProgressWithDelta:1.0 animated:YES];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(sensorValueChanged:)
-     name:@"sensorValueChanged"
-     object:nil];
+  
     
 }
 
@@ -91,21 +91,32 @@
     [self updateProgressWithDelta:-0.1 animated:YES];
 }
 
-- (IBAction)orientationHasChanged:(id)sender
-{
-    CGFloat value = self.orientationSlider.value;
-    CGFloat angle = (M_PI/180) * value;
-    self.orientationLabel.text = [NSString stringWithFormat:@"orientation (%.0f°)", value];
-    
-    for (DPMeterView *v in [self shapeViews]) {
-        [v setGradientOrientationAngle:angle];
-    }
-}
 
 - (void)sensorValueChanged:(NSNotification *)notification{
     NSLog(@"sensor notifcation received, sensorValueChanged called!");
     //Set the shape view to match the sensor value 
-    [self.shape1View setProgress:[[MantraUser shared] sensorVal] animated:YES];
+    [self.shape1View setProgress:[[MantraUser shared] lungVal] animated:YES];
+    
+    NSString *sensorString = [NSString stringWithFormat: @"%.2hu", [[MantraUser shared] sensorVal]];
+    self.sensorValLabel.text = sensorString;
+    
+    NSString *lungString = [NSString stringWithFormat: @"%.2f", [[MantraUser shared] lungVal]];
+    self.lungValLabel.text = lungString;
+    
+    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[MantraUser shared] bleConnected]];
+    self.connectedLabel.text = bleConnected;
+    
+    self.connectionStrengthLabel.text = [[[MantraUser shared] connectionStrength] stringValue];
+}
+
+- (void)setGravity:(BOOL)state
+{
+    if (state == YES) {
+        [self.shape1View startGravity];
+    }
+    else{
+        [self.shape1View stopGravity];
+    }
 }
 
 - (IBAction)testButton:(id)sender{
@@ -114,29 +125,10 @@
      postNotificationName:@"sensorValueChanged"
      object:[MantraUser shared]];
     NSLog(@"notification posted!");
+    [[MantraUser shared] scanForPeripherals:self];
 }
 
-- (IBAction)toggleGravity:(id)sender
-{
-    for (DPMeterView *shapeView in [self shapeViews]) {
-        if ([self.gravitySwitch isOn] && ![shapeView isGravityActive]) {
-            [shapeView startGravity];
-        } else if (![self.gravitySwitch isOn] && [shapeView isGravityActive]) {
-            [shapeView stopGravity];
-        }
-    }
-}
 
-- (void)toggleGravity
-{
-    for (DPMeterView *shapeView in [self shapeViews]) {
-        if ([self.gravitySwitch isOn] && ![shapeView isGravityActive]) {
-            [shapeView startGravity];
-        } else if (![self.gravitySwitch isOn] && [shapeView isGravityActive]) {
-            [shapeView stopGravity];
-        }
-    }
-}
 
 
 - (NSUInteger)supportedInterfaceOrientations
