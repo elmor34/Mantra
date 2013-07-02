@@ -39,6 +39,9 @@ return _sharedObject; \
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi;
 -(void) bleDidReceiveData:(unsigned char *) data length:(int) length;
 
+- (void)scanForPeripherals:(id)sender;
+- (void)scanForPeripherals;
+
 
 + (id)shared;
 - (BOOL) isFirstRun;

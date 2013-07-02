@@ -10,16 +10,24 @@
 #import "BreathViewController.h"
 #import "MantraUser.h"
 #import "MantraUser.m"
-#import "CustomSettingsCell.h"
 
-@interface SettingsViewController : UITableViewController
 
-@property (strong, nonatomic) CustomSettingsCell *connectionCell;
-@property (strong, nonatomic) IBOutlet CustomSettingsCell *meterGravityCell;
-@property (strong, nonatomic) CustomSettingsCell *targetBreathingCell;
-@property (strong, nonatomic) CustomSettingsCell *inhaleTimeCell;
-@property (strong, nonatomic) CustomSettingsCell *exhaleTimeCell;
-@property (strong, nonatomic) CustomSettingsCell *breathingRateCell;
+@interface SettingsViewController : UITableViewController {
+   
+    
+    IBOutlet UISwitch *gravitySwitch;
+    IBOutlet UISwitch *targetBreathingSwitch;
+    IBOutlet UIButton *targetBreathingInfoButton;
+    IBOutlet UILabel *connectionStatusLabel;
+    IBOutlet UIButton *connectionStatusButton;
+    IBOutlet UITextField *inhaleTimeField;
+    IBOutlet UITextField *exhaleTimeField;
+    IBOutlet UILabel *breathingRateLabel;
+    IBOutlet UIActivityIndicatorView *indConnecting;
+    IBOutlet UILabel *lblRSSI;
+}
+
+
 
 
 @end

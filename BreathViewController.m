@@ -80,16 +80,16 @@
     self.title = [NSString stringWithFormat:@"%.2f%%",
                   [(DPMeterView *)[shapeViews lastObject] progress]*100];
 }
-
-- (IBAction)minus:(id)sender
-{
-    [self updateProgressWithDelta:+0.1 animated:YES];
-}
-
-- (IBAction)add:(id)sender
-{
-    [self updateProgressWithDelta:-0.1 animated:YES];
-}
+//
+//- (IBAction)minus:(id)sender
+//{
+//    [self updateProgressWithDelta:+0.1 animated:YES];
+//}
+//
+//- (IBAction)add:(id)sender
+//{
+//    [self updateProgressWithDelta:-0.1 animated:YES];
+//}
 
 
 - (void)sensorValueChanged:(NSNotification *)notification{

@@ -42,6 +42,7 @@
 
 - (void)scanForPeripherals:(id)sender
 {
+    
     if (ble.activePeripheral)
         if(ble.activePeripheral.isConnected)
         {
@@ -55,6 +56,10 @@
     [ble findBLEPeripherals:2];
     
     [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
+}
+
+- (void)scanForPeripherals{
+
 }
 
 -(void) connectionTimer:(NSTimer *)timer
