@@ -40,6 +40,7 @@
     [self.shape1View setShape:[UIBezierPath heartShape:self.shape1View.frame].CGPath];
     self.shape1View.progressTintColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.f];
     
+    
     [[MantraUser shared] scanForPeripherals:self];
 }
 
@@ -50,7 +51,9 @@
     [super viewDidAppear:animated];
     [self.shape1View setHidden:NO];
     [self updateProgressWithDelta:1.0 animated:YES];
-  
+    
+    //apply gravity setting last selected in the settings screen
+    [self setGravity];
     
 }
 
@@ -80,6 +83,7 @@
     self.title = [NSString stringWithFormat:@"%.2f%%",
                   [(DPMeterView *)[shapeViews lastObject] progress]*100];
 }
+
 //
 //- (IBAction)minus:(id)sender
 //{
@@ -109,13 +113,16 @@
     self.connectionStrengthLabel.text = [[[MantraUser shared] connectionStrength] stringValue];
 }
 
-- (void)setGravity:(BOOL)state
+
+- (void)setGravity
 {
-    if (state == YES) {
+    if ([[MantraUser shared] meterGravityEnabled] == YES) {
         [self.shape1View startGravity];
+        NSLog(@"Gravity has started");
     }
     else{
         [self.shape1View stopGravity];
+        NSLog(@"Gravity has stopped");
     }
 }
 

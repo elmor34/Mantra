@@ -18,7 +18,7 @@
 
 @implementation SettingsViewController
 
-//@synthesize connectionLabel, meterGravitySwitch, targetBreathingSwitch, inhaleTimeField, exhaleTimeField, breathingRateField, targetBreathingSwitch, exhaleTimeCell, breathingRateCell;
+@synthesize breathingRateField,connectionLabel,gravityMeterSwitch,inhaleTimeField,inhaleTimeCell,exhaleTimeField,exhaleTimeCell,breathingRateCell,targetBreathingSwitch;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -30,22 +30,16 @@
     return self;
 }
 
-- (IBAction)gravitySwitchTouched
+- (IBAction)gravitySwitchTouched:(id)sender
 {
-//    if (state == YES) {
-//        [self.shape1View startGravity];
-//    }
-//    else{
-//        [self.shape1View stopGravity];
-//    }
-    
-    //    for (DPMeterView *shapeView in [self shapeViews]) {
-    //        if ([self.gravitySwitch isOn] && ![shapeView isGravityActive]) {
-    //            [shapeView startGravity];
-    //        } else if (![self.gravitySwitch isOn] && [shapeView isGravityActive]) {
-    //            [shapeView stopGravity];
-    //        }
-    //    }
+    if ([sender isOn]) {
+        [[MantraUser shared] setMeterGravityEnabled:YES];
+        NSLog(@"Gravity!");
+    }
+    else{
+        [[MantraUser shared] setMeterGravityEnabled:NO];
+        NSLog(@"No Gravity!");
+    }
     NSLog(@"WOOOOOO!");
 }
 

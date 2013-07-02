@@ -11,7 +11,7 @@
 
 @implementation MantraUser
 
-@synthesize breathingRate, exhaleRate, inhaleRate, maxVolume, minVolume, sensorVal, ble, bleConnected, connectionStrength;
+@synthesize breathingRate, exhaleRate, inhaleRate, maxVolume, minVolume, sensorVal, ble, bleConnected, connectionStrength, meterGravityEnabled;
 
 
 + (MantraUser *)shared
@@ -19,11 +19,16 @@
     DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
         return [[self alloc] init];
     });
-    
-   
-    
 }
 
+-(MantraUser *)init{
+    self = [super init];
+    
+    //set the defaults or load MantraUser from storage
+    meterGravityEnabled = YES;
+    
+    return self;
+}
 
 
 - (BOOL) isFirstRun

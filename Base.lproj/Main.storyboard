@@ -148,7 +148,7 @@
                                                     <rect key="frame" x="251" y="6" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
-                                                        <action selector="gravitySwitchTouched" destination="32w-L6-qpZ" eventType="valueChanged" id="Ril-45-FLz"/>
+                                                        <action selector="gravitySwitchTouched:" destination="32w-L6-qpZ" eventType="valueChanged" id="k0X-qC-sI4"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meter Gravity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgs-S5-04w">
@@ -804,6 +804,7 @@
         <class className="SettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="gravitySwitchTouched:"/>
                 <relationship kind="outlet" name="breathingRateCell" candidateClass="UITableViewCell"/>
                 <relationship kind="outlet" name="breathingRateField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="connectionLabel" candidateClass="UILabel"/>

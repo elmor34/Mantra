@@ -41,7 +41,7 @@
 
 
 - (IBAction)testButton:(id)sender;
-- (void)setGravity:(BOOL)state;
+-(void)setGravity;
 - (void)sensorValueChanged:(NSNotification *)notification;
 
 @end
