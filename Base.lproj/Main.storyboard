@@ -694,11 +694,11 @@
                             </tableViewSection>
                             <tableViewSection id="u0C-CZ-lBa">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="42" id="Nf8-uo-dJx">
-                                        <rect key="frame" x="0.0" y="359" width="320" height="42"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="47" id="Nf8-uo-dJx">
+                                        <rect key="frame" x="0.0" y="359" width="320" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XED-vZ-tD3">
@@ -718,188 +718,16 @@
                                                         <action selector="btnScanForPeripherals:" destination="rUe-nH-h9A" eventType="touchUpInside" id="BRF-qW-BOk"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yYu-Zb-MsI">
+                                                    <rect key="frame" x="215" y="6" width="37" height="37"/>
+                                                    <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="XED-vZ-tD3" firstAttribute="centerX" secondItem="Nf8-uo-dJx" secondAttribute="centerX" id="FGd-Mh-4Fe"/>
                                             <constraint firstItem="XED-vZ-tD3" firstAttribute="top" secondItem="Nf8-uo-dJx" secondAttribute="top" constant="6" id="Xlq-uO-r45"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="127" id="EDB-0c-gqz">
-                                        <rect key="frame" x="0.0" y="401" width="320" height="127"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yYu-Zb-MsI">
-                                                    <rect key="frame" x="142" y="9" width="37" height="37"/>
-                                                    <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </activityIndicatorView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="yYu-Zb-MsI" firstAttribute="top" secondItem="EDB-0c-gqz" secondAttribute="top" constant="13" id="hs4-wP-ABI"/>
-                                            <constraint firstItem="yYu-Zb-MsI" firstAttribute="centerX" secondItem="EDB-0c-gqz" secondAttribute="centerX" id="klk-MK-68h"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="50" id="4SC-wr-ak5">
-                                        <rect key="frame" x="0.0" y="528" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbX-Em-k6a">
-                                                    <rect key="frame" x="114" y="3" width="93" height="43"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="37" id="Nh7-MT-cLD"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
-                                                    <state key="normal" title="Connect">
-                                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="btnScanForPeripherals:" destination="rUe-nH-h9A" eventType="touchUpInside" id="ZDo-tH-B5h"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="fbX-Em-k6a" firstAttribute="top" secondItem="4SC-wr-ak5" secondAttribute="top" constant="6" id="DP8-Ug-Iax"/>
-                                            <constraint firstItem="fbX-Em-k6a" firstAttribute="centerX" secondItem="4SC-wr-ak5" secondAttribute="centerX" id="ZQb-U9-UgV"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="119" id="djk-8e-tXg">
-                                        <rect key="frame" x="0.0" y="578" width="320" height="120"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="118"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="TxX-lu-B4W">
-                                                    <rect key="frame" x="142" y="13" width="37" height="37"/>
-                                                    <color key="color" red="0.1944211032" green="0.19533934140000001" blue="0.67883831520000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                </activityIndicatorView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="TxX-lu-B4W" firstAttribute="top" secondItem="djk-8e-tXg" secondAttribute="top" constant="13" id="7f9-y1-BPg"/>
-                                            <constraint firstItem="TxX-lu-B4W" firstAttribute="centerX" secondItem="djk-8e-tXg" secondAttribute="centerX" id="rG8-aR-kwB"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="bX0-GA-vBz">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="42" id="NWL-vu-eoH">
-                                        <rect key="frame" x="0.0" y="718" width="320" height="42"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGP-E2-t1F">
-                                                    <rect key="frame" x="114" y="3" width="93" height="43"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="37" id="VZd-5w-6Kj"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
-                                                    <state key="normal" title="Connect">
-                                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="btnScanForPeripherals:" destination="rUe-nH-h9A" eventType="touchUpInside" id="rMC-gC-Twp"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="JGP-E2-t1F" firstAttribute="top" secondItem="NWL-vu-eoH" secondAttribute="top" constant="6" id="rLT-xZ-ECI"/>
-                                            <constraint firstItem="JGP-E2-t1F" firstAttribute="centerX" secondItem="NWL-vu-eoH" secondAttribute="centerX" id="vus-LG-et7"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="127" id="Ev0-9d-YxA">
-                                        <rect key="frame" x="0.0" y="760" width="320" height="127"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-s3-jE7">
-                                                    <rect key="frame" x="142" y="9" width="37" height="37"/>
-                                                    <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </activityIndicatorView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="ygj-s3-jE7" firstAttribute="centerX" secondItem="Ev0-9d-YxA" secondAttribute="centerX" id="SeH-j1-1p7"/>
-                                            <constraint firstItem="ygj-s3-jE7" firstAttribute="top" secondItem="Ev0-9d-YxA" secondAttribute="top" constant="13" id="nlg-V4-5o3"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="50" id="1Mq-S6-8DR">
-                                        <rect key="frame" x="0.0" y="887" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="feq-9P-chR">
-                                                    <rect key="frame" x="114" y="3" width="93" height="43"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="37" id="PEG-VT-w77"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
-                                                    <state key="normal" title="Connect">
-                                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="btnScanForPeripherals:" destination="rUe-nH-h9A" eventType="touchUpInside" id="pkd-2t-31x"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="feq-9P-chR" firstAttribute="centerX" secondItem="1Mq-S6-8DR" secondAttribute="centerX" id="CrZ-mz-lvf"/>
-                                            <constraint firstItem="feq-9P-chR" firstAttribute="top" secondItem="1Mq-S6-8DR" secondAttribute="top" constant="6" id="ubT-oL-uPC"/>
-                                        </constraints>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="119" id="r7C-Mn-g1a">
-                                        <rect key="frame" x="0.0" y="937" width="320" height="120"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="118"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nEg-qM-H2h">
-                                                    <rect key="frame" x="142" y="13" width="37" height="37"/>
-                                                    <color key="color" red="0.1944211032" green="0.19533934140000001" blue="0.67883831520000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                </activityIndicatorView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="nEg-qM-H2h" firstAttribute="centerX" secondItem="r7C-Mn-g1a" secondAttribute="centerX" id="3xq-l3-Rf0"/>
-                                            <constraint firstItem="nEg-qM-H2h" firstAttribute="top" secondItem="r7C-Mn-g1a" secondAttribute="top" constant="13" id="p60-8W-sb8"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
