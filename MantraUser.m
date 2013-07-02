@@ -58,7 +58,19 @@
     [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
 }
 
-- (void)scanForPeripherals{
+- (void)scanForPeripherals
+{
+    if (ble.activePeripheral)
+        if(ble.activePeripheral.isConnected)
+        {
+            [[ble CM] cancelPeripheralConnection:[ble activePeripheral]];
+            return;
+        }
+    
+    if (ble.peripherals)
+        ble.peripherals = nil;
+    
+    [ble findBLEPeripherals:2];
 
 }
 

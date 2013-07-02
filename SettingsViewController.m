@@ -8,8 +8,8 @@
 
 #import "SettingsViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "MantraUser.h"
-#import "MantraUser.m"
+
+
 
 
 @interface SettingsViewController ()
@@ -20,6 +20,7 @@
 
 //@synthesize connectionLabel, meterGravitySwitch, targetBreathingSwitch, inhaleTimeField, exhaleTimeField, breathingRateField, targetBreathingSwitch, exhaleTimeCell, breathingRateCell;
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -29,23 +30,24 @@
     return self;
 }
 
-//- (IBOutlet)toggleGravity:
-//{
+- (IBAction)gravitySwitchTouched
+{
 //    if (state == YES) {
 //        [self.shape1View startGravity];
 //    }
 //    else{
 //        [self.shape1View stopGravity];
 //    }
-//    
-//    //    for (DPMeterView *shapeView in [self shapeViews]) {
-//    //        if ([self.gravitySwitch isOn] && ![shapeView isGravityActive]) {
-//    //            [shapeView startGravity];
-//    //        } else if (![self.gravitySwitch isOn] && [shapeView isGravityActive]) {
-//    //            [shapeView stopGravity];
-//    //        }
-//    //    }
-//}
+    
+    //    for (DPMeterView *shapeView in [self shapeViews]) {
+    //        if ([self.gravitySwitch isOn] && ![shapeView isGravityActive]) {
+    //            [shapeView startGravity];
+    //        } else if (![self.gravitySwitch isOn] && [shapeView isGravityActive]) {
+    //            [shapeView stopGravity];
+    //        }
+    //    }
+    NSLog(@"WOOOOOO!");
+}
 
 - (void)viewDidLoad
 {

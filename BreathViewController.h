@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MantraUser.h"
 #import "DPMeterView.h"
 
 

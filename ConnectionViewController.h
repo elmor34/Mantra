@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BLE.h"
+#import "MantraUser.h"
 
-@interface TableViewController : UITableViewController 
+@interface ConnectionViewController : UITableViewController 
 {
     IBOutlet UIButton *btnConnect;
     IBOutlet UISwitch *swDigitalIn;
@@ -20,7 +21,9 @@
     IBOutlet UISlider *sldServo;
     IBOutlet UIActivityIndicatorView *indConnecting;
     IBOutlet UILabel *lblRSSI;
+    IBOutlet UISwitch *gravitySwitch;
 }
 
-
+-(void)sensorValueChanged;
+- (IBAction)toggleGravity;
 @end

@@ -1,18 +1,11 @@
-//
-//  TableViewController.m
-//  SimpleControl
-//
-//  Created by Cheong on 7/11/12.
-//  Copyright (c) 2012 RedBearLab. All rights reserved.
-//
+#import "ConnectionViewController.h"
 
-#import "TableViewController.h"
 
-@interface TableViewController ()
+@interface ConnectionViewController ()
 
 @end
 
-@implementation TableViewController
+@implementation ConnectionViewController
 
 
 
@@ -22,16 +15,20 @@
     if (self) {
         // Custom initialization
     }
-    return self;
+    return self;    
 }
 
+- (IBAction)toggleGravity
+{
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//    ble = [[BLE alloc] init];
-//    [ble controlSetup:1];
-//    ble.delegate = self;
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sensorValueChanged:)
+     name:@"sensorValueChanged"
+     object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,23 +38,26 @@
 }
 
 #pragma mark - BLE delegate
+-(void)sensorValueChanged
+{
 
+}
 - (void)bleDidDisconnect
 {
-//    NSLog(@"->Disconnected");
-//
-//    [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-//    [indConnecting stopAnimating];
-//    
-//    lblAnalogIn.enabled = false;
-//    swDigitalOut.enabled = false;
-//    swDigitalIn.enabled = false;
-//    swAnalogIn.enabled = false;
-//    sldPWM.enabled = false;
-//    sldServo.enabled = false;
-//    
-//    lblRSSI.text = @"---";
-// //   lblAnalogIn.text = @"----";
+    NSLog(@"->Disconnected");
+
+    [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
+    [indConnecting stopAnimating];
+    
+    lblAnalogIn.enabled = false;
+    swDigitalOut.enabled = false;
+    swDigitalIn.enabled = false;
+    swAnalogIn.enabled = false;
+    sldPWM.enabled = false;
+    sldServo.enabled = false;
+    
+    lblRSSI.text = @"---";
+    lblAnalogIn.text = @"----";
 }
 
 // When RSSI is changed, this will be called
@@ -69,22 +69,22 @@
 // When disconnected, this will be called
 -(void) bleDidConnect
 {
-//    NSLog(@"->Connected");
-//
-//    [indConnecting stopAnimating];
-//    
-//    lblAnalogIn.enabled = true;
-//    swDigitalOut.enabled = true;
-//    swDigitalIn.enabled = true;
-//    swAnalogIn.enabled = true;
-//    sldPWM.enabled = true;
-//    sldServo.enabled = true;
-//    
-//    swDigitalOut.on = false;
-//    swDigitalIn.on = false;
-//    swAnalogIn.on = false;
-//    sldPWM.value = 0;
-//    sldServo.value = 0;
+    NSLog(@"->Connected");
+
+    [indConnecting stopAnimating];
+    
+    lblAnalogIn.enabled = true;
+    swDigitalOut.enabled = true;
+    swDigitalIn.enabled = true;
+    swAnalogIn.enabled = true;
+    sldPWM.enabled = true;
+    sldServo.enabled = true;
+    
+    swDigitalOut.on = false;
+    swDigitalIn.on = false;
+    swAnalogIn.on = false;
+    sldPWM.value = 0;
+    sldServo.value = 0;
 }
 
 // When data is comming, this will be called
@@ -132,10 +132,14 @@
 //    
 //    [btnConnect setEnabled:false];
 //    [ble findBLEPeripherals:2];
-//    
-//    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
-//    
-//    [indConnecting startAnimating];
+
+    //make the call to MantraUser's scanForPeripherals here
+    
+    [[MantraUser shared] scanForPeripherals];
+    
+    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
+   
+    [indConnecting startAnimating];
 }
 
 -(void) connectionTimer:(NSTimer *)timer
