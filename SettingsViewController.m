@@ -43,6 +43,15 @@
     NSLog(@"WOOOOOO!");
 }
 
+- (IBAction)targetBreathingSwitchTouched:(id)sender
+
+{
+
+}
+- (IBAction)targetBreathingInfoButtonTouched:(id)sender{
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

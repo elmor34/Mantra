@@ -27,6 +27,9 @@
     //set the defaults or load MantraUser from storage
     meterGravityEnabled = YES;
     
+    
+ 
+    
     return self;
 }
 

@@ -28,4 +28,8 @@
 @property (strong, nonatomic) IBOutlet UITableViewCell *exhaleTimeCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *breathingRateCell;
 
+- (IBAction)gravitySwitchTouched:(id)sender;
+- (IBAction)targetBreathingSwitchTouched:(id)sender;
+- (IBAction)targetBreathingInfoButtonTouched:(id)sender;
+
 @end
