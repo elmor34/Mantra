@@ -44,18 +44,29 @@
 }
 
 - (IBAction)targetBreathingSwitchTouched:(id)sender
-
 {
-
+    if ([sender isOn]) {
+         NSLog(@"WOOOOOO!22222222");
+        inhaleTimeCell.hidden = NO;
+        exhaleTimeCell.hidden = NO;
+        breathingRateCell.hidden = NO;
+    }
+    else {
+        inhaleTimeCell.hidden = YES;
+        exhaleTimeCell.hidden = YES;
+        breathingRateCell.hidden = YES;
+    }
 }
 - (IBAction)targetBreathingInfoButtonTouched:(id)sender{
-
+//sexy modal with instructions
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    inhaleTimeCell.hidden = YES;
+    exhaleTimeCell.hidden = YES;
+    breathingRateCell.hidden = YES;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
