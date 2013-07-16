@@ -88,8 +88,7 @@
     [[UAPush shared] handleNotification:[launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey]
                        applicationState:application.applicationState];
     
-    
-    
+
     
     return YES;
 }

@@ -33,20 +33,20 @@
 
 @property (nonatomic,assign) id <BLEDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray *peripherals;
-@property (strong, nonatomic) CBCentralManager *CM;
+@property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) CBPeripheral *activePeripheral;
 
 -(void) enableWrite;
--(void) enableReadNotification:(CBPeripheral *)p;
+-(void) enableReadNotification:(CBPeripheral *)peripheral;
 -(void) read;
--(void) writeValue:(CBUUID *)serviceUUID characteristicUUID:(CBUUID *)characteristicUUID p:(CBPeripheral *)p data:(NSData *)data;
+-(void) writeValue:(CBUUID *)serviceUUID characteristicUUID:(CBUUID *)characteristicUUID peripheral:(CBPeripheral *)peripheral data:(NSData *)data;
 
 -(UInt16) readLibVer;
 -(UInt16) readFrameworkVersion;
 -(NSString *) readVendorName;
 -(BOOL) isConnected;
 -(int) readRSSI;
--(void) write:(NSData *)d;
+-(void) write:(NSData *)dataToWrite;
 
 -(int) controlSetup:(int) s;
 -(int) findBLEPeripherals:(int) timeout;

@@ -54,7 +54,7 @@
     if (ble.activePeripheral)
         if(ble.activePeripheral.isConnected)
         {
-            [[ble CM] cancelPeripheralConnection:[ble activePeripheral]];
+            [[ble centralManager] cancelPeripheralConnection:[ble activePeripheral]];
             return;
         }
     
@@ -71,7 +71,7 @@
     if (ble.activePeripheral)
         if(ble.activePeripheral.isConnected)
         {
-            [[ble CM] cancelPeripheralConnection:[ble activePeripheral]];
+            [[ble centralManager] cancelPeripheralConnection:[ble activePeripheral]];
             return;
         }
     

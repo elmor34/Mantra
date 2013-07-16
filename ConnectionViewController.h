@@ -10,7 +10,7 @@
 #import "BLE.h"
 #import "MantraUser.h"
 
-@interface ConnectionViewController : UITableViewController 
+@interface ConnectionViewController : UITableViewController <BLEDelegate>
 {
     IBOutlet UIButton *btnConnect;
     IBOutlet UISwitch *swDigitalIn;
@@ -24,6 +24,8 @@
     IBOutlet UISwitch *gravitySwitch;
 }
 
+@property (strong, nonatomic) BLE *ble;
+    
 -(void)sensorValueChanged;
 - (IBAction)toggleGravity;
 @end

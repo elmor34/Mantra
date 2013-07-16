@@ -8,7 +8,6 @@
         <!--Breath View Controller - First-->
         <scene sceneID="W3I-pn-N6e">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
                 <viewController title="First" id="CZ4-MO-1fc" customClass="BreathViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2VE-Yg-loa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
@@ -85,6 +84,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="lungs.png" translatesAutoresizingMaskIntoConstraints="NO" id="PNq-4B-Swg">
+                                <rect key="frame" x="-78" y="-146" width="462" height="596"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -98,13 +101,13 @@
                         <outlet property="shape1View" destination="mei-Te-wRk" id="3i3-bb-VwU"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="653" y="-179"/>
         </scene>
         <!--Settings View Controller - SettingsViewController-->
         <scene sceneID="fyL-RZ-aj7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S93-2Q-88b" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="32w-L6-qpZ" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="OW2-w9-nBU">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
@@ -305,13 +308,13 @@
                         <outlet property="targetBreathingSwitch" destination="poC-n3-Bu9" id="7aM-qh-Wv5"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S93-2Q-88b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1083" y="496"/>
         </scene>
         <!--View Controller - Help-->
         <scene sceneID="pjc-gN-PvL">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WRi-qL-1b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="oDG-p6-iRx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ttx-32-7BN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
@@ -321,13 +324,13 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Help" image="HelpIcon.png" id="QCm-bC-foO"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WRi-qL-1b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="653" y="1174"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
                 <tabBarController id="8YX-ce-x5E" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -342,13 +345,13 @@
                         <segue destination="oDG-p6-iRx" kind="relationship" relationship="viewControllers" id="nre-G4-hGW"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="189" y="328"/>
         </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="nvO-Np-trx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GTH-qS-1EV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="pi6-G4-dFJ" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Item" id="WbL-WE-YJo"/>
@@ -359,6 +362,7 @@
                         <segue destination="32w-L6-qpZ" kind="relationship" relationship="rootViewController" id="NMO-dS-Acf"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GTH-qS-1EV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="653" y="496"/>
         </scene>
@@ -723,7 +727,7 @@
                                                     </connections>
                                                 </button>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yYu-Zb-MsI">
-                                                    <rect key="frame" x="215" y="6" width="37" height="37"/>
+                                                    <rect key="frame" x="263" y="6" width="37" height="37"/>
                                                     <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </activityIndicatorView>
                                             </subviews>
@@ -765,66 +769,8 @@
         <image name="HelpIcon.png" width="4.2000699043273926" height="4.2000699043273926"/>
         <image name="LungsIcon.png" width="4.2000699043273926" height="4.2000699043273926"/>
         <image name="SettingsIcon.png" width="4.2000699043273926" height="4.2000699043273926"/>
+        <image name="lungs.png" width="160.53279113769531" height="207.09423828125"/>
     </resources>
-    <classes>
-        <class className="BreathViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BreathViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="testButton:"/>
-                <relationship kind="outlet" name="connectedLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="connectionStrengthLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lungValLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="sensorValLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="shape1View" candidateClass="DPMeterView"/>
-            </relationships>
-        </class>
-        <class className="ConnectionViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConnectionViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="btnScanForPeripherals:"/>
-                <relationship kind="action" name="sendAnalogIn:"/>
-                <relationship kind="action" name="sendDigitalOut:"/>
-                <relationship kind="action" name="sendPWM:"/>
-                <relationship kind="action" name="sendServo:"/>
-                <relationship kind="action" name="toggleGravity"/>
-                <relationship kind="outlet" name="btnConnect" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="gravitySwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="indConnecting" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="lblAnalogIn" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lblRSSI" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="sldPWM" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sldServo" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="swAnalogIn" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="swDigitalIn" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="swDigitalOut" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="DPMeterView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DPMeterView.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="SettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gravitySwitchTouched:"/>
-                <relationship kind="action" name="targetBreathingInfoButtonTouched:"/>
-                <relationship kind="action" name="targetBreathingSwitchTouched:"/>
-                <relationship kind="outlet" name="breathingRateCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="breathingRateField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="connectionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="exhaleTimeCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="exhaleTimeField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="gravityMeterSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="inhaleTimeCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="inhaleTimeField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="targetBreathingCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="targetBreathingInfoButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="targetBreathingSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
