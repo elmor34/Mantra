@@ -33,12 +33,12 @@
      object:nil];
     
     // UIApperance
-    [[DPMeterView appearance] setTrackTintColor:[UIColor redColor]];
-    [[DPMeterView appearance] setProgressTintColor:[UIColor redColor]];
+    [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:10/255.f alpha:0.7f]];
+    [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:10/255.f alpha:0.5f]];
     
     // shape 1 -- Lungs
     [self.shape1View setShape:[UIBezierPath heartShape:self.shape1View.frame].CGPath];
-    self.shape1View.progressTintColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.f];
+    self.shape1View.progressTintColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.5f];
     
     
     [[MantraUser shared] scanForPeripherals:self];
@@ -107,7 +107,7 @@
     NSString *lungString = [NSString stringWithFormat: @"%.2f", [[MantraUser shared] lungVal]];
     self.lungValLabel.text = lungString;
     
-    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[MantraUser shared] bleConnected]];
+    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[MantraUser shared] bleIsConnected]];
     self.connectedLabel.text = bleConnected;
     
     self.connectionStrengthLabel.text = [[[MantraUser shared] connectionStrength] stringValue];

@@ -11,7 +11,7 @@
 
 @implementation MantraUser
 
-@synthesize breathingRate, exhaleRate, inhaleRate, maxVolume, minVolume, sensorVal, ble, bleConnected, connectionStrength, meterGravityEnabled;
+@synthesize breathingRate, exhaleRate, inhaleRate, maxVolume, minVolume, sensorVal, ble, bleIsConnected, connectionStrength, meterGravityEnabled;
 
 
 + (MantraUser *)shared
@@ -27,6 +27,9 @@
     //set the defaults or load MantraUser from storage
     meterGravityEnabled = YES;
     
+    ble = [[BLE alloc] init];
+    [ble controlSetup:1];
+    ble.delegate = self;
     
  
     
@@ -102,16 +105,26 @@
 -(void) bleDidConnect
 {
     NSLog(@"BLE->Connected");
-    bleConnected = YES;
+    bleIsConnected = YES;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"bleConnected"
+     object:[MantraUser shared]];
 }
 
 -(void) bleDidDisconnect{
     NSLog(@"BLE->Disconnected");
-    bleConnected = NO;
+    bleIsConnected = NO;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"bleDisconnected"
+     object:[MantraUser shared]];
 }
 
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi{
     connectionStrength = rssi;
+    //Post notification that sensor value changed
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"connectionStrengthChanged"
+     object:[MantraUser shared]];
 }
 
 //not sure if this is required to start analog input

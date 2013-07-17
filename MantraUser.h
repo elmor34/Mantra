@@ -28,9 +28,10 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *minVolume;
 @property (strong, nonatomic) NSNumber *connectionStrength;
 @property (readwrite) BOOL meterGravityEnabled;
-@property BOOL bleConnected;
+@property BOOL bleIsConnected;
 @property CGFloat lungVal;//sensor value between 0 and 1 representing lung volume
 @property UInt16 sensorVal; //raw sensor value as received from BLE
+
 
 
 //BLE Delegate

@@ -16,7 +16,6 @@
 @class QBFlatButton;
 
 @interface BreathViewController : UIViewController {
-    
     CalibrationViewController * semiVC;
     
 }
