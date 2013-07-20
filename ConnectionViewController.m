@@ -54,7 +54,7 @@
 }
 
 -(void)updateConnectionButtonState{
-    if ([[MantraUser shared] bleIsConnected]){
+    if ([[MantraUser shared] bleIsConnected] == false){
         [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
     }
     else {
@@ -128,9 +128,12 @@
   
     [btnConnect setEnabled:false];
 
-    //make the call to MantraUser's scanForPeripherals here
-    [[MantraUser shared] scanForPeripherals];
     
+    [[MantraUser shared] scanForPeripherals];
+        
+    
+    //make the call to MantraUser's scanForPeripherals here
+   
     
     [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
    
@@ -139,8 +142,9 @@
 
 -(void) connectionTimer:(NSTimer *)timer
 {
-    [btnConnect setEnabled:true];
+    
     [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
+    [btnConnect setEnabled:true];
     
     if ([[MantraUser shared] ble].peripherals.count > 0)
     {

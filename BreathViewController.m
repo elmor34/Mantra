@@ -80,8 +80,8 @@
         }
     }
     
-    self.title = [NSString stringWithFormat:@"%.2f%%",
-                  [(DPMeterView *)[shapeViews lastObject] progress]*100];
+    /*self.title = [NSString stringWithFormat:@"%.2f%%",
+                  [(DPMeterView *)[shapeViews lastObject] progress]*100];*/
 }
 
 //

@@ -105,7 +105,7 @@
 -(void) bleDidConnect
 {
     NSLog(@"BLE->Connected");
-    bleIsConnected = YES;
+    self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"bleConnected"
      object:[MantraUser shared]];
@@ -113,7 +113,7 @@
 
 -(void) bleDidDisconnect{
     NSLog(@"BLE->Disconnected");
-    bleIsConnected = NO;
+    self.bleIsConnected = NO;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"bleDisconnected"
      object:[MantraUser shared]];
