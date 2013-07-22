@@ -22,15 +22,14 @@ return _sharedObject; \
     
     
     
-@property (strong, nonatomic) NSNumber *breathingRate;
-@property (strong, nonatomic) NSNumber *fakeUserInhaleRate;
-@property (strong, nonatomic) NSNumber *fakeUserExhaleRate;
-@property (strong, nonatomic) NSNumber *fakeCurrentVolume;//refactor to fakeUserCurrentVolume for consistency
-@property (strong, nonatomic) NSNumber *fakeUserMaxVolume;
-@property (strong, nonatomic) NSNumber *fakeUserMinVolume;
-@property (strong, nonatomic) NSNumber *sampleTime;
-@property (strong, nonatomic) NSNumber *incrementSize;
-@property CGFloat incrementSize2;
+@property CGFloat breathingRate;
+@property CGFloat fakeUserInhaleTime;
+@property CGFloat fakeUserExhaleTime;
+@property CGFloat fakeUserCurrentVolume;//refactor to fakeUserCurrentVolume for consistency
+@property CGFloat fakeUserMaxVolume;
+@property CGFloat fakeUserMinVolume;
+@property CGFloat sampleTime;
+@property CGFloat deltaSize;
 
 
 
@@ -41,7 +40,7 @@ return _sharedObject; \
     
 + (id)shared;
 
--(void)startFakeBreathingWithFakeBreathingStats:(NSNumber*)fakeUserInhaleRate exhaleRate:(NSNumber*)fakeUserExhaleRate fakeUserMaxVolume:(NSNumber*)fakeUserMaxVolume fakeUserMinVolume:(NSNumber*)fakeUserMinVolume;
+-(void)startFakeBreathingWithFakeBreathingStats:(CGFloat)fakeUserInhaleRate exhaleRate:(CGFloat)fakeUserExhaleRate fakeUserMaxVolume:(CGFloat)fakeUserMaxVolume fakeUserMinVolume:(CGFloat)fakeUserMinVolume;
     -(void)fakeInhale;
     -(void)fakeExhale;
 -(void)printFakeDataToConsole;

@@ -13,7 +13,7 @@
 #import "UIBezierPath+BasicShapes.h"
 
 @interface BreathViewController ()
-@property (nonatomic, strong) NSTimer* animationTimer;
+//@property (nonatomic, strong) NSTimer* animationTimer;
 @end
 
 @implementation BreathViewController

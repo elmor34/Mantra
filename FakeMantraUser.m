@@ -10,7 +10,7 @@
 
 @implementation FakeMantraUser
 
-    @synthesize breathingRate, breathingOn, sensorVal,sampleTime, fakeCurrentVolume, incrementSize, fakeUserMaxVolume, fakeUserExhaleRate, fakeUserInhaleRate, fakeUserMinVolume;
+    @synthesize breathingRate, breathingOn, sensorVal,sampleTime, fakeUserCurrentVolume, deltaSize, fakeUserMaxVolume, fakeUserExhaleTime, fakeUserInhaleTime, fakeUserMinVolume;
     
     
 + (FakeMantraUser *)shared
@@ -25,8 +25,8 @@
     
     breathingOn = NO;
     breathingRate = 0;
-    fakeUserExhaleRate = 0;
-    fakeUserInhaleRate = 0;
+    fakeUserExhaleTime = 0;
+    fakeUserInhaleTime = 0;
     fakeUserMaxVolume = 0;
     fakeUserMinVolume = 0;
     sensorVal = 0;
@@ -36,16 +36,16 @@
 
 -(void)startFakeBreathingWithFakeUserInhaleRate:(NSNumber*)fakeInhaleRate andFakeUserExhaleRate:(NSNumber*)fakeExhaleRate fakeMaxVolume:(NSNumber*)fakeMaxVolume andFakeUserMinVolume:(NSNumber*)fakeMinVolume{
     
-    self.fakeUserExhaleRate = fakeExhaleRate;
-    self.fakeUserInhaleRate = fakeInhaleRate;
-    self.fakeUserMaxVolume = fakeMaxVolume;
-    self.fakeUserMinVolume = fakeMinVolume;
+    self.fakeUserExhaleTime = fakeExhaleRate.floatValue;
+    self.fakeUserInhaleTime = fakeInhaleRate.floatValue;
+    self.fakeUserMaxVolume = fakeMaxVolume.floatValue;
+    self.fakeUserMinVolume = fakeMinVolume.floatValue;
     self.breathingOn = YES;
     self.sampleTime = 0; //sample rate for the fake sensor is 100 ms
     
     /*incrementSize needs to be calculated because the volume needs to increment at a more natural rate.  You must get to the maxVolume in inhaleTime - so the natural increment size is determined by taking (the amount you need to increment) / (the number of samples you will take)
     */
-    self.incrementSize2  = (self.fakeUserMaxVolume.floatValue-self.fakeCurrentVolume.floatValue)/(self.fakeUserInhaleRate.floatValue/self.sampleTime.floatValue);
+    self.deltaSize  = (self.fakeUserMaxVolume-self.fakeUserCurrentVolume)/(self.fakeUserInhaleTime/self.sampleTime);
     
     sensorVal = 700;
     [self fakeInhale];
@@ -59,8 +59,8 @@
     breathingRate = 0;
     breathingOn = NO;
     breathingRate = 0;
-    fakeUserExhaleRate = 0;
-    fakeUserInhaleRate = 0;
+    fakeUserExhaleTime = 0;
+    fakeUserInhaleTime = 0;
     fakeUserMaxVolume = 0;
     fakeUserMinVolume = 0;
     sensorVal = 0;
@@ -71,41 +71,57 @@
 -(void)fakeInhale{
     //Fake inhale will increment sensorval and continue to call itself until the total elapsed sampling time = the inhale rate
     
-    
+    NSTimer *inhaleTimer;
     
     if(breathingOn == YES){
         
         //continue to call the timer 
-        if (fakeCurrentVolume > fakeUserMaxVolume) {
+        if (fakeUserCurrentVolume > fakeUserMaxVolume) {
             
             //set a timer to call self until the above condition is no longer true
-            [NSTimer scheduledTimerWithTimeInterval:self.sampleTime target:self selector:@selector(fakeInhale) userInfo:nil repeats:YES];
+            inhaleTimer = [NSTimer scheduledTimerWithTimeInterval:self.sampleTime target:self selector:@selector(fakeInhale) userInfo:nil repeats:YES];
             NSLog(@"fake_sensorVal: %hu", sensorVal);
             
-            fakeCurrentVolume + incrementSize = fakeCurrentVolume;
+            self.fakeUserCurrentVolume = self.fakeUserCurrentVolume + self.deltaSize;
+        }
+        else{
+            //invalidate the secondary timer and call fakeExhale
+            [inhaleTimer invalidate];
+            [self fakeExhale];
         }
 
     }
-    
-    //invalidate the secondary timer in fakeExhale
-    
-
 }
     
 -(void)fakeExhale{
+//intelligently copy fakeInhale
+    NSTimer *exhaleTimer;
+    
     if(breathingOn == YES){
-
-    [NSTimer scheduledTimerWithTimeInterval:(float)exhaleRate.floatValue target:self selector:@selector(fakeInhale) userInfo:nil repeats:NO];
-    
+        
+        //continue to call the timer
+        if (fakeUserCurrentVolume > fakeUserMaxVolume) {
+            
+            //set a timer to call self until the above condition is no longer true
+            exhaleTimer = [NSTimer scheduledTimerWithTimeInterval:self.sampleTime target:self selector:@selector(fakeExhale) userInfo:nil repeats:YES];
+            NSLog(@"fake_sensorVal: %hu", sensorVal);
+            
+            self.fakeUserCurrentVolume = self.fakeUserCurrentVolume - self.deltaSize;
+        }
+        else{
+            //invalidate the secondary timer and call fakeExhale
+            [exhaleTimer invalidate];
+            [self fakeExhale];
+        }
+        
     }
-    
-    //invalidate the secondary timer in fakeInhale
 }
     
 -(void)printFakeDataToConsole{
     NSLog(@"fake_sensorVal: %hu", sensorVal);
-    NSLog(@"fake_inhaleRate: %f", inhaleRate.floatValue);
-    NSLog(@"fake_exhaleRate: %f", exhaleRate.floatValue);
+    NSLog(@"fake_sensorVal: %f", fakeUserCurrentVolume);
+    NSLog(@"fake_inhaleRate: %f", fakeUserInhaleTime);
+    NSLog(@"fake_exhaleRate: %f", fakeUserExhaleTime);
 }
 
 
