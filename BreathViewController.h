@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MantraUser.h"
+#import "FakeMantraUser.h"
 #import "DPMeterView.h"
 
 
@@ -26,11 +27,12 @@
 
 //@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
 //DPMeterView
-
 @property (strong, nonatomic) IBOutlet DPMeterView *shape1View;
 @property float meterLevel;
 
 
+//MantraUser and FakeMantraUser
+    @property (strong, nonatomic) id currentUser;
 
 //Debug properties
 @property (strong, nonatomic) IBOutlet UILabel *lungValLabel;
