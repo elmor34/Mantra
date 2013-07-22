@@ -195,5 +195,35 @@
     }
 }
 
+-(void) didReceiveFakeData:(unsigned char *)data length:(int)length
+{
+
+            
+            //Post notification that sensor value changed
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"fakeSensorValueChanged"
+             object:[MantraUser shared]];
+            
+
+            
+            
+            
+            
+            //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
+            CGFloat refInMax = 300.0;//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = 530.0;//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            
+            
+            //dynamic calibration block
+            
+            CGFloat outMax = 1.0;
+            CGFloat outMin = 0;
+            CGFloat in = self.sensorVal;
+            CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
+            self.lungVal = out;
+ 
+    
+}
+
 
 @end

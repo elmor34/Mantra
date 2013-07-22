@@ -31,8 +31,7 @@
 @property float meterLevel;
 
 
-//MantraUser and FakeMantraUser
-    @property (strong, nonatomic) id currentUser;
+
 
 //Debug properties
 @property (strong, nonatomic) IBOutlet UILabel *lungValLabel;

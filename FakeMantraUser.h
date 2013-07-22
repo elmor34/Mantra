@@ -23,14 +23,18 @@ return _sharedObject; \
     
     
 @property (strong, nonatomic) NSNumber *breathingRate;
-@property (strong, nonatomic) NSNumber *inhaleRate;
-@property (strong, nonatomic) NSNumber *exhaleRate;
 @property (strong, nonatomic) NSNumber *fakeUserInhaleRate;
 @property (strong, nonatomic) NSNumber *fakeUserExhaleRate;
-@property (strong, nonatomic) NSNumber *maxVolume;
-@property (strong, nonatomic) NSNumber *minVolume;
+@property (strong, nonatomic) NSNumber *fakeCurrentVolume;//refactor to fakeUserCurrentVolume for consistency
 @property (strong, nonatomic) NSNumber *fakeUserMaxVolume;
 @property (strong, nonatomic) NSNumber *fakeUserMinVolume;
+@property (strong, nonatomic) NSNumber *sampleTime;
+@property (strong, nonatomic) NSNumber *incrementSize;
+@property CGFloat incrementSize2;
+
+
+
+
 @property BOOL breathingOn;
 @property CGFloat lungVal;//sensor value between 0 and 1 representing lung volume
 @property UInt16 sensorVal; //raw sensor value as received from BLE
@@ -38,12 +42,15 @@ return _sharedObject; \
 + (id)shared;
 
 -(void)startFakeBreathingWithFakeBreathingStats:(NSNumber*)fakeUserInhaleRate exhaleRate:(NSNumber*)fakeUserExhaleRate fakeUserMaxVolume:(NSNumber*)fakeUserMaxVolume fakeUserMinVolume:(NSNumber*)fakeUserMinVolume;
--(void)fakeInhale;
--(void)fakeExhale;
+    -(void)fakeInhale;
+    -(void)fakeExhale;
 -(void)printFakeDataToConsole;
     
 -(void)setFakeShallowBreathing;
 -(void)setFakePerfectBreathing;
+
+    -(void)naturalIncrement;
+-(void)naturalDecrement;
 
     
 @end

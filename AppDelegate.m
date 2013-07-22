@@ -17,6 +17,7 @@
 #import "UAInbox.h"
 #import "UAUser.h"
 #import "UAInboxMessageList.h"
+#import "DeveloperSettingsViewController.h"
 
 @implementation AppDelegate
 
@@ -43,6 +44,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //Do check for fake data or real data
+    
+    
     
     // Display a UIAlertView warning developers that push notifications do not work in the simulator
     // You should remove this in your app.
