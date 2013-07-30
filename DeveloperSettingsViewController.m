@@ -15,6 +15,8 @@
 
 @implementation DeveloperSettingsViewController
 
+@synthesize fakeUserExhaleTimeTextField, fakeUserInhaleTimeTextField, fakeUserMaxVolumeTextField, fakeUserMinVolumeTextField,fakeUserSwitch;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,12 +30,22 @@
 }
 
 - (IBAction)fakeUserSwitchTouched:(id)sender{
-    if (self.fakeUserSwitch.isOn) {
+    if (self.fakeUserSwitch.isOn == YES) {
         
         
-        
+        NSLog(@"fake data ON");
         //fix this to use real values from fakeuser
-        [[FakeMantraUser shared] startFakeBreathingWithFakeBreathingStats:10 exhaleRate:10 fakeUserMaxVolume:10 fakeUserMinVolume:10];
+        
+        [NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]];
+        
+        
+        [[FakeMantraUser shared] startFakeBreathingWithFakeUserInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] andFakeUserExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxVolume:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] andFakeUserMinVolume:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
     }
+    if (self.fakeUserSwitch.isOn == NO) {
+        NSLog(@"fake data OFF");
+        [[FakeMantraUser shared] stopFakeBreathing];
+    }
+    
+
 }
 @end

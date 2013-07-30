@@ -31,7 +31,8 @@ return _sharedObject; \
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
 
-
+@property NSTimer *inhaleTimer;
+@property NSTimer *exhaleTimer;
 
 
 @property BOOL breathingOn;
@@ -40,16 +41,12 @@ return _sharedObject; \
     
 + (id)shared;
 
--(void)startFakeBreathingWithFakeBreathingStats:(CGFloat)fakeUserInhaleRate exhaleRate:(CGFloat)fakeUserExhaleRate fakeUserMaxVolume:(CGFloat)fakeUserMaxVolume fakeUserMinVolume:(CGFloat)fakeUserMinVolume;
-    -(void)fakeInhale;
-    -(void)fakeExhale;
+-(void)startFakeBreathingWithFakeUserInhaleTime:(NSNumber*)fakeInhaleTime andFakeUserExhaleTime:(NSNumber*)fakeExhaleRate fakeMaxVolume:(NSNumber*)fakeMaxVolume andFakeUserMinVolume:(NSNumber*)fakeMinVolume;
+-(void)stopFakeBreathing;
+-(void)fakeInhale;
+-(void)fakeExhale;
 -(void)printFakeDataToConsole;
-    
--(void)setFakeShallowBreathing;
--(void)setFakePerfectBreathing;
 
-    -(void)naturalIncrement;
--(void)naturalDecrement;
 
     
 @end

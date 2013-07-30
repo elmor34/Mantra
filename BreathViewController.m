@@ -32,6 +32,12 @@
      name:@"sensorValueChanged"
      object:nil];
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(sensorValueChanged:)
+     name:@"fakeSensorValueChanged"
+     object:nil];
+    
     // UIApperance
     [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:10/255.f alpha:0.7f]];
     [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:10/255.f alpha:0.5f]];
@@ -94,6 +100,12 @@
 //{
 //    [self updateProgressWithDelta:-0.1 animated:YES];
 //}
+
+
+- (void)fakeSensorValueChanged:(NSNotification *)notification{
+    NSLog(@"fake sensor notifcation received, fakeSensorValueChanged called!");
+
+}
 
 
 - (void)sensorValueChanged:(NSNotification *)notification{

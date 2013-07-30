@@ -11,8 +11,8 @@
 @interface DeveloperSettingsViewController : UIViewController
 
 
-    @property (strong, nonatomic) IBOutlet UITextField *fakeUserInhaleRateTextField;
-    @property (strong, nonatomic) IBOutlet UITextField *fakeUserExhaleRateTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserInhaleTimeTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserExhaleTimeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
