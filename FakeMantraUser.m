@@ -7,6 +7,7 @@
 //
 
 #import "FakeMantraUser.h"
+#import "MantraUser.h"
 
 @implementation FakeMantraUser
 
@@ -43,7 +44,7 @@
     self.sensorVal = 770;
     self.fakeUserCurrentVolume = sensorVal;
     self.breathingOn = YES;
-    self.sampleTime = 1; //sample rate for the fake sensor is 100 ms
+    self.sampleTime = .1; //sample rate for the fake sensor is 100 ms
     
     /*incrementSize needs to be calculated because the volume needs to increment at a more natural rate.  You must get to the maxVolume in inhaleTime - so the natural increment size is determined by taking (the amount you need to increment) / (the number of samples you will take)
     */
@@ -78,7 +79,7 @@
     if(breathingOn == YES){
         
         
-        if (fakeUserCurrentVolume <= fakeUserMaxVolume) {
+        if (fakeUserCurrentVolume < fakeUserMaxVolume) {
             if (inhaleTimer == nil){
             //set a timer to call self until the above condition is no longer true
             self.inhaleTimer = [[NSTimer alloc] init];
@@ -104,7 +105,7 @@
 
     if(breathingOn == YES){
         
-        if (fakeUserCurrentVolume >= fakeUserMinVolume) {
+        if (fakeUserCurrentVolume > fakeUserMinVolume) {
             
             //set a timer to call self until the above condition is no longer true
             if (exhaleTimer == nil){
@@ -135,6 +136,20 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"fakeSensorValueChanged"
      object:[FakeMantraUser shared]];
+    
+    //Do mapping to set lunVal directly
+    //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
+    CGFloat refInMax = self.fakeUserMaxVolume;//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+    CGFloat refInMin = self.fakeUserMinVolume;//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+    
+    
+    //dynamic calibration block
+    
+    CGFloat outMax = 1.0;
+    CGFloat outMin = 0;
+    CGFloat in = self.fakeUserCurrentVolume;
+    CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
+    [[MantraUser shared] setLungVal:out];
     
     //NSLog(@"fake_sensorVal: %hu", self.sensorVal);
     NSLog(@"fakeUserCurrentVolume: %f", self.fakeUserCurrentVolume);

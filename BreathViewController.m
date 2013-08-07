@@ -144,7 +144,6 @@
      postNotificationName:@"sensorValueChanged"
      object:[MantraUser shared]];
     NSLog(@"notification posted!");
-    [[MantraUser shared] scanForPeripherals:self];
 }
 
 

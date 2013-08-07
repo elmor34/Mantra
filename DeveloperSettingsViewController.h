@@ -16,7 +16,8 @@
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
-    
+
+        
     - (IBAction)fakeUserSwitchTouched:(id)sender;
     
     

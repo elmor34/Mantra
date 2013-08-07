@@ -17,11 +17,10 @@
     return self;    
 }
 
-- (IBAction)toggleGravity
-{
-}
+
 - (void)viewDidLoad
 {
+     self.view.userInteractionEnabled = TRUE;
     
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]
@@ -48,10 +47,26 @@
      name:@"bleDisconnected"
      object:nil];
     
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.tableView addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    
     [self updateConnectionButtonState];
    
    
 }
+
+- (void)hideKeyboard{
+    [self.view endEditing:YES];
+}
+
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    //Iterate through your subviews, or some other custom array of views
+    for (UIView *view in self.view.subviews)
+        [view resignFirstResponder];
+}
+
 
 -(void)updateConnectionButtonState{
     if ([[MantraUser shared] bleIsConnected] == false){
