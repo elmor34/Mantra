@@ -50,5 +50,6 @@ return _sharedObject; \
 -(void)printFakeDataToConsole;
 -(void)loadFakeLungValIntoMantraUser;
 -(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue;
+-(void)calculateBreathingRateRateWithPastValue: (CGFloat) pastValue;
     
 @end

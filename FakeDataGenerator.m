@@ -166,7 +166,7 @@
     //Store a value to compare to the subsample ~0.5 seconds later
     pastValue = out;
     //Subsample the fake value for calculating the delta
-    double delayInSeconds = 0.5;
+    double delayInSeconds = 1.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
@@ -181,9 +181,21 @@
 -(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue{
     CGFloat delta = pastValue - [[User shared] userCurrentLungVolume];
     NSLog(@"\n Delta:%f \n", delta);
+    [[User shared] setUserCurrentBreathingRate:[NSNumber numberWithFloat:delta]];
+    CGFloat pastValue2 = delta;
+    //Subsample the fake value for calculating the delta
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        //code to be executed on the main queue after delay
+        [self calculateBreathingRateRateWithPastValue:pastValue2];
+    });
     
 }
 
-
+-(void)calculateBreathingRateRateWithPastValue: (CGFloat) pastValue{
+    CGFloat deltadelta = pastValue - [[User shared] userCurrentBreathingRate].floatValue;
+    NSLog(@"\n Deltadelta:%f \n", deltadelta);
+}
 
 @end

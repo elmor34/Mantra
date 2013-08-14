@@ -22,6 +22,7 @@
 }
 
 -(User *)init{
+
     self = [super init];
     
     //set the defaults or load MantraUser from storage
@@ -37,6 +38,13 @@
     ble.delegate = self;
     
     return self;
+}
+
+-(void)loadDefaults{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *key = [NSString stringWithFormat:@"userCurrentInhaleTime"];
+    [userDefaults setObject:userCurrentInhaleTime forKey:key];
+    
 }
 
 

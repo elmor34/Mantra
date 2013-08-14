@@ -49,6 +49,8 @@ return _sharedObject; \
 @property BOOL bleIsConnected;
 @property BOOL fakeDataIsOn;
 
+-(void)loadDefaults;
+
 
 //Bluetooth Low Energy delegate methods
 -(void) bleDidConnect;
