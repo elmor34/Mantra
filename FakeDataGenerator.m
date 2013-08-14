@@ -6,26 +6,26 @@
 //  Copyright (c) 2013 David Crow. All rights reserved.
 //
 
-#import "FakeMantraUser.h"
-#import "MantraUser.h"
+#import "FakeDataGenerator.h"
+#import "User.h"
 
-@implementation FakeMantraUser
+@implementation FakeDataGenerator
 
-@synthesize breathingRate, breathingOn, sensorVal,sampleTime, fakeUserCurrentVolume, deltaSize, fakeUserMaxVolume, fakeUserExhaleTime, fakeUserInhaleTime, fakeUserMinVolume, inhaleTimer, exhaleTimer;
+@synthesize fakeUserBreathingRate, fakeUserBreathingOn, sensorVal,sampleTime, fakeUserCurrentVolume, deltaSize, fakeUserMaxVolume, fakeUserExhaleTime, fakeUserInhaleTime, fakeUserMinVolume, inhaleTimer, exhaleTimer;
     
     
-+ (FakeMantraUser *)shared
++ (FakeDataGenerator *)shared
     {
         DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
             return [[self alloc] init];
         });
     }
     
--(FakeMantraUser *)init{
+-(FakeDataGenerator *)init{
     self = [super init];
     
-    self.breathingOn = NO;
-    self.breathingRate = 0;
+    self.fakeUserBreathingOn = NO;
+    self.fakeUserBreathingRate = 0;
     self.fakeUserExhaleTime = 0;
     self.fakeUserInhaleTime = 0;
     self.fakeUserMaxVolume = 0;
@@ -35,6 +35,7 @@
     return self;
 }
 
+//This method is ridiculous, refactor
 -(void)startFakeBreathingWithFakeUserInhaleTime:(NSNumber*)fakeInhaleTime andFakeUserExhaleTime:(NSNumber*)fakeExhaleRate fakeMaxVolume:(NSNumber*)fakeMaxVolume andFakeUserMinVolume:(NSNumber*)fakeMinVolume{
     
     self.fakeUserExhaleTime = fakeExhaleRate.floatValue;
@@ -43,7 +44,7 @@
     self.fakeUserMinVolume = fakeMinVolume.floatValue;
     self.sensorVal = 770;
     self.fakeUserCurrentVolume = sensorVal;
-    self.breathingOn = YES;
+    self.fakeUserBreathingOn = YES;
     self.sampleTime = .1; //sample rate for the fake sensor is 100 ms
     
     /*incrementSize needs to be calculated because the volume needs to increment at a more natural rate.  You must get to the maxVolume in inhaleTime - so the natural increment size is determined by taking (the amount you need to increment) / (the number of samples you will take)
@@ -59,10 +60,8 @@
     self.inhaleTimer = nil;
     [self.exhaleTimer invalidate];
     self.exhaleTimer = nil;
-    self.breathingOn = NO;
-    self.breathingRate = 0;
-    self.breathingOn = NO;
-    self.breathingRate = 0;
+    self.fakeUserBreathingOn = NO;
+    self.fakeUserBreathingRate = 0;
     self.fakeUserExhaleTime = 0;
     self.fakeUserInhaleTime = 0;
     self.fakeUserMaxVolume = 0;
@@ -76,7 +75,7 @@
 -(void)fakeInhale{
     //Fake inhale will increment sensorval and continue to call itself until the total elapsed sampling time = the inhale rate
     
-    if(breathingOn == YES){
+    if(fakeUserBreathingOn == YES){
         
         
         if (fakeUserCurrentVolume < fakeUserMaxVolume) {
@@ -87,6 +86,7 @@
             }
             self.fakeUserCurrentVolume = self.fakeUserCurrentVolume + self.deltaSize;
             [self printFakeDataToConsole];
+            [self loadFakeLungValIntoMantraUser];
         }
         else{
             //set exhale delta size
@@ -103,7 +103,7 @@
     
 -(void)fakeExhale{
 
-    if(breathingOn == YES){
+    if(fakeUserBreathingOn == YES){
         
         if (fakeUserCurrentVolume > fakeUserMinVolume) {
             
@@ -116,6 +116,7 @@
                         
             self.fakeUserCurrentVolume = self.fakeUserCurrentVolume + self.deltaSize;
             [self printFakeDataToConsole];
+            [self loadFakeLungValIntoMantraUser];
 
         }
         else{
@@ -132,26 +133,7 @@
 }
     
 -(void)printFakeDataToConsole{
-    //Post notification that sensor value changed
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"fakeSensorValueChanged"
-     object:[FakeMantraUser shared]];
-    
-    //Do mapping to set lunVal directly
-    //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-    CGFloat refInMax = self.fakeUserMaxVolume;//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-    CGFloat refInMin = self.fakeUserMinVolume;//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
-    
-    
-    //dynamic calibration block
-    
-    CGFloat outMax = 1.0;
-    CGFloat outMin = 0;
-    CGFloat in = self.fakeUserCurrentVolume;
-    CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
-    [[MantraUser shared] setLungVal:out];
-    
-    //NSLog(@"fake_sensorVal: %hu", self.sensorVal);
+   //NSLog(@"fake_sensorVal: %hu", self.sensorVal);
     NSLog(@"fakeUserCurrentVolume: %f", self.fakeUserCurrentVolume);
     NSLog(@"fake_inhaleRate: %f", self.fakeUserInhaleTime);
    
@@ -160,6 +142,48 @@
 }
 
 
+-(void)loadFakeLungValIntoMantraUser{//refactor, this is not lungVal anymore
+    //Post notification that sensor value changed
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"fakeSensorValueChanged"
+     object:[FakeDataGenerator shared]];
+    
+    //Do mapping to set lunVal directly
+    //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
+    CGFloat refInMax = [[User shared] userCalibratedMaxSensorValue].floatValue;//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+    CGFloat refInMin = [[User shared] userCalibratedMinSensorValue].floatValue;//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
     
     
+    //dynamic calibration block
+    
+    CGFloat pastValue;
+    CGFloat outMax = 1.0;
+    CGFloat outMin = 0;
+    CGFloat in = self.fakeUserCurrentVolume;
+    CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
+    [[User shared] setUserCurrentLungVolume:out];
+    
+    //Store a value to compare to the subsample ~0.5 seconds later
+    pastValue = out;
+    //Subsample the fake value for calculating the delta
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        //code to be executed on the main queue after delay
+        [self calculateBreathingRateWithPastValue:pastValue];
+    });
+    
+    
+    
+}
+
+//Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
+-(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue{
+    CGFloat delta = pastValue - [[User shared] userCurrentLungVolume];
+    NSLog(@"\n Delta:%f \n", delta);
+    
+}
+
+
+
 @end

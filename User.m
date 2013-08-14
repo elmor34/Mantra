@@ -6,28 +6,31 @@
 //  Copyright (c) 2013 David Crow. All rights reserved.
 //
 
-#import "MantraUser.h"
+#import "User.h"
 
 
-@implementation MantraUser
+@implementation User
 
-@synthesize breathingRate, exhaleTime, inhaleTime, maxVolume, minVolume, sensorVal, ble, bleIsConnected, connectionStrength, meterGravityEnabled, fakeUserDataIsOn;
+@synthesize userCurrentBreathingRate, userCurrentExhaleTime, userCurrentInhaleTime, userCalibratedMaxSensorValue, userCalibratedMinSensorValue, rawStretchSensorValue, ble, bleIsConnected, connectionStrength, meterGravityEnabled, fakeDataIsOn, userCurrentLungVolume, userTargetExhaleTime, userTargetInhaleTime, userTargetDepth, userCurrentRawSensorDelta, userBreathCount;
 
 
-+ (MantraUser *)shared
++ (User *)shared
 {
     DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
         return [[self alloc] init];
     });
 }
 
--(MantraUser *)init{
+-(User *)init{
     self = [super init];
     
     //set the defaults or load MantraUser from storage
+    userBreathCount = 0;
     meterGravityEnabled = YES;
-    fakeUserDataIsOn = NO;
-    
+    fakeDataIsOn = NO;
+       userCalibratedMaxSensorValue = [NSNumber numberWithFloat:800];//this will need to be set to zero here and then by the calibration method elsewhere
+    userCalibratedMinSensorValue = [NSNumber numberWithFloat:700];
+     
     //set up the BLE
     ble = [[BLE alloc] init];
     [ble controlSetup:1];
@@ -108,7 +111,7 @@
     self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"bleConnected"
-     object:[MantraUser shared]];
+     object:[User shared]];
 }
 
 -(void) bleDidDisconnect{
@@ -116,7 +119,7 @@
     self.bleIsConnected = NO;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"bleDisconnected"
-     object:[MantraUser shared]];
+     object:[User shared]];
 }
 
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi{
@@ -124,7 +127,7 @@
     //Post notification that sensor value changed
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"connectionStrengthChanged"
-     object:[MantraUser shared]];
+     object:[User shared]];
 }
 
 //not sure if this is required to start analog input
@@ -170,31 +173,55 @@
             //Post notification that sensor value changed
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"sensorValueChanged"
-             object:[MantraUser shared]];
+             object:[User shared]];
             
             //Filter out outliers outside absolute min and max
             if (Value > 100 && Value < 700){
-                self.sensorVal = Value;
+                self.rawStretchSensorValue = Value;
             }
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = [maxVolume floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            CGFloat refInMin = [minVolume floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = [userCalibratedMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = [userCalibratedMinSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block
-            
+            CGFloat pastValue;
             CGFloat outMax = 1.0;
             CGFloat outMin = 0;
-            CGFloat in = self.sensorVal;
+            CGFloat in = self.rawStretchSensorValue;
             CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
-            self.lungVal = out;
+            self.userCurrentLungVolume = out;
+            pastValue = out;
             
+            
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                //code to be executed on the main queue after delay
+                [self calculateBreathingRateWithPastValue:pastValue];
+            });
         }
     }
 }
+//Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
+-(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue{
+    CGFloat delta = pastValue - self.userCurrentLungVolume;
+    NSLog(@"\n Delta:%f \n", delta);
+    self.userCurrentRawSensorDelta = [NSNumber numberWithFloat:delta];
 
+}
 
+-(int)calculateBreathCoherence{
+    
+    return 11;
+}
+
+-(void)calculateBreathCount{
+//take 50 samples
+    NSArray *samplesArray = [[NSArray alloc] init];
+    
+}
 
 @end

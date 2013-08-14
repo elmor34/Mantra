@@ -18,7 +18,7 @@
 
 @implementation SettingsViewController
 
-@synthesize breathingRateField,connectionLabel,gravityMeterSwitch,inhaleTimeField,inhaleTimeCell,exhaleTimeField,exhaleTimeCell,breathingRateCell,targetBreathingSwitch;
+@synthesize breathingRateField,connectionLabel,gravityMeterSwitch,inhaleTimeField,inhaleTimeCell,exhaleTimeField,exhaleTimeCell,breathingRateCell,targetBreathingSwitch, targetDepthCell, targetBreathingCell, targetBreathingInfoButton, targetDepthLabel, targetDepthSlider;
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -35,15 +35,20 @@
 - (IBAction)gravitySwitchTouched:(id)sender
 {
     if ([sender isOn]) {
-        [[MantraUser shared] setMeterGravityEnabled:YES];
+        [[User shared] setMeterGravityEnabled:YES];
         NSLog(@"Gravity!");
     }
     else{
-        [[MantraUser shared] setMeterGravityEnabled:NO];
+        [[User shared] setMeterGravityEnabled:NO];
         NSLog(@"No Gravity!");
     }
 }
 - (void)hideKeyboard{
+    //update field values on keyboard hide
+   
+    [[User shared] setUserTargetInhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
+    [[User shared] setUserTargetExhaleTime:[NSNumber numberWithFloat:exhaleTimeField.text.floatValue]];
+    
 [self.view endEditing:YES];
 }
 
@@ -53,11 +58,13 @@
         inhaleTimeCell.hidden = NO;
         exhaleTimeCell.hidden = NO;
         breathingRateCell.hidden = NO;
+        targetDepthCell.hidden = NO;
     }
     else {
         inhaleTimeCell.hidden = YES;
         exhaleTimeCell.hidden = YES;
         breathingRateCell.hidden = YES;
+        targetDepthCell.hidden = YES;
     }
 }
 - (IBAction)targetBreathingInfoButtonTouched:(id)sender{
@@ -65,7 +72,7 @@
 }
 
 -(BOOL)checkTextFieldValues{
-    
+    // change this to something like: [field checkFieldValuesAreBetween: 0 and: 1 withUnitsString: @"minutes"]
     if (([self.inhaleTimeField.text floatValue] < 0.5) || ([self.inhaleTimeField.text floatValue] > 300))
     {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 seconds and 5 minutes"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -99,6 +106,10 @@
     inhaleTimeCell.hidden = YES;
     exhaleTimeCell.hidden = YES;
     breathingRateCell.hidden = YES;
+    targetDepthCell.hidden =YES;
+    
+    [targetDepthSlider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -106,6 +117,12 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
+}
+
+- (void)sliderChanged:(UISlider *)slider {
+    self.targetDepthLabel.text = [NSString stringWithFormat:@"%1.0f%%", slider.value * 100];
+    //update target breathingdepth 
+    [[User shared] setUserTargetDepth:[NSNumber numberWithFloat:targetDepthSlider.value]];
 }
 
 

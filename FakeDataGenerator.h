@@ -18,24 +18,26 @@ _sharedObject = block(); \
 return _sharedObject; \
 
 
-@interface FakeMantraUser : NSObject
+@interface FakeDataGenerator : NSObject
     
     
-    
-@property CGFloat breathingRate;
+//Fake user data
+@property CGFloat fakeUserBreathingRate;
 @property CGFloat fakeUserInhaleTime;
 @property CGFloat fakeUserExhaleTime;
-@property CGFloat fakeUserCurrentVolume;//refactor to fakeUserCurrentVolume for consistency
+@property CGFloat fakeUserCurrentVolume;
 @property CGFloat fakeUserMaxVolume;
 @property CGFloat fakeUserMinVolume;
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
 
+
+//Timers for inhale stroke and exhale stroke
 @property NSTimer *inhaleTimer;
 @property NSTimer *exhaleTimer;
 
 
-@property BOOL breathingOn;
+@property BOOL fakeUserBreathingOn;
 @property CGFloat lungVal;//sensor value between 0 and 1 representing lung volume
 @property UInt16 sensorVal; //raw sensor value as received from BLE
     
@@ -46,7 +48,7 @@ return _sharedObject; \
 -(void)fakeInhale;
 -(void)fakeExhale;
 -(void)printFakeDataToConsole;
-
-
+-(void)loadFakeLungValIntoMantraUser;
+-(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue;
     
 @end

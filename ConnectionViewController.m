@@ -69,7 +69,7 @@
 
 
 -(void)updateConnectionButtonState{
-    if ([[MantraUser shared] bleIsConnected] == false){
+    if ([[User shared] bleIsConnected] == false){
         [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
     }
     else {
@@ -91,7 +91,7 @@
     
 -(void)connectionStrengthChanged{
     NSLog(@"connection strength changed!");
-    lblRSSI.text = [[MantraUser shared] connectionStrength].stringValue;
+    lblRSSI.text = [[User shared] connectionStrength].stringValue;
 }
 
 // When disconnected, this will be called
@@ -144,7 +144,7 @@
     [btnConnect setEnabled:false];
 
     
-    [[MantraUser shared] scanForPeripherals];
+    [[User shared] scanForPeripherals];
         
     
     //make the call to MantraUser's scanForPeripherals here
@@ -161,9 +161,9 @@
     [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
     [btnConnect setEnabled:true];
     
-    if ([[MantraUser shared] ble].peripherals.count > 0)
+    if ([[User shared] ble].peripherals.count > 0)
     {
-        [[[MantraUser shared] ble] connectPeripheral:[[[MantraUser shared] ble].peripherals objectAtIndex:0]];
+        [[[User shared] ble] connectPeripheral:[[[User shared] ble].peripherals objectAtIndex:0]];
     }
     else
     {
@@ -183,7 +183,7 @@
         buf[1] = 0x00;
     
     NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[MantraUser shared] ble] write:data];
+    [[[User shared] ble] write:data];
 }
 
 /* Send command to Arduino to enable analog reading */
@@ -200,7 +200,7 @@
         NSLog(@"wrote no data");}
     
     NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[MantraUser shared] ble] write:data];
+    [[[User shared] ble] write:data];
 }
 
 // PWM slide will call this to send its value to Arduino
@@ -212,7 +212,7 @@
     buf[2] = (int)sldPWM.value >> 8;
     
     NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[MantraUser shared] ble] write:data];
+    [[[User shared] ble] write:data];
 }
 
 // Servo slider will call this to send its value to Arduino
@@ -224,7 +224,7 @@
     buf[2] = (int)sldServo.value >> 8;
     
     NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[MantraUser shared] ble] write:data];
+    [[[User shared] ble] write:data];
 }
 
 @end

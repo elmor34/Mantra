@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MantraUser.h"
-#import "FakeMantraUser.h"
+#import "User.h"
+#import "FakeDataGenerator.h"
 #import "DPMeterView.h"
 
 
@@ -30,7 +30,7 @@
 @property (strong, nonatomic) IBOutlet DPMeterView *shape1View;
 @property float meterLevel;
 
-
+@property (strong, nonatomic) UIColor *lungColor;
 
 
 //Debug properties
@@ -43,5 +43,7 @@
 - (IBAction)testButton:(id)sender;
 -(void)setGravity;
 - (void)sensorValueChanged:(NSNotification *)notification;
+-(UIColor*)setLungColor;
+-(int)calculateTargetCoherence;
 
 @end

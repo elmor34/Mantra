@@ -7,8 +7,8 @@
 //
 
 #import "DeveloperSettingsViewController.h"
-#import "FakeMantraUser.h"
-#import "MantraUser.h"
+#import "FakeDataGenerator.h"
+#import "User.h"
 
 @interface DeveloperSettingsViewController ()
 
@@ -21,7 +21,7 @@
 - (void)viewDidLoad
 {
     //Propertly load settings
-    if ([[MantraUser shared] fakeUserDataIsOn] == YES) {
+    if ([[User shared] fakeDataIsOn] == YES) {
         [fakeUserSwitch setOn:YES];
     }
     else [fakeUserSwitch setOn:NO];
@@ -84,7 +84,7 @@
 
 - (IBAction)fakeUserSwitchTouched:(id)sender{
     if (self.fakeUserSwitch.isOn == YES) {
-        [[MantraUser shared] setFakeUserDataIsOn:YES];
+        [[User shared] setFakeDataIsOn:YES];
         
         NSLog(@"fake data ON");
         //fix this to use real values from fakeuser
@@ -92,12 +92,12 @@
         [NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]];
         
         
-        [[FakeMantraUser shared] startFakeBreathingWithFakeUserInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] andFakeUserExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxVolume:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] andFakeUserMinVolume:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
+        [[FakeDataGenerator shared] startFakeBreathingWithFakeUserInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] andFakeUserExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxVolume:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] andFakeUserMinVolume:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
     }
     if (self.fakeUserSwitch.isOn == NO) {
-        [[MantraUser shared] setFakeUserDataIsOn:NO];
+        [[User shared] setFakeDataIsOn:NO];
         NSLog(@"fake data OFF");
-        [[FakeMantraUser shared] stopFakeBreathing];
+        [[FakeDataGenerator shared] stopFakeBreathing];
     }
     
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BreathViewController.h"
-#import "MantraUser.h"
+#import "User.h"
 
 
 
@@ -22,11 +22,14 @@
 @property (strong, nonatomic) IBOutlet UITextField *inhaleTimeField;
 @property (strong, nonatomic) IBOutlet UITextField *exhaleTimeField;
 @property (strong, nonatomic) IBOutlet UITextField *breathingRateField;
+@property (strong, nonatomic) IBOutlet UILabel *targetDepthLabel;
+@property (strong, nonatomic) IBOutlet UISlider *targetDepthSlider;
 
 @property (strong, nonatomic) IBOutlet UITableViewCell *targetBreathingCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *inhaleTimeCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *exhaleTimeCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *breathingRateCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *targetDepthCell;
 
 - (IBAction)gravitySwitchTouched:(id)sender;
 - (IBAction)targetBreathingSwitchTouched:(id)sender;

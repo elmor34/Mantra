@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BLE.h"
-#import "MantraUser.h"
+#import "User.h"
 
 @interface ConnectionViewController : UITableViewController
 {

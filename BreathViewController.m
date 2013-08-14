@@ -8,7 +8,7 @@
 
 #import "BreathViewController.h"
 #import "SettingsViewController.h"
-#import "MantraUser.h"
+#import "User.h"
 #import "DPMeterView.h"
 #import "UIBezierPath+BasicShapes.h"
 
@@ -38,16 +38,16 @@
      name:@"fakeSensorValueChanged"
      object:nil];
     
-    // UIApperance
-    [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:10/255.f alpha:0.7f]];
-    [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:10/255.f alpha:0.5f]];
+    //Set initial apperance (white)
+    [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:0.7f]];
+    [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.5f]];
     
-    // shape 1 -- Lungs
+    //Lungs shape
     [self.shape1View setShape:[UIBezierPath heartShape:self.shape1View.frame].CGPath];
     self.shape1View.progressTintColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.5f];
     
     
-    [[MantraUser shared] scanForPeripherals:self];
+    [[User shared] scanForPeripherals:self];
 }
 
 
@@ -90,17 +90,6 @@
                   [(DPMeterView *)[shapeViews lastObject] progress]*100];*/
 }
 
-//
-//- (IBAction)minus:(id)sender
-//{
-//    [self updateProgressWithDelta:+0.1 animated:YES];
-//}
-//
-//- (IBAction)add:(id)sender
-//{
-//    [self updateProgressWithDelta:-0.1 animated:YES];
-//}
-
 
 - (void)fakeSensorValueChanged:(NSNotification *)notification{
     NSLog(@"fake sensor notifcation received, fakeSensorValueChanged called!");
@@ -111,24 +100,24 @@
 - (void)sensorValueChanged:(NSNotification *)notification{
     NSLog(@"sensor notifcation received, sensorValueChanged called!");
     //Set the shape view to match the sensor value 
-    [self.shape1View setProgress:[[MantraUser shared] lungVal] animated:YES];
+    [self.shape1View setProgress:[[User shared] userCurrentLungVolume] animated:YES];
     
-    NSString *sensorString = [NSString stringWithFormat: @"%.2hu", [[MantraUser shared] sensorVal]];
+    NSString *sensorString = [NSString stringWithFormat: @"%.2hu", [[User shared] rawStretchSensorValue]];
     self.sensorValLabel.text = sensorString;
     
-    NSString *lungString = [NSString stringWithFormat: @"%.2f", [[MantraUser shared] lungVal]];
+    NSString *lungString = [NSString stringWithFormat: @"%.2f", [[User shared] userCurrentLungVolume]];
     self.lungValLabel.text = lungString;
     
-    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[MantraUser shared] bleIsConnected]];
+    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
     self.connectedLabel.text = bleConnected;
     
-    self.connectionStrengthLabel.text = [[[MantraUser shared] connectionStrength] stringValue];
+    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];
 }
 
 
 - (void)setGravity
 {
-    if ([[MantraUser shared] meterGravityEnabled] == YES) {
+    if ([[User shared] meterGravityEnabled] == YES) {
         [self.shape1View startGravity];
         NSLog(@"Gravity has started");
     }
@@ -138,15 +127,31 @@
     }
 }
 
-- (IBAction)testButton:(id)sender{
-    //Post notification that sensor value changed
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"sensorValueChanged"
-     object:[MantraUser shared]];
-    NSLog(@"notification posted!");
+-(UIColor*)setLungColor{
+    CGFloat red = 255;
+    CGFloat green = 0;
+    CGFloat blue = 0;
+    
+ 
+    
+        // Timer check 
+    
+    UIColor *color = [UIColor colorWithRed:red/255.f green:green/255.f blue:blue/255.f alpha:0.7f];
+
+    return color;
 }
 
-
+//calculates coherence to target breathing metrics, returns coherence percentage
+-(int)calculateTargetCoherence{
+    int coherence = 0;
+    
+    CGFloat currentDepth = [[User shared] userCurrentLungVolume];
+    CGFloat targetDepth = [[User shared] userTargetDepth].floatValue;
+    
+    
+    
+    return coherence;
+}
 
 
 - (NSUInteger)supportedInterfaceOrientations
