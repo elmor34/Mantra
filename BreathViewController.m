@@ -38,6 +38,8 @@
      name:@"fakeSensorValueChanged"
      object:nil];
     
+
+    
     //Set initial apperance (white)
     [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:0.7f]];
     [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.5f]];
@@ -61,6 +63,22 @@
     //apply gravity setting last selected in the settings screen
     [self setGravity];
     
+    
+    if ([[User shared] fakeDataIsOn]) {
+        self.breathCountLabel.hidden = NO;
+        self.lungValLabel.hidden = NO;
+        self.sensorValLabel.hidden = NO;
+        self.volumeLabel.hidden = NO;
+        self.rawLabel.hidden = NO;
+    }
+    else {
+        self.breathCountLabel.hidden = YES;
+        self.lungValLabel.hidden = YES;
+        self.sensorValLabel.hidden = YES;
+        self.volumeLabel.hidden = YES;
+        self.rawLabel.hidden = YES;
+       
+    }
 }
 
 
@@ -105,11 +123,15 @@
     NSString *sensorString = [NSString stringWithFormat: @"%.2hu", [[User shared] rawStretchSensorValue]];
     self.sensorValLabel.text = sensorString;
     
-    NSString *lungString = [NSString stringWithFormat: @"%.2f", [[User shared] userCurrentLungVolume]];
+    
+    NSString *lungString = [NSString stringWithFormat: @"%1.0f%%", (1 - [[User shared] userCurrentLungVolume]) * 100];
     self.lungValLabel.text = lungString;
     
     NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
     self.connectedLabel.text = bleConnected;
+    
+    NSString *breathCount = [NSString stringWithFormat:@"%1.1f", [[User shared] userBreathCount]];
+    self.breathCountLabel.text = breathCount;
     
     self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];
 }

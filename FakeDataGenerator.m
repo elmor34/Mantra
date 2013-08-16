@@ -9,7 +9,7 @@
 #import "FakeDataGenerator.h"
 #import "User.h"
 
-@implementation FakeDataGenerator
+@implementation FakeDataGenerator {}
 
 @synthesize fakeUserBreathingRate, fakeUserBreathingOn, sensorVal,sampleTime, fakeUserCurrentVolume, deltaSize, fakeUserMaxVolume, fakeUserExhaleTime, fakeUserInhaleTime, fakeUserMinVolume, inhaleTimer, exhaleTimer;
     
@@ -162,40 +162,79 @@
     CGFloat in = self.fakeUserCurrentVolume;
     CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
     [[User shared] setUserCurrentLungVolume:out];
-    
+    [self calculateBreathCount];
     //Store a value to compare to the subsample ~0.5 seconds later
     pastValue = out;
     //Subsample the fake value for calculating the delta
-    double delayInSeconds = 1.0;
+    double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
-        [self calculateBreathingRateWithPastValue:pastValue];
+        [self calculateBreathingDeltaWithPastValue:pastValue];
     });
     
-    
+
     
 }
 
 //Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
--(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue{
+-(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
     CGFloat delta = pastValue - [[User shared] userCurrentLungVolume];
     NSLog(@"\n Delta:%f \n", delta);
-    [[User shared] setUserCurrentBreathingRate:[NSNumber numberWithFloat:delta]];
+    [[User shared] setUserCurrentBreathingDelta:[NSNumber numberWithFloat:delta]];
+    
+    
     CGFloat pastValue2 = delta;
     //Subsample the fake value for calculating the delta
-    double delayInSeconds = 1.0;
+double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
-        [self calculateBreathingRateRateWithPastValue:pastValue2];
+        [self calculateBreathingDeltaDeltaWithPastValue:pastValue2];
     });
     
 }
 
--(void)calculateBreathingRateRateWithPastValue: (CGFloat) pastValue{
-    CGFloat deltadelta = pastValue - [[User shared] userCurrentBreathingRate].floatValue;
+-(void)calculateBreathingDeltaDeltaWithPastValue: (CGFloat) pastValue{
+    CGFloat deltadelta = pastValue - [[User shared] userCurrentBreathingDelta].floatValue;
     NSLog(@"\n Deltadelta:%f \n", deltadelta);
+    [[User shared] setUserCurrentBreathingDeltaDelta:[NSNumber numberWithFloat:deltadelta]];
 }
+
+
+-(void)calculateBreathCoherence{
+
+}
+
+//number of breaths taken with some target breathing pattern
+-(void)calculateBreathCount{
+    double tmpBreathCount = [[User shared] userBreathCount];
+    
+    if (inhaleCheck == 0) {
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue >= 0.05){
+            NSLog(@"\nMax inhale\n");
+            tmpBreathCount = tmpBreathCount + 0.5;
+            inhaleCheck++;//increment to prevent re-counting inhale
+            exhaleCheck = 0;//set to zero to allow counting of exhale
+        }
+        
+    }
+  
+    if (exhaleCheck == 0){
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue <= -0.05){
+            NSLog(@"\nMax Exhale\n");
+            tmpBreathCount = tmpBreathCount + 0.5;
+            exhaleCheck++;//increment to prevent re-counting exhale
+            inhaleCheck = 0;//set to zero to allow counting of exhale
+        }
+      
+    }
+  
+    
+    [[User shared] setUserBreathCount:tmpBreathCount];
+    NSLog(@"\nbreath count = %f\n", [[User shared] userBreathCount]);
+}
+
+
 
 @end

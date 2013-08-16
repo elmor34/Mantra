@@ -30,14 +30,18 @@
 @property (strong, nonatomic) IBOutlet DPMeterView *shape1View;
 @property float meterLevel;
 
-@property (strong, nonatomic) UIColor *lungColor;
 
 
 //Debug properties
+@property (strong, nonatomic) UIColor *lungColor;
+@property (strong, nonatomic) IBOutlet UILabel *rawLabel;
+@property (strong, nonatomic) IBOutlet UILabel *volumeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lungValLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sensorValLabel;
 @property (strong, nonatomic) IBOutlet UILabel *connectionStrengthLabel;
 @property (strong, nonatomic) IBOutlet UILabel *connectedLabel;
+@property (strong, nonatomic) IBOutlet UILabel *breathCountLabel;
+
 
 
 - (IBAction)testButton:(id)sender;

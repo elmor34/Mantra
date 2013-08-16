@@ -18,7 +18,10 @@ _sharedObject = block(); \
 return _sharedObject; \
 
 
-@interface FakeDataGenerator : NSObject
+@interface FakeDataGenerator : NSObject {
+    int inhaleCheck;
+    int exhaleCheck;
+}
     
     
 //Fake user data
@@ -30,6 +33,7 @@ return _sharedObject; \
 @property CGFloat fakeUserMinVolume;
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
+
 
 
 //Timers for inhale stroke and exhale stroke
@@ -49,7 +53,7 @@ return _sharedObject; \
 -(void)fakeExhale;
 -(void)printFakeDataToConsole;
 -(void)loadFakeLungValIntoMantraUser;
--(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue;
--(void)calculateBreathingRateRateWithPastValue: (CGFloat) pastValue;
+-(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue;
+-(void)calculateBreathingDeltaDeltaWithPastValue: (CGFloat) pastValue;
     
 @end

@@ -11,7 +11,7 @@
 
 @implementation User
 
-@synthesize userCurrentBreathingRate, userCurrentExhaleTime, userCurrentInhaleTime, userCalibratedMaxSensorValue, userCalibratedMinSensorValue, rawStretchSensorValue, ble, bleIsConnected, connectionStrength, meterGravityEnabled, fakeDataIsOn, userCurrentLungVolume, userTargetExhaleTime, userTargetInhaleTime, userTargetDepth, userCurrentRawSensorDelta, userBreathCount;
+@synthesize userCurrentBreathingRate, userCurrentExhaleTime, userCurrentInhaleTime, userCalibratedMaxSensorValue, userCalibratedMinSensorValue, rawStretchSensorValue, ble, bleIsConnected, connectionStrength, meterGravityEnabled, fakeDataIsOn, userCurrentLungVolume, userTargetExhaleTime, userTargetInhaleTime, userTargetDepth, userBreathCount;
 
 
 + (User *)shared
@@ -208,16 +208,16 @@
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 //code to be executed on the main queue after delay
-                [self calculateBreathingRateWithPastValue:pastValue];
+                [self calculateBreathingDeltaWithPastValue:pastValue];
             });
         }
     }
 }
 //Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
--(void)calculateBreathingRateWithPastValue: (CGFloat) pastValue{
+-(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
     CGFloat delta = pastValue - self.userCurrentLungVolume;
     NSLog(@"\n Delta:%f \n", delta);
-    self.userCurrentRawSensorDelta = [NSNumber numberWithFloat:delta];
+    //self.userCurrentRawSensorDelta = [NSNumber numberWithFloat:delta];
 
 }
 
@@ -226,10 +226,6 @@
     return 11;
 }
 
--(void)calculateBreathCount{
-//take 50 samples
-    NSArray *samplesArray = [[NSArray alloc] init];
-    
-}
+
 
 @end
