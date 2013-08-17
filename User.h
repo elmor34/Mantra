@@ -27,14 +27,18 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDelta;//Change breathing rate (0.5s delta)
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDeltaDelta;//Change breathing rate rate (0.5s delta of 0.5s delta)
 
-
+@property (strong, nonatomic) NSNumber *userTotalBreathCoherence;
+@property (strong, nonatomic) NSNumber *userTotalBreathCoherenceDelta;
+@property (strong, nonatomic) NSNumber *userCurrentBreathCoherence;
 
 
 @property double userBreathCount; //number of breaths made under this specific target
 @property CGFloat userCurrentLungVolume; // CHANGE TO DEPTH value between 0 and 1 representing 0% to 100% lung volume
 @property UInt16 rawStretchSensorValue; //raw sensor value as received from BLE
-@property (strong, nonatomic) NSNumber *userCalibratedMaxSensorValue;
-@property (strong, nonatomic) NSNumber *userCalibratedMinSensorValue;
+@property (strong, nonatomic) NSNumber *userCalibratedMaxSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCalibratedMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCalibratedMaxVolume;//value between 0 and 1
+@property (strong, nonatomic) NSNumber *userCalibratedMinVolume;//value between 0 and 1
 
 
 
@@ -70,8 +74,14 @@ return _sharedObject; \
 //Delta is change in rate of rate of breathing
 -(void)calculateBreathingDeltaDeltaWithPastValue:(CGFloat)pastValue;
 
+-(void)calculateTotalBreathCoherence;
+-(void)calculateCurrentBreathCoherence;
+
+
 -(void)calculateBreathCount;
--(void)calculateBreathCoherence;
+-(void)calculateBreathCoherenceDeltaWithPastValue:(CGFloat)pastValue;
+-(void)calibrateMaxVolume;
+-(void)calibrateMinVolume;
 
 
 + (id)shared;

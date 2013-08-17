@@ -9,7 +9,10 @@
 #import "User.h"
 
 
-@implementation User
+@implementation User {
+    CGFloat inhaleCheck;
+    CGFloat exhaleCheck;
+}
 
 @synthesize userCurrentBreathingRate, userCurrentExhaleTime, userCurrentInhaleTime, userCalibratedMaxSensorValue, userCalibratedMinSensorValue, rawStretchSensorValue, ble, bleIsConnected, connectionStrength, meterGravityEnabled, fakeDataIsOn, userCurrentLungVolume, userTargetExhaleTime, userTargetInhaleTime, userTargetDepth, userBreathCount;
 
@@ -25,13 +28,17 @@
 
     self = [super init];
     
+//    //init with values to avoid calibration on nil properties (these will quickly be cleared with real values)
+//    userCalibratedMaxSensorValue = [NSNumber numberWithFloat: 800];
+//    userCalibratedMinSensorValue = [NSNumber numberWithFloat: 700];
+//    userCurrentLungVolume = 750;
+//    
+    
+    
     //set the defaults or load MantraUser from storage
     userBreathCount = 0;
     meterGravityEnabled = YES;
     fakeDataIsOn = NO;
-       userCalibratedMaxSensorValue = [NSNumber numberWithFloat:800];//this will need to be set to zero here and then by the calibration method elsewhere
-    userCalibratedMinSensorValue = [NSNumber numberWithFloat:700];
-     
     //set up the BLE
     ble = [[BLE alloc] init];
     [ble controlSetup:1];
@@ -213,19 +220,117 @@
         }
     }
 }
+
 //Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
 -(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
-    CGFloat delta = pastValue - self.userCurrentLungVolume;
+    CGFloat delta = pastValue - [[User shared] userCurrentLungVolume];
     NSLog(@"\n Delta:%f \n", delta);
-    //self.userCurrentRawSensorDelta = [NSNumber numberWithFloat:delta];
-
-}
-
--(int)calculateBreathCoherence{
+    [[User shared] setUserCurrentBreathingDelta:[NSNumber numberWithFloat:delta]];
     
-    return 11;
+    
+    CGFloat pastValue2 = delta;
+    //Subsample the fake value for calculating the delta
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        //code to be executed on the main queue after delay
+        [self calculateBreathingDeltaDeltaWithPastValue:pastValue2];
+    });
+    
 }
 
+-(void)calculateBreathingDeltaDeltaWithPastValue: (CGFloat) pastValue{
+    CGFloat deltadelta = pastValue - [[User shared] userCurrentBreathingDelta].floatValue;
+    NSLog(@"\n Deltadelta:%f \n", deltadelta);
+    [[User shared] setUserCurrentBreathingDeltaDelta:[NSNumber numberWithFloat:deltadelta]];
+}
+
+
+-(void)calculateTotalBreathCoherence{
+    CGFloat breathCount = [[User shared] userBreathCount];
+    CGFloat userTargetDepth = [[User shared] userTargetDepth].floatValue;
+    CGFloat totalCoherence;
+    CGFloat currentCoherence;
+    CGFloat pastValue;
+    
+    
+    CGFloat targetTotalVolume = breathCount * userTargetDepth;
+    //make sure calibratedMaxVolume is getting caluclated first so this isn't nil
+    CGFloat currentVolume = breathCount * self.userCalibratedMaxVolume.floatValue;
+    
+    //Total coherence = target volume vs. volume breathed (check every complete inhale)
+    //Current coherence = delta target volume vs. delta volume breathed (check every half complete breath)
+    
+    //make sure current user calibrated
+    totalCoherence = targetTotalVolume/self.userCalibratedMaxVolume.floatValue;
+    
+    self.userTotalBreathCoherence = [NSNumber numberWithFloat:totalCoherence];
+    
+    pastValue = totalCoherence;
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        //code to be executed on the main queue after delay
+        [self calculateBreathCoherenceDeltaWithPastValue:pastValue];
+    });
+}
+
+-(void)calculateBreathCoherenceDeltaWithPastValue:(CGFloat)pastValue{
+    CGFloat coherenceDelta = pastValue - self.userTotalBreathCoherence.floatValue;
+    self.userTotalBreathCoherenceDelta = [NSNumber numberWithFloat:coherenceDelta];
+        NSLog(@"coherence delta = %f" , coherenceDelta);
+}
+
+//gets called when calculateBreathCount hits a peak in lung volume
+-(void)calibrateMaxVolume{
+    [self setUserCalibratedMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    [self setUserCalibratedMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    NSLog(@"Max volume = %1.0f" , self.userCurrentLungVolume);
+    NSLog(@"Max sensor = %hu" , self.rawStretchSensorValue);
+    //calling calculate here ensures this is the peak inhale volume (max volume)
+    [self calculateTotalBreathCoherence];
+
+}
+//gets called when calculateBreathCount hits a dip in lung volume
+-(void)calibrateMinVolume{
+    [self setUserCalibratedMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    [self setUserCalibratedMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    NSLog(@"Min volume = %1.0f" , self.userCurrentLungVolume);
+    NSLog(@"Min sensor = %hu" , self.rawStretchSensorValue);
+}
+
+
+
+//number of breaths taken with some target breathing pattern
+-(void)calculateBreathCount{
+    double tmpBreathCount = [[User shared] userBreathCount];
+    
+    if (inhaleCheck == 0) {
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue >= 0.05){
+            NSLog(@"Max inhale");
+            tmpBreathCount = tmpBreathCount + 0.5;
+            inhaleCheck++;//increment to prevent re-counting inhale
+            exhaleCheck = 0;//set to zero to allow counting of exhale
+            [self calibrateMaxVolume];
+        }
+        
+    }
+    
+    if (exhaleCheck == 0){
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue <= -0.05){
+            NSLog(@"Max Exhale");
+            tmpBreathCount = tmpBreathCount + 0.5;
+            exhaleCheck++;//increment to prevent re-counting exhale
+            inhaleCheck = 0;//set to zero to allow counting of exhale
+            [self calibrateMinVolume];
+        }
+        
+    }
+    
+    
+    [[User shared] setUserBreathCount:tmpBreathCount];
+    NSLog(@"\nbreath count = %f\n", [[User shared] userBreathCount]);
+}
 
 
 @end
