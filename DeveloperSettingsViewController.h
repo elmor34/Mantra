@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DeveloperSettingsViewController : UIViewController
+@interface DeveloperSettingsViewController : UITableViewController
 
 
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserInhaleTimeTextField;

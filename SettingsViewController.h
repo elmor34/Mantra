@@ -15,6 +15,7 @@
 
 @interface SettingsViewController : UITableViewController
 
+//might want to copy connection view controller and not have these be properties
 @property (strong, nonatomic) IBOutlet UILabel *connectionLabel;
 @property (strong, nonatomic) IBOutlet UISwitch *gravityMeterSwitch;
 @property (strong, nonatomic) IBOutlet UISwitch *targetBreathingSwitch;
