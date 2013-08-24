@@ -16,15 +16,13 @@
 
 @implementation DeveloperSettingsViewController
 
-@synthesize fakeUserExhaleTimeTextField, fakeUserInhaleTimeTextField, fakeUserMaxVolumeTextField, fakeUserMinVolumeTextField,fakeUserSwitch;
-
 - (void)viewDidLoad
 {
     //Propertly load settings
     if ([[User shared] fakeDataIsOn] == YES) {
-        [fakeUserSwitch setOn:YES];
+        [self.fakeUserSwitch setOn:YES];
     }
-    else [fakeUserSwitch setOn:NO];
+    else [self.fakeUserSwitch setOn:NO];
     
     self.view.userInteractionEnabled = TRUE;
     
@@ -41,7 +39,7 @@
         //hide keyboard
         [self.view endEditing:YES];
         //restart fake data generation with new values
-        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
+      [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
     }
     else{
     [self.view endEditing:YES];
@@ -94,10 +92,10 @@
         NSLog(@"fake data ON");
         //fix this to use real values from fakeuser
         
-        [NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]];
+        [NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]];
         
-        
-        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
+        //this is so ugly it hurts
+        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
     }
     if (self.fakeUserSwitch.isOn == NO) {
         [[User shared] setFakeDataIsOn:NO];

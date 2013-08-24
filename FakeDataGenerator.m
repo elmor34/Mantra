@@ -33,12 +33,13 @@
 }
 
 //This method is ridiculous, refactor
--(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxVolume fakeMinSens:(NSNumber*)fakeMinVolume{
+-(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxSens fakeMinSens:(NSNumber*)fakeMinSens fakeMaxVol:(NSNumber *) fakeMaxVol fakeMinVol:(NSNumber *) fakeMinVol{
     
     self.fakeUserExhaleTime = fakeExhaleTime.floatValue;
     self.fakeUserInhaleTime = fakeInhaleTime.floatValue;
-    self.fakeUserMaxSensorValue = fakeMaxVolume.floatValue;
-    self.fakeUserMinSensorValue = fakeMinVolume.floatValue;
+    self.fakeUserMaxSensorValue = fakeMaxSens.floatValue;
+    self.fakeUserMinSensorValue = fakeMinSens.floatValue;
+    
     self.sensorVal = 770;
     self.fakeUserCurrentSensorValue = self.sensorVal;
     self.fakeUserBreathingOn = YES;
@@ -49,7 +50,7 @@
     //set initial inhale delta size
     self.deltaSize  = (self.fakeUserMaxSensorValue-self.fakeUserCurrentSensorValue)/(self.fakeUserInhaleTime/self.sampleTime);
     [self fakeInhale];
-    NSLog(@"fake breathing started with stats with \n fakeInhaleRate:%@ \n fakeExhaleRate:%@ \n fakeMinVolume:%@ \n fakeMaxVolume:%@",fakeInhaleTime,fakeExhaleTime ,fakeMaxVolume,fakeMinVolume);
+    NSLog(@"fake breathing started with stats with \n fakeInhaleRate:%@ \n fakeExhaleRate:%@ \n fakeMinVolume:%@ \n fakeMaxVolume:%@",fakeInhaleTime,fakeExhaleTime ,fakeMaxSens,fakeMinSens);
 }
 
 -(void)stopFakeBreathing{

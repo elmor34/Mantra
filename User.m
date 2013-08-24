@@ -194,8 +194,8 @@
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = [self.userCalibratedMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            CGFloat refInMin = [self.userCalibratedMinSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = [self.userCalibratedStaticMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = [self.userCalibratedStaticMaxSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block
@@ -217,6 +217,7 @@
         }
     }
 }
+
 
 //Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
 -(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
@@ -249,11 +250,11 @@
     CGFloat tempTotalCoherence;
     CGFloat tempCurrentCoherence;
     CGFloat pastValue;
-    CGFloat userCurrentMaxVolumeCalibratedVolume = self.userCalibratedMaxVolume.floatValue;
+    CGFloat userCurrentMaxVolumeCalibratedVolume = self.userCurrentMaxVolume.floatValue;
     
     CGFloat targetTotalVolume = tempbreathCount * tempUserTargetDepth;
     //make sure calibratedMaxVolume is getting caluclated first so this isn't nil
-    CGFloat currentVolume = tempbreathCount * self.userCalibratedMaxVolume.floatValue;
+    CGFloat currentVolume = tempbreathCount * self.userCurrentMaxVolume.floatValue;
     
     //Total coherence = target volume vs. volume breathed (check every complete inhale)
     //Current coherence = delta target volume vs. delta volume breathed (check every half complete breath)
@@ -280,8 +281,8 @@
 
 //gets called when calculateBreathCount hits a peak in lung volume
 -(void)calibrateMaxVolume{
-    [self setUserCalibratedMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
-    [self setUserCalibratedMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    [self setUserCurrentMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    [self setUserCurrentMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     NSLog(@"Max volume = %1.0f" , self.userCurrentLungVolume);
     NSLog(@"Max sensor = %hu" , self.rawStretchSensorValue);
     //calling calculate here ensures this is the peak inhale volume (max volume)
@@ -290,8 +291,8 @@
 }
 //gets called when calculateBreathCount hits a dip in lung volume
 -(void)calibrateMinVolume{
-    [self setUserCalibratedMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
-    [self setUserCalibratedMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    [self setUserCurrentMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    [self setUserCurrentMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     NSLog(@"Min volume = %1.0f" , self.userCurrentLungVolume);
     NSLog(@"Min sensor = %hu" , self.rawStretchSensorValue);
 }

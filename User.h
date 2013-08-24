@@ -26,6 +26,10 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userCurrentExhaleTime;
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDelta;//Change breathing rate (0.5s delta)
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDeltaDelta;//Change breathing rate rate (0.5s delta of 0.5s delta)
+@property (strong, nonatomic) NSNumber *userCurrentMaxSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCurrentMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCurrentMaxVolume;//value between 0 and 1
+@property (strong, nonatomic) NSNumber *userCurrentMinVolume;//value between 0 and 1
 
 @property (strong, nonatomic) NSNumber *userTotalBreathCoherence;
 @property (strong, nonatomic) NSNumber *userTotalBreathCoherenceDelta;
@@ -35,10 +39,13 @@ return _sharedObject; \
 @property double userBreathCount; //number of breaths made under this specific target
 @property CGFloat userCurrentLungVolume; // CHANGE TO DEPTH value between 0 and 1 representing 0% to 100% lung volume
 @property UInt16 rawStretchSensorValue; //raw sensor value as received from BLE
-@property (strong, nonatomic) NSNumber *userCalibratedMaxSensorValue; //value between 0 and 9999 (usually 700-800)
-@property (strong, nonatomic) NSNumber *userCalibratedMinSensorValue; //value between 0 and 9999 (usually 700-800)
-@property (strong, nonatomic) NSNumber *userCalibratedMaxVolume;//value between 0 and 1
-@property (strong, nonatomic) NSNumber *userCalibratedMinVolume;//value between 0 and 1
+
+
+//calibrated static breathing metrics
+@property (strong, nonatomic) NSNumber *userCalibratedStaticMaxSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCalibratedStaticMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCalibratedStaticMaxVolume;//value between 0 and 1
+@property (strong, nonatomic) NSNumber *userCalibratedStaticMinVolume;//value between 0 and 1
 
 
 
@@ -68,21 +75,23 @@ return _sharedObject; \
 - (void) scanForPeripherals:(id)sender;
 - (void) scanForPeripherals;
 
+
+
 //Breathing delta and deltadelta calculations
 //Delta is change in rate of breathing
 -(void)calculateBreathingDeltaWithPastValue:(CGFloat)pastValue;
 //Delta is change in rate of rate of breathing
 -(void)calculateBreathingDeltaDeltaWithPastValue:(CGFloat)pastValue;
 
+
+
+//breathing coherence calucations
 -(void)calculateTotalBreathCoherence;
 -(void)calculateCurrentBreathCoherence;
-
-
 -(void)calculateBreathCount;
 -(void)calculateBreathCoherenceDeltaWithPastValue:(CGFloat)pastValue;
 -(void)calibrateMaxVolume;
 -(void)calibrateMinVolume;
-
 
 + (id)shared;
 - (BOOL) isFirstRun;

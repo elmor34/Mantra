@@ -32,6 +32,8 @@ return _sharedObject; \
 @property CGFloat fakeUserCurrentSensorValue;//raw sensor value (usually between 700 and 900)
 @property CGFloat fakeUserMaxSensorValue;
 @property CGFloat fakeUserMinSensorValue;
+@property CGFloat fakeUserMaxVolumeValue;
+@property CGFloat fakeUserMinVolumeValue;
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
 
@@ -48,7 +50,8 @@ return _sharedObject; \
     
 + (id)shared;
 
--(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxVolume fakeMinSens:(NSNumber*)fakeMinVolume;
+//This method is ridiculous, refactor
+-(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxSens fakeMinSens:(NSNumber*)fakeMinSens fakeMaxVol:(NSNumber *) fakeMaxVol fakeMinVol:(NSNumber *) fakeMinVol;
 -(void)stopFakeBreathing;
 -(void)fakeInhale;
 -(void)fakeExhale;

@@ -139,10 +139,10 @@
     NSString *breathCount = [NSString stringWithFormat:@"%1.1f", [[User shared] userBreathCount]];
     self.breathCountLabel.text = breathCount;
     
-    NSString *cMaxVol = [NSString stringWithFormat:@"SMax: %1.2f", [[User shared] userCalibratedMaxVolume].doubleValue];
+    NSString *cMaxVol = [NSString stringWithFormat:@"cVMax: %1.2f", [[User shared] userCalibratedMaxVolume].doubleValue];
     self.cMaxVolLabel.text = cMaxVol;
     
-    NSString *cMinVol = [NSString stringWithFormat:@"SMin: %1.2f",[[User shared] userCalibratedMinVolume].doubleValue];
+    NSString *cMinVol = [NSString stringWithFormat:@"cVMin: %1.2f",[[User shared] userCalibratedMinVolume].doubleValue];
     self.cMinVolLabel.text = cMinVol;
     
     NSString *maxSens = [NSString stringWithFormat:@"cSMax: %1.2f",[[User shared] userCalibratedMaxSensorValue].doubleValue];

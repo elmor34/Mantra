@@ -13,6 +13,8 @@
 
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserInhaleTimeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserExhaleTimeTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxSensorTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinSensorTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
