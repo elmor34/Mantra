@@ -53,7 +53,7 @@
     
     [[User shared] setUserTargetInhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
     [[User shared] setUserTargetExhaleTime:[NSNumber numberWithFloat:exhaleTimeField.text.floatValue]];
-    
+    [[User shared] setUserTargetDepth:[NSNumber numberWithFloat:1.0 - targetDepthSlider.value]];
     [self.view endEditing:YES];
 }
 
@@ -81,13 +81,13 @@
     // change this to something like: [field checkFieldValuesAreBetween: 0 and: 1 withUnitsString: @"minutes"]
     if (([inhaleTimeField.text floatValue] < 0.5) || ([inhaleTimeField.text floatValue] > 300))
     {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 seconds and 5 minutes"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
         return NO;
     }
     if (([exhaleTimeField.text floatValue] < 0.5) || ([exhaleTimeField.text floatValue] > 300))
     {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a exhale time between 0.5 seconds and 5 minutes"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a exhale time between 0.5 and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
         return NO;
     }

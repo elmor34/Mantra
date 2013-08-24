@@ -28,9 +28,10 @@ return _sharedObject; \
 @property CGFloat fakeUserBreathingRate;
 @property CGFloat fakeUserInhaleTime;
 @property CGFloat fakeUserExhaleTime;
-@property CGFloat fakeUserCurrentVolume;
-@property CGFloat fakeUserMaxVolume;
-@property CGFloat fakeUserMinVolume;
+@property CGFloat fakeUserCurrentVolume;//number from 0 to 1
+@property CGFloat fakeUserCurrentSensorValue;//raw sensor value (usually between 700 and 900)
+@property CGFloat fakeUserMaxSensorValue;
+@property CGFloat fakeUserMinSensorValue;
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
 
@@ -47,13 +48,12 @@ return _sharedObject; \
     
 + (id)shared;
 
--(void)startFakeBreathingWithFakeUserInhaleTime:(NSNumber*)fakeInhaleTime andFakeUserExhaleTime:(NSNumber*)fakeExhaleRate fakeMaxVolume:(NSNumber*)fakeMaxVolume andFakeUserMinVolume:(NSNumber*)fakeMinVolume;
+-(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxVolume fakeMinSens:(NSNumber*)fakeMinVolume;
 -(void)stopFakeBreathing;
 -(void)fakeInhale;
 -(void)fakeExhale;
 -(void)printFakeDataToConsole;
 -(void)loadFakeLungValIntoMantraUser;
--(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue;
--(void)calculateBreathingDeltaDeltaWithPastValue: (CGFloat) pastValue;
+
     
 @end

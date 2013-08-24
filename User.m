@@ -14,8 +14,6 @@
     CGFloat exhaleCheck;
 }
 
-@synthesize userCurrentBreathingRate, userCurrentExhaleTime, userCurrentInhaleTime, userCalibratedMaxSensorValue, userCalibratedMinSensorValue, rawStretchSensorValue, ble, bleIsConnected, connectionStrength, meterGravityEnabled, fakeDataIsOn, userCurrentLungVolume, userTargetExhaleTime, userTargetInhaleTime, userTargetDepth, userBreathCount;
-
 
 + (User *)shared
 {
@@ -28,21 +26,20 @@
 
     self = [super init];
     
-//    //init with values to avoid calibration on nil properties (these will quickly be cleared with real values)
-//    userCalibratedMaxSensorValue = [NSNumber numberWithFloat: 800];
-//    userCalibratedMinSensorValue = [NSNumber numberWithFloat: 700];
-//    userCurrentLungVolume = 750;
-//    
+   //init with values to avoid calibration on nil properties (these will quickly be cleared with real values)
+    
+
+    
     
     
     //set the defaults or load MantraUser from storage
-    userBreathCount = 0;
-    meterGravityEnabled = YES;
-    fakeDataIsOn = NO;
+    self.userBreathCount = 0;
+    self.meterGravityEnabled = YES;
+    self.fakeDataIsOn = NO;
     //set up the BLE
-    ble = [[BLE alloc] init];
-    [ble controlSetup:1];
-    ble.delegate = self;
+    self.ble = [[BLE alloc] init];
+    [self.ble controlSetup:1];
+    self.ble.delegate = self;
     
     return self;
 }
@@ -50,7 +47,7 @@
 -(void)loadDefaults{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *key = [NSString stringWithFormat:@"userCurrentInhaleTime"];
-    [userDefaults setObject:userCurrentInhaleTime forKey:key];
+    [userDefaults setObject:self.userCurrentInhaleTime forKey:key];
     
 }
 
@@ -72,34 +69,34 @@
 - (void)scanForPeripherals:(id)sender
 {
     
-    if (ble.activePeripheral)
-        if(ble.activePeripheral.isConnected)
+    if (self.ble.activePeripheral)
+        if(self.ble.activePeripheral.isConnected)
         {
-            [[ble centralManager] cancelPeripheralConnection:[ble activePeripheral]];
+            [[self.ble centralManager] cancelPeripheralConnection:[self.ble activePeripheral]];
             return;
         }
     
-    if (ble.peripherals)
-        ble.peripherals = nil;
+    if (self.ble.peripherals)
+        self.ble.peripherals = nil;
     
-    [ble findBLEPeripherals:2];
+    [self.ble findBLEPeripherals:2];
     
     [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
 }
 
 - (void)scanForPeripherals
 {
-    if (ble.activePeripheral)
-        if(ble.activePeripheral.isConnected)
+    if (self.ble.activePeripheral)
+        if(self.ble.activePeripheral.isConnected)
         {
-            [[ble centralManager] cancelPeripheralConnection:[ble activePeripheral]];
+            [[self.ble centralManager] cancelPeripheralConnection:[self.ble activePeripheral]];
             return;
         }
     
-    if (ble.peripherals)
-        ble.peripherals = nil;
+    if (self.ble.peripherals)
+        self.ble.peripherals = nil;
     
-    [ble findBLEPeripherals:2];
+    [self.ble findBLEPeripherals:2];
 
 }
 
@@ -108,9 +105,9 @@
 //    [btnConnect setEnabled:true];
 //    [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
 //    
-    if (ble.peripherals.count > 0)
+    if (self.ble.peripherals.count > 0)
     {
-        [ble connectPeripheral:[ble.peripherals objectAtIndex:0]];
+        [self.ble connectPeripheral:[self.ble.peripherals objectAtIndex:0]];
     }
 //    else
 //    {
@@ -138,7 +135,7 @@
 }
 
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi{
-    connectionStrength = rssi;
+    self.connectionStrength = rssi;
     //Post notification that sensor value changed
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"connectionStrengthChanged"
@@ -156,7 +153,7 @@
         buf[1] = 0x00;
     
     NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [ble write:data];
+    [self.ble write:data];
 }
 
 
@@ -197,8 +194,8 @@
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = [userCalibratedMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            CGFloat refInMin = [userCalibratedMinSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = [self.userCalibratedMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = [self.userCalibratedMinSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block
@@ -207,7 +204,7 @@
             CGFloat outMin = 0;
             CGFloat in = self.rawStretchSensorValue;
             CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
-            self.userCurrentLungVolume = out;
+            self.userCurrentLungVolume = 1 - out;//inverting this value because high volume = low sensor value
             pastValue = out;
             
             
@@ -228,13 +225,13 @@
     [[User shared] setUserCurrentBreathingDelta:[NSNumber numberWithFloat:delta]];
     
     
-    CGFloat pastValue2 = delta;
+    CGFloat pastValueDelta = delta;
     //Subsample the fake value for calculating the delta
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
-        [self calculateBreathingDeltaDeltaWithPastValue:pastValue2];
+        [self calculateBreathingDeltaDeltaWithPastValue:pastValueDelta];
     });
     
 }
@@ -247,26 +244,26 @@
 
 
 -(void)calculateTotalBreathCoherence{
-    CGFloat breathCount = [[User shared] userBreathCount];
-    CGFloat userTargetDepth = [[User shared] userTargetDepth].floatValue;
-    CGFloat totalCoherence;
-    CGFloat currentCoherence;
+    CGFloat tempbreathCount = [[User shared] userBreathCount];
+    CGFloat tempUserTargetDepth = [[User shared] userTargetDepth].floatValue;
+    CGFloat tempTotalCoherence;
+    CGFloat tempCurrentCoherence;
     CGFloat pastValue;
+    CGFloat userCurrentMaxVolumeCalibratedVolume = self.userCalibratedMaxVolume.floatValue;
     
-    
-    CGFloat targetTotalVolume = breathCount * userTargetDepth;
+    CGFloat targetTotalVolume = tempbreathCount * tempUserTargetDepth;
     //make sure calibratedMaxVolume is getting caluclated first so this isn't nil
-    CGFloat currentVolume = breathCount * self.userCalibratedMaxVolume.floatValue;
+    CGFloat currentVolume = tempbreathCount * self.userCalibratedMaxVolume.floatValue;
     
     //Total coherence = target volume vs. volume breathed (check every complete inhale)
     //Current coherence = delta target volume vs. delta volume breathed (check every half complete breath)
     
     //make sure current user calibrated
-    totalCoherence = targetTotalVolume/self.userCalibratedMaxVolume.floatValue;
+    tempTotalCoherence = targetTotalVolume/userCurrentMaxVolumeCalibratedVolume;
     
-    self.userTotalBreathCoherence = [NSNumber numberWithFloat:totalCoherence];
+    self.userTotalBreathCoherence = [NSNumber numberWithFloat:tempTotalCoherence];
     
-    pastValue = totalCoherence;
+    pastValue = tempTotalCoherence;
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -288,7 +285,7 @@
     NSLog(@"Max volume = %1.0f" , self.userCurrentLungVolume);
     NSLog(@"Max sensor = %hu" , self.rawStretchSensorValue);
     //calling calculate here ensures this is the peak inhale volume (max volume)
-    [self calculateTotalBreathCoherence];
+    //[self calculateTotalBreathCoherence];
 
 }
 //gets called when calculateBreathCount hits a dip in lung volume
@@ -305,28 +302,25 @@
 -(void)calculateBreathCount{
     double tmpBreathCount = [[User shared] userBreathCount];
     
-    if (inhaleCheck == 0) {
+    if (exhaleCheck == 0) {
         if ([[User shared] userCurrentBreathingDeltaDelta].floatValue >= 0.05){
             NSLog(@"Max inhale");
             tmpBreathCount = tmpBreathCount + 0.5;
-            inhaleCheck++;//increment to prevent re-counting inhale
-            exhaleCheck = 0;//set to zero to allow counting of exhale
-            [self calibrateMaxVolume];
-        }
-        
-    }
-    
-    if (exhaleCheck == 0){
-        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue <= -0.05){
-            NSLog(@"Max Exhale");
-            tmpBreathCount = tmpBreathCount + 0.5;
-            exhaleCheck++;//increment to prevent re-counting exhale
+            exhaleCheck++;//increment to prevent re-counting inhale
             inhaleCheck = 0;//set to zero to allow counting of exhale
             [self calibrateMinVolume];
         }
-        
     }
     
+    if (inhaleCheck == 0){
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue <= -0.05){
+            NSLog(@"Max Exhale");
+            tmpBreathCount = tmpBreathCount + 0.5;
+            inhaleCheck++;//increment to prevent re-counting exhale
+            exhaleCheck = 0;//set to zero to allow counting of exhale
+            [self calibrateMaxVolume];
+        }
+    }
     
     [[User shared] setUserBreathCount:tmpBreathCount];
     NSLog(@"\nbreath count = %f\n", [[User shared] userBreathCount]);
