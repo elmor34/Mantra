@@ -16,15 +16,13 @@
 
 @implementation DeveloperSettingsViewController
 
-@synthesize fakeUserExhaleTimeTextField, fakeUserInhaleTimeTextField, fakeUserMaxVolumeTextField, fakeUserMinVolumeTextField,fakeUserSwitch;
-
 - (void)viewDidLoad
 {
     //Propertly load settings
     if ([[User shared] fakeDataIsOn] == YES) {
-        [fakeUserSwitch setOn:YES];
+        [self.fakeUserSwitch setOn:YES];
     }
-    else [fakeUserSwitch setOn:NO];
+    else [self.fakeUserSwitch setOn:NO];
     
     self.view.userInteractionEnabled = TRUE;
     
@@ -36,43 +34,45 @@
 }
 
 - (void)hideKeyboard{
-
-    if ([self checkTextFieldValues] == YES) {
-         [self.view endEditing:YES];
-    }
     
-    //restart fake data generation with new values
-    [[FakeDataGenerator shared] startFakeBreathingWithFakeUserInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] andFakeUserExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxVolume:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] andFakeUserMinVolume:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
-   
+    if ([self checkTextFieldValues] == YES && [self.fakeUserSwitch isOn]) {
+        //hide keyboard
+        [self.view endEditing:YES];
+        //restart fake data generation with new values
+      [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
+    }
+    else{
+    [self.view endEditing:YES];
+    }
 }
 
 -(BOOL)checkTextFieldValues{
     
-    if (([self.fakeUserInhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserInhaleTimeTextField.text floatValue] > 300))
-    {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-        return NO;
-    }
-    if (([self.fakeUserExhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserExhaleTimeTextField.text floatValue] > 300))
-    {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a exhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-        return NO;
-    }
-    if (([self.fakeUserMinVolumeTextField.text floatValue] < [[User shared] userCalibratedMinSensorValue].floatValue) || ([self.fakeUserMinVolumeTextField.text floatValue] > [[User shared] userCalibratedMaxSensorValue].floatValue))
-    {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a maximum sensor value between %1.0f and %1.0f", [[User shared] userCalibratedMinSensorValue].floatValue, [[User shared] userCalibratedMaxSensorValue].floatValue] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-        return NO;
-    }
-    if (([self.fakeUserMaxVolumeTextField.text floatValue] < [[User shared] userCalibratedMinSensorValue].floatValue) || ([self.fakeUserMaxVolumeTextField.text floatValue] > [[User shared] userCalibratedMaxSensorValue].floatValue))
-    {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a maximum sensor value between %1.0f and %1.0f", [[User shared] userCalibratedMinSensorValue].floatValue, [[User shared] userCalibratedMaxSensorValue].floatValue] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-        return NO;
-    }
-    else return YES;
+//    if (([self.fakeUserInhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserInhaleTimeTextField.text floatValue] > 300))
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alertView show];
+//        return NO;
+//    }
+//    if (([self.fakeUserExhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserExhaleTimeTextField.text floatValue] > 300))
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a exhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alertView show];
+//        return NO;
+//    }
+//    if (([self.fakeUserMinVolumeTextField.text floatValue] < [[User shared] userCalibratedMinSensorValue].floatValue) || ([self.fakeUserMinVolumeTextField.text floatValue] > [[User shared] userCalibratedMaxSensorValue].floatValue))
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a minimum sensor value between %1.0f and %1.0f", [[User shared] userCalibratedMinSensorValue].floatValue, [[User shared] userCalibratedMaxSensorValue].floatValue] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alertView show];
+//        return NO;
+//    }
+//    if (([self.fakeUserMaxVolumeTextField.text floatValue] < [[User shared] userCalibratedMinSensorValue].floatValue) || ([self.fakeUserMaxVolumeTextField.text floatValue] > [[User shared] userCalibratedMaxSensorValue].floatValue))
+//    {
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a maximum sensor value between %1.0f and %1.0f", [[User shared] userCalibratedMinSensorValue].floatValue, [[User shared] userCalibratedMaxSensorValue].floatValue] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alertView show];
+//        return NO;
+//    }
+     return YES;
 
 }
 
@@ -92,10 +92,10 @@
         NSLog(@"fake data ON");
         //fix this to use real values from fakeuser
         
-        [NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]];
+        [NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]];
         
-        
-        [[FakeDataGenerator shared] startFakeBreathingWithFakeUserInhaleTime:[NSNumber numberWithInteger:[fakeUserInhaleTimeTextField.text integerValue]] andFakeUserExhaleTime:[NSNumber numberWithInteger:[fakeUserExhaleTimeTextField.text integerValue]] fakeMaxVolume:[NSNumber numberWithInteger:[fakeUserMaxVolumeTextField.text integerValue]] andFakeUserMinVolume:[NSNumber numberWithInteger:[fakeUserMinVolumeTextField.text integerValue]]];
+        //this is so ugly it hurts
+        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
     }
     if (self.fakeUserSwitch.isOn == NO) {
         [[User shared] setFakeDataIsOn:NO];

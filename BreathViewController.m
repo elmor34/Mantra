@@ -58,29 +58,35 @@
 {
     [super viewDidAppear:animated];
     [self.shape1View setHidden:NO];
-    [self updateProgressWithDelta:1.0 animated:YES];
+    
     
     //apply gravity setting last selected in the settings screen
     [self setGravity];
-    
+    [self loadDevLabels];
+}
+
+-(void)loadDevLabels{
     
     if ([[User shared] fakeDataIsOn]) {
         self.breathCountLabel.hidden = NO;
         self.lungValLabel.hidden = NO;
-        self.sensorValLabel.hidden = NO;
-        self.volumeLabel.hidden = NO;
         self.rawLabel.hidden = NO;
+        self.cMaxVolLabel.hidden = NO;
+        self.cMinVolLabel.hidden = NO;
+        self.maxSensLabel.hidden = NO;
+        self.minSensLabel.hidden = NO;
+
     }
     else {
         self.breathCountLabel.hidden = YES;
         self.lungValLabel.hidden = YES;
-        self.sensorValLabel.hidden = YES;
-        self.volumeLabel.hidden = YES;
         self.rawLabel.hidden = YES;
-       
+        self.cMaxVolLabel.hidden = YES;
+        self.cMinVolLabel.hidden = YES;
+        self.maxSensLabel.hidden =YES;
+        self.minSensLabel.hidden = YES;
     }
 }
-
 
 - (NSArray *)shapeViews
 {
@@ -118,22 +124,34 @@
 - (void)sensorValueChanged:(NSNotification *)notification{
     NSLog(@"sensor notifcation received, sensorValueChanged called!");
     //Set the shape view to match the sensor value 
-    [self.shape1View setProgress:[[User shared] userCurrentLungVolume] animated:YES];
+    [self.shape1View setProgress:(1 -[[User shared] userCurrentLungVolume]) animated:YES]; //Inverted (more air is less fill)
     
-    NSString *sensorString = [NSString stringWithFormat: @"%.2hu", [[User shared] rawStretchSensorValue]];
-    self.sensorValLabel.text = sensorString;
+    NSString *sensorString = [NSString stringWithFormat: @"Raw: %1.1hu", [[User shared] rawStretchSensorValue]];
+    self.rawLabel.text = sensorString;
     
     
-    NSString *lungString = [NSString stringWithFormat: @"%1.0f%%", (1 - [[User shared] userCurrentLungVolume]) * 100];
+    NSString *lungString = [NSString stringWithFormat: @"Vol: %1.0f%%", [[User shared] userCurrentLungVolume] * 100];
     self.lungValLabel.text = lungString;
-    
-    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
-    self.connectedLabel.text = bleConnected;
+   
+//    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
+//    self.connectedLabel.text = bleConnected;
     
     NSString *breathCount = [NSString stringWithFormat:@"%1.1f", [[User shared] userBreathCount]];
     self.breathCountLabel.text = breathCount;
     
-    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];
+    NSString *cMaxVol = [NSString stringWithFormat:@"cVMax: %1.2f", [[User shared] userCalibratedMaxVolume].doubleValue];
+    self.cMaxVolLabel.text = cMaxVol;
+    
+    NSString *cMinVol = [NSString stringWithFormat:@"cVMin: %1.2f",[[User shared] userCalibratedMinVolume].doubleValue];
+    self.cMinVolLabel.text = cMinVol;
+    
+    NSString *maxSens = [NSString stringWithFormat:@"cSMax: %1.2f",[[User shared] userCalibratedMaxSensorValue].doubleValue];
+     self.maxSensLabel.text = maxSens;
+    
+    NSString *minSens = [NSString stringWithFormat:@"cSMin: %1.2f",[[User shared] userCalibratedMinSensorValue].doubleValue];
+    self.minSensLabel.text = minSens;
+    
+//    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];
 }
 
 
@@ -163,17 +181,6 @@
     return color;
 }
 
-//calculates coherence to target breathing metrics, returns coherence percentage
--(int)calculateTargetCoherence{
-    int coherence = 0;
-    
-    CGFloat currentDepth = [[User shared] userCurrentLungVolume];
-    CGFloat targetDepth = [[User shared] userTargetDepth].floatValue;
-    
-    
-    
-    return coherence;
-}
 
 
 - (NSUInteger)supportedInterfaceOrientations

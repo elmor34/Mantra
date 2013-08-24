@@ -35,16 +35,14 @@
 //Debug properties
 @property (strong, nonatomic) UIColor *lungColor;
 @property (strong, nonatomic) IBOutlet UILabel *rawLabel;
-@property (strong, nonatomic) IBOutlet UILabel *volumeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lungValLabel;
-@property (strong, nonatomic) IBOutlet UILabel *sensorValLabel;
-@property (strong, nonatomic) IBOutlet UILabel *connectionStrengthLabel;
-@property (strong, nonatomic) IBOutlet UILabel *connectedLabel;
 @property (strong, nonatomic) IBOutlet UILabel *breathCountLabel;
+@property (strong, nonatomic) IBOutlet UILabel *cMaxVolLabel;
+@property (strong, nonatomic) IBOutlet UILabel *cMinVolLabel;
+@property (strong, nonatomic) IBOutlet UILabel *maxSensLabel;
+@property (strong, nonatomic) IBOutlet UILabel *minSensLabel;
 
 
-
-- (IBAction)testButton:(id)sender;
 -(void)setGravity;
 - (void)sensorValueChanged:(NSNotification *)notification;
 -(UIColor*)setLungColor;

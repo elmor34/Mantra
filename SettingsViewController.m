@@ -45,30 +45,7 @@
 }
 - (void)hideKeyboard{
     //update field values on keyboard hide
-   
-    [[User shared] setUserTargetInhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
-    [[User shared] setUserTargetExhaleTime:[NSNumber numberWithFloat:exhaleTimeField.text.floatValue]];
-    
-[self.view endEditing:YES];
-}
-
-- (IBAction)targetBreathingSwitchTouched:(id)sender
-{
-    if ([sender isOn]) {
-        inhaleTimeCell.hidden = NO;
-        exhaleTimeCell.hidden = NO;
-        breathingRateCell.hidden = NO;
-        targetDepthCell.hidden = NO;
-    }
-    else {
-        inhaleTimeCell.hidden = YES;
-        exhaleTimeCell.hidden = YES;
-        breathingRateCell.hidden = YES;
-        targetDepthCell.hidden = YES;
-    }
-}
-- (IBAction)targetBreathingInfoButtonTouched:(id)sender{
-//sexy modal with instructions
+   [self.view endEditing:YES];
 }
 
 -(BOOL)checkTextFieldValues{
@@ -103,10 +80,7 @@
     
     self.view.userInteractionEnabled = TRUE;
     [super viewDidLoad];
-    inhaleTimeCell.hidden = YES;
-    exhaleTimeCell.hidden = YES;
-    breathingRateCell.hidden = YES;
-    targetDepthCell.hidden =YES;
+
     
     [targetDepthSlider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
     
