@@ -28,14 +28,24 @@ return _sharedObject; \
 @property CGFloat fakeUserBreathingRate;
 @property CGFloat fakeUserInhaleTime;
 @property CGFloat fakeUserExhaleTime;
+
 @property CGFloat fakeUserCurrentVolume;//number from 0 to 1
 @property CGFloat fakeUserCurrentSensorValue;//raw sensor value (usually between 700 and 900)
-@property CGFloat fakeUserMaxSensorValue;
-@property CGFloat fakeUserMinSensorValue;
-@property CGFloat fakeUserMaxVolumeValue;
-@property CGFloat fakeUserMinVolumeValue;
+
+@property CGFloat fakeUserCurrentMaxSensorValue;
+@property CGFloat fakeUserCurrentMinSensorValue;
+@property CGFloat fakeUserCurrentMaxVolumeValue;
+@property CGFloat fakeUserCurrentMinVolumeValue;
+
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
+
+
+//calibrated global metrics (the global values are the highest and lowest recorded in per app run)
+@property CGFloat fakeUserGlobalMaxSensorValue; //value between 0 and 9999 (usually 700-800)
+@property CGFloat fakeUserGlobalMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property CGFloat fakeUserGlobalMaxVolume;//value between 0 and 1
+@property CGFloat fakeUserGlobalMinVolume;//value between 0 and 1
 
 
 

@@ -39,6 +39,21 @@
         //hide keyboard
         [self.view endEditing:YES];
         //restart fake data generation with new values
+        
+        [self.fakeUserInhaleTimeTextField.text integerValue];
+        [self.fakeUserExhaleTimeTextField.text integerValue];
+        [self.fakeUserMaxSensorTextField.text integerValue];
+        [self.fakeUserMinSensorTextField.text integerValue];
+        [self.fakeUserMaxVolumeTextField.text floatValue];
+        [self.fakeUserMinVolumeTextField.text floatValue];
+        
+        fakeUserGlobalMaxSensorValue; //value between 0 and 9999 (usually 700-800)
+        fakeUserGlobalMinSensorValue; //value between 0 and 9999 (usually 700-800)
+        fakeUserGlobalMaxVolume;//value between 0 and 1
+        fakeUserGlobalMinVolume;//value between 0 and 1
+        
+        [[FakeDataGenerator shared] startFakeBreathing];
+        
       [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
     }
     else{

@@ -69,22 +69,24 @@
     
     if ([[User shared] fakeDataIsOn]) {
         self.breathCountLabel.hidden = NO;
-        self.lungValLabel.hidden = NO;
+        self.volLabel.hidden = NO;
         self.rawLabel.hidden = NO;
         self.cMaxVolLabel.hidden = NO;
         self.cMinVolLabel.hidden = NO;
         self.maxSensLabel.hidden = NO;
         self.minSensLabel.hidden = NO;
+        self.developerMenu.hidden = NO;
 
     }
     else {
         self.breathCountLabel.hidden = YES;
-        self.lungValLabel.hidden = YES;
+        self.volLabel.hidden = YES;
         self.rawLabel.hidden = YES;
         self.cMaxVolLabel.hidden = YES;
         self.cMinVolLabel.hidden = YES;
         self.maxSensLabel.hidden =YES;
         self.minSensLabel.hidden = YES;
+        self.developerMenu.hidden = YES;
     }
 }
 
@@ -123,32 +125,54 @@
 
 - (void)sensorValueChanged:(NSNotification *)notification{
     NSLog(@"sensor notifcation received, sensorValueChanged called!");
-    //Set the shape view to match the sensor value 
+    //Set the shape view to match the sensor value
+    
+    double raw = [[User shared] rawStretchSensorValue];
+    
+    double cVolPercent = [[User shared] userCurrentLungVolume] * 100;
+    
+    
+    double cSMax = [[User shared] userCurrentMaxSensorValue].doubleValue;
+    double cSMin = [[User shared] userCurrentMinSensorValue].doubleValue;
+    
+    double cVMax = [[User shared] userCurrentMaxVolume].doubleValue;
+    double cVMin = [[User shared] userCurrentMinVolume].doubleValue;
+
+    double gSMax = [[User shared] userGlobalMaxSensorValue].doubleValue;
+    double gSMin = [[User shared] userGlobalMinSensorValue].doubleValue;
+    
+    double gVMax = [[User shared] userGlobalMaxVolume].doubleValue;
+    double gVMin = [[User shared] userGlobalMinVolume].doubleValue;
+  
+    double bCount = [[User shared] userBreathCount];
+
+    
     [self.shape1View setProgress:(1 -[[User shared] userCurrentLungVolume]) animated:YES]; //Inverted (more air is less fill)
     
     NSString *sensorString = [NSString stringWithFormat: @"Raw: %1.1hu", [[User shared] rawStretchSensorValue]];
     self.rawLabel.text = sensorString;
     
     
-    NSString *lungString = [NSString stringWithFormat: @"Vol: %1.0f%%", [[User shared] userCurrentLungVolume] * 100];
-    self.lungValLabel.text = lungString;
+    NSString *lungString = [NSString stringWithFormat: @"Vol: %1.0f%%", cVolPercent];
+    self.volLabel.text = lungString;
    
 //    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
 //    self.connectedLabel.text = bleConnected;
     
-    NSString *breathCount = [NSString stringWithFormat:@"%1.1f", [[User shared] userBreathCount]];
+    NSString *breathCount = [NSString stringWithFormat:@"%1.1f", bCount];
     self.breathCountLabel.text = breathCount;
     
-    NSString *cMaxVol = [NSString stringWithFormat:@"cVMax: %1.2f", [[User shared] userCalibratedMaxVolume].doubleValue];
+
+    NSString *cMaxVol = [NSString stringWithFormat:@"cVMax/gVmin: %1.2f/%1.2f", cVMax, gVMax];
     self.cMaxVolLabel.text = cMaxVol;
     
-    NSString *cMinVol = [NSString stringWithFormat:@"cVMin: %1.2f",[[User shared] userCalibratedMinVolume].doubleValue];
+    NSString *cMinVol = [NSString stringWithFormat:@"cVMin/gVmin: %1.2f/%1.2f", cVMin , gVMin];
     self.cMinVolLabel.text = cMinVol;
     
-    NSString *maxSens = [NSString stringWithFormat:@"cSMax: %1.2f",[[User shared] userCalibratedMaxSensorValue].doubleValue];
+    NSString *maxSens = [NSString stringWithFormat:@"cSMax/gSMax: %1.2f/%1.2f",cSMax , gSMax];
      self.maxSensLabel.text = maxSens;
     
-    NSString *minSens = [NSString stringWithFormat:@"cSMin: %1.2f",[[User shared] userCalibratedMinSensorValue].doubleValue];
+    NSString *minSens = [NSString stringWithFormat:@"cSMin/gSMin: %1.2f/%1.2f",cSMin, gSMin];
     self.minSensLabel.text = minSens;
     
 //    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];

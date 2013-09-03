@@ -35,12 +35,13 @@
 //Debug properties
 @property (strong, nonatomic) UIColor *lungColor;
 @property (strong, nonatomic) IBOutlet UILabel *rawLabel;
-@property (strong, nonatomic) IBOutlet UILabel *lungValLabel;
+@property (strong, nonatomic) IBOutlet UILabel *volLabel;
 @property (strong, nonatomic) IBOutlet UILabel *breathCountLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cMaxVolLabel;
 @property (strong, nonatomic) IBOutlet UILabel *cMinVolLabel;
 @property (strong, nonatomic) IBOutlet UILabel *maxSensLabel;
 @property (strong, nonatomic) IBOutlet UILabel *minSensLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *developerMenu;
 
 
 -(void)setGravity;

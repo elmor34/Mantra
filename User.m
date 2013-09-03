@@ -194,8 +194,8 @@
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = [self.userCalibratedStaticMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            CGFloat refInMin = [self.userCalibratedStaticMaxSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = 800;//[self.userGlobalMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = 760; //[self.userGlobalMaxSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block
@@ -205,6 +205,7 @@
             CGFloat in = self.rawStretchSensorValue;
             CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
             self.userCurrentLungVolume = 1 - out;//inverting this value because high volume = low sensor value
+          
             pastValue = out;
             
             
@@ -283,6 +284,16 @@
 -(void)calibrateMaxVolume{
     [self setUserCurrentMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    
+    //the global max should always be >= currentMax
+    if (self.rawStretchSensorValue > self.userGlobalMaxSensorValue.floatValue){
+        [self setUserGlobalMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    }
+    //the global max should always be >= currentMax
+    if (self.userCurrentLungVolume > self.userGlobalMaxVolume.floatValue){
+        [self setUserGlobalMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    }
+    
     NSLog(@"Max volume = %1.0f" , self.userCurrentLungVolume);
     NSLog(@"Max sensor = %hu" , self.rawStretchSensorValue);
     //calling calculate here ensures this is the peak inhale volume (max volume)
@@ -293,6 +304,16 @@
 -(void)calibrateMinVolume{
     [self setUserCurrentMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    
+    //the global min should always be <= currentMax
+    if (self.rawStretchSensorValue < self.userGlobalMinSensorValue.floatValue){
+        [self setUserGlobalMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    }
+    //the global max should always be <= currentMax
+    if (self.userCurrentLungVolume < self.userGlobalMinVolume.floatValue){
+        [self setUserGlobalMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
+    }
+    
     NSLog(@"Min volume = %1.0f" , self.userCurrentLungVolume);
     NSLog(@"Min sensor = %hu" , self.rawStretchSensorValue);
 }

@@ -26,6 +26,7 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userCurrentExhaleTime;
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDelta;//Change breathing rate (0.5s delta)
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDeltaDelta;//Change breathing rate rate (0.5s delta of 0.5s delta)
+
 @property (strong, nonatomic) NSNumber *userCurrentMaxSensorValue; //value between 0 and 9999 (usually 700-800)
 @property (strong, nonatomic) NSNumber *userCurrentMinSensorValue; //value between 0 and 9999 (usually 700-800)
 @property (strong, nonatomic) NSNumber *userCurrentMaxVolume;//value between 0 and 1
@@ -41,11 +42,11 @@ return _sharedObject; \
 @property UInt16 rawStretchSensorValue; //raw sensor value as received from BLE
 
 
-//calibrated static breathing metrics
-@property (strong, nonatomic) NSNumber *userCalibratedStaticMaxSensorValue; //value between 0 and 9999 (usually 700-800)
-@property (strong, nonatomic) NSNumber *userCalibratedStaticMinSensorValue; //value between 0 and 9999 (usually 700-800)
-@property (strong, nonatomic) NSNumber *userCalibratedStaticMaxVolume;//value between 0 and 1
-@property (strong, nonatomic) NSNumber *userCalibratedStaticMinVolume;//value between 0 and 1
+//calibrated global metrics (the global values are the highest and lowest recorded in per app run)
+@property (strong, nonatomic) NSNumber *userGlobalMaxSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userGlobalMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userGlobalMaxVolume;//value between 0 and 1
+@property (strong, nonatomic) NSNumber *userGlobalMinVolume;//value between 0 and 1
 
 
 
