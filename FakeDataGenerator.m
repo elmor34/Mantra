@@ -53,11 +53,6 @@
 }
 
 -(void)startFakeBreathing{
-    
-    self.fakeUserExhaleTime;
-    self.fakeUserInhaleTime;
-    self.fakeUserCurrentMaxSensorValue;
-    self.fakeUserCurrentMinSensorValue;
     self.sensorVal = 770;
     self.fakeUserCurrentSensorValue = self.sensorVal;
     self.fakeUserBreathingOn = YES;
@@ -72,6 +67,7 @@
 
 
 -(void)stopFakeBreathing{
+    //this might be a problem later, might not want to set these to 0
     [self.inhaleTimer invalidate];
     self.inhaleTimer = nil;
     [self.exhaleTimer invalidate];

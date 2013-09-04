@@ -303,7 +303,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="4" borderStyle="roundedRect" placeholder="sec" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vz9-Ds-qbN">
-                                                    <rect key="frame" x="239" y="7" width="60" height="30"/>
+                                                    <rect key="frame" x="240" y="7" width="60" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -607,7 +607,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Static Sensor Range" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wxf-fh-zFv">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Global Sensor Range" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wxf-fh-zFv">
                                                     <rect key="frame" x="20" y="11" width="175" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -645,7 +645,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Static Volume Range" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLM-SL-vfK">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Global Volume Range" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLM-SL-vfK">
                                                     <rect key="frame" x="20" y="11" width="175" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -688,6 +688,10 @@
                     <navigationItem key="navigationItem" id="qFY-ZE-LGP"/>
                     <connections>
                         <outlet property="fakeUserExhaleTimeTextField" destination="EKy-12-rEt" id="r9m-QJ-e9K"/>
+                        <outlet property="fakeUserGlobalMaxSensorTextField" destination="R6M-T5-GZV" id="Tz9-6e-Lx8"/>
+                        <outlet property="fakeUserGlobalMaxVolumeTextField" destination="9Gf-Bl-65N" id="cCZ-kL-puh"/>
+                        <outlet property="fakeUserGlobalMinSensorTextField" destination="Bck-ZI-f3x" id="Z1D-R1-RNV"/>
+                        <outlet property="fakeUserGlobalMinVolumeTextField" destination="BVH-2Z-xyR" id="M8K-X4-Ok5"/>
                         <outlet property="fakeUserInhaleTimeTextField" destination="XsV-dd-ISz" id="0we-xr-Myz"/>
                         <outlet property="fakeUserMaxSensorTextField" destination="K9d-c4-I5t" id="0QK-3r-O8v"/>
                         <outlet property="fakeUserMaxVolumeTextField" destination="GF7-aV-uYX" id="UY0-qV-IiO"/>

@@ -17,6 +17,10 @@
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinSensorTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMaxSensorTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinSensorTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMaxVolumeTextField;
+    @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
 
 
@@ -26,6 +30,7 @@
 
         
     - (IBAction)fakeUserSwitchTouched:(id)sender;
-    
+    -(void)updateFakeDataGeneratorProperties;
+
     
 @end

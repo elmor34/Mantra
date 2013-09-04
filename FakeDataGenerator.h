@@ -62,6 +62,7 @@ return _sharedObject; \
 
 //This method is ridiculous, refactor
 -(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxSens fakeMinSens:(NSNumber*)fakeMinSens fakeMaxVol:(NSNumber *) fakeMaxVol fakeMinVol:(NSNumber *) fakeMinVol;
+-(void)startFakeBreathing;
 -(void)stopFakeBreathing;
 -(void)fakeInhale;
 -(void)fakeExhale;
