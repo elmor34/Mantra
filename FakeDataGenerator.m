@@ -32,27 +32,8 @@
     return self;
 }
 
-//This method is ridiculous, refactor
--(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxSens fakeMinSens:(NSNumber*)fakeMinSens fakeMaxVol:(NSNumber *) fakeMaxVol fakeMinVol:(NSNumber *) fakeMinVol{
-    
-    self.fakeUserExhaleTime = fakeExhaleTime.floatValue;
-    self.fakeUserInhaleTime = fakeInhaleTime.floatValue;
-    self.fakeUserCurrentMaxSensorValue = fakeMaxSens.floatValue;
-    self.fakeUserCurrentMinSensorValue = fakeMinSens.floatValue;
-    
-    self.sensorVal = 770;
-    self.fakeUserCurrentSensorValue = self.sensorVal;
-    self.fakeUserBreathingOn = YES;
-    self.sampleTime = .05; //sample rate for the fake sensor is 100 ms
-    
-    /*incrementSize needs to be calculated because the volume needs to increment at a more natural rate.  You must get to the maxVolume in inhaleTime - so the natural increment size is determined by taking (the amount you need to increment) / (the number of samples you will take)
-    */
-    //set initial inhale delta size
-    self.deltaSize  = (self.fakeUserCurrentMaxSensorValue-self.fakeUserCurrentSensorValue)/(self.fakeUserInhaleTime/self.sampleTime);
-    [self fakeInhale];
-}
-
 -(void)startFakeBreathing{
+    
     self.sensorVal = 770;
     self.fakeUserCurrentSensorValue = self.sensorVal;
     self.fakeUserBreathingOn = YES;
@@ -73,13 +54,6 @@
     [self.exhaleTimer invalidate];
     self.exhaleTimer = nil;
     self.fakeUserBreathingOn = NO;
-    self.fakeUserBreathingRate = 0;
-    self.fakeUserExhaleTime = 0;
-    self.fakeUserInhaleTime = 0;
-    self.fakeUserCurrentMaxSensorValue = 0;
-    self.fakeUserCurrentMinSensorValue = 0;
-    self.fakeUserCurrentSensorValue = 0;
-    self.sensorVal = 0;
     [self printFakeDataToConsole];
     NSLog(@"fake breathing stopped");
 }
@@ -183,9 +157,6 @@
         //code to be executed on the main queue after delay
         [[User shared] calculateBreathingDeltaWithPastValue:pastValue];
     });
-    
-
-    
 }
 
 

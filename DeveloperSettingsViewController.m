@@ -101,8 +101,6 @@
 }
 
 
-
-
 - (IBAction)fakeUserSwitchTouched:(id)sender{
     if (self.fakeUserSwitch.isOn == YES) {
         [[User shared] setFakeDataIsOn:YES];
@@ -111,18 +109,14 @@
         //fix this to use real values from fakeuser
         
         [NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]];
+        [self updateFakeDataGeneratorProperties];
         [[FakeDataGenerator shared] startFakeBreathing];
-        //this is so ugly it hurts
-//        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
     }
     if (self.fakeUserSwitch.isOn == NO) {
         [[User shared] setFakeDataIsOn:NO];
         NSLog(@"fake data OFF");
         [[FakeDataGenerator shared] stopFakeBreathing];
     }
-    
-
 }
-
 
 @end
