@@ -23,11 +23,6 @@
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
 
-
-
-
-
-
         
     - (IBAction)fakeUserSwitchTouched:(id)sender;
     -(void)updateFakeDataGeneratorProperties;

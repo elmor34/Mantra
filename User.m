@@ -194,8 +194,10 @@
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = 800;//[self.userGlobalMaxSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            CGFloat refInMin = 760; //[self.userGlobalMaxSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = [self.userGlobalMinSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            
+            //Sensor value is smallest when volume is Max
+            CGFloat refInMin = [self.userGlobalMaxSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block

@@ -38,14 +38,14 @@
     //Set all the necessary FakeDataGenerator properties
     [[FakeDataGenerator shared] setFakeUserInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
     [[FakeDataGenerator shared] setFakeUserExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMaxSensorValue:[self.fakeUserMaxSensorTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMinSensorValue:[self.fakeUserMinSensorTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMaxVolumeValue:[self.fakeUserMaxVolumeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMaxSensorValue:[self.fakeUserGlobalMaxSensorTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMinSensorValue:[self.fakeUserGlobalMinSensorTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text integerValue]];
+    [[FakeDataGenerator shared] setFakeUserCurrentMaxSensorValue:[self.fakeUserMaxSensorTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserCurrentMinSensorValue:[self.fakeUserMinSensorTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserCurrentMaxVolumeValue:[self.fakeUserMaxVolumeTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserGlobalMaxSensorValue:[self.fakeUserGlobalMaxSensorTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserGlobalMinSensorValue:[self.fakeUserGlobalMinSensorTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text floatValue]];
 }
 
 - (void)hideKeyboard{
@@ -111,9 +111,9 @@
         //fix this to use real values from fakeuser
         
         [NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]];
-        
+        [[FakeDataGenerator shared] startFakeBreathing];
         //this is so ugly it hurts
-        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
+//        [[FakeDataGenerator shared] startFakeBreathingWithFakeInhaleTime:[NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]] fakeExhaleTime:[NSNumber numberWithInteger:[self.fakeUserExhaleTimeTextField.text integerValue]] fakeMaxSens:[NSNumber numberWithInteger:[self.fakeUserMaxSensorTextField.text integerValue]] fakeMinSens:[NSNumber numberWithInteger:[self.fakeUserMinSensorTextField.text integerValue]] fakeMaxVol:[NSNumber numberWithInteger:[self.fakeUserMaxVolumeTextField.text floatValue]] fakeMinVol:[NSNumber numberWithInteger:[self.fakeUserMinVolumeTextField.text floatValue]]];
     }
     if (self.fakeUserSwitch.isOn == NO) {
         [[User shared] setFakeDataIsOn:NO];
