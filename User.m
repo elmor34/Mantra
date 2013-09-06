@@ -21,7 +21,9 @@
    //init with values to avoid calibration on nil properties (these will quickly be cleared with real values)
     
 
-    
+    //set global values to something non-zero (they will be overwritten by the highest current values during autocalibration)
+    [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:999]];
+    [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:0]];
     
     
     //set the defaults or load MantraUser from storage
@@ -279,11 +281,11 @@
     [self setUserCurrentMaxStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     
-    //the global max should always be <= currentMax
+    //the global max stretch should always be <= current max stretch is low
     if (self.rawStretchSensorValue < self.userGlobalMaxStretchValue.floatValue){
         [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     }
-    //the global max should always be <= currentMax
+    //the global max volume should always be >= current max volume
     if (self.userCurrentLungVolume < self.userGlobalMaxVolume.floatValue){
         [self setUserGlobalMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     }
@@ -299,12 +301,12 @@
     [self setUserCurrentMinStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     
-    //the global min should always be >= currentMax
+    //the global min stretch should always be >= currentMin min stretch is high
     if (self.rawStretchSensorValue > self.userGlobalMinStretchValue.floatValue){
         [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     }
-    //the global max should always be >= currentMax
-    if (self.userCurrentLungVolume > self.userGlobalMinVolume.floatValue){
+    //the global min volume should always be <= current min volume
+     if (self.userCurrentLungVolume > self.userGlobalMinVolume.floatValue){
         [self setUserGlobalMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     }
     
