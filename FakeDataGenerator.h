@@ -1,11 +1,3 @@
-//
-//  FakeSensor.h
-//  MantraV1.2
-//
-//  Created by David Crow on 7/20/13.
-//  Copyright (c) 2013 David Crow. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 
@@ -32,8 +24,8 @@ return _sharedObject; \
 @property CGFloat fakeUserCurrentVolume;//number from 0 to 1
 @property CGFloat fakeUserCurrentSensorValue;//raw sensor value (usually between 700 and 900)
 
-@property CGFloat fakeUserCurrentMaxSensorValue;
-@property CGFloat fakeUserCurrentMinSensorValue;
+@property CGFloat fakeUserCurrentMaxStretchValue;
+@property CGFloat fakeUserCurrentMinStretchValue;
 @property CGFloat fakeUserCurrentMaxVolumeValue;
 @property CGFloat fakeUserCurrentMinVolumeValue;
 
@@ -42,8 +34,8 @@ return _sharedObject; \
 
 
 //calibrated global metrics (the global values are the highest and lowest recorded in per app run)
-@property CGFloat fakeUserGlobalMaxSensorValue; //value between 0 and 9999 (usually 700-800)
-@property CGFloat fakeUserGlobalMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property CGFloat fakeUserGlobalMaxStretchValue; //value between 0 and 9999 (usually 700-800)
+@property CGFloat fakeUserGlobalMinStretchValue; //value between 0 and 9999 (usually 700-800)
 @property CGFloat fakeUserGlobalMaxVolume;//value between 0 and 1
 @property CGFloat fakeUserGlobalMinVolume;//value between 0 and 1
 

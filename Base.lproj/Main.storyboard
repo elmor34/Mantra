@@ -688,14 +688,14 @@
                     <navigationItem key="navigationItem" id="qFY-ZE-LGP"/>
                     <connections>
                         <outlet property="fakeUserExhaleTimeTextField" destination="EKy-12-rEt" id="r9m-QJ-e9K"/>
-                        <outlet property="fakeUserGlobalMaxSensorTextField" destination="R6M-T5-GZV" id="Tz9-6e-Lx8"/>
+                        <outlet property="fakeUserGlobalMaxStretchTextField" destination="R6M-T5-GZV" id="f5Z-dX-JVR"/>
                         <outlet property="fakeUserGlobalMaxVolumeTextField" destination="9Gf-Bl-65N" id="cCZ-kL-puh"/>
-                        <outlet property="fakeUserGlobalMinSensorTextField" destination="Bck-ZI-f3x" id="Z1D-R1-RNV"/>
+                        <outlet property="fakeUserGlobalMinStretchTextField" destination="Bck-ZI-f3x" id="Q1c-OJ-w3m"/>
                         <outlet property="fakeUserGlobalMinVolumeTextField" destination="BVH-2Z-xyR" id="M8K-X4-Ok5"/>
                         <outlet property="fakeUserInhaleTimeTextField" destination="XsV-dd-ISz" id="0we-xr-Myz"/>
-                        <outlet property="fakeUserMaxSensorTextField" destination="K9d-c4-I5t" id="0QK-3r-O8v"/>
+                        <outlet property="fakeUserMaxStretchTextField" destination="K9d-c4-I5t" id="bGm-6H-4QS"/>
                         <outlet property="fakeUserMaxVolumeTextField" destination="GF7-aV-uYX" id="UY0-qV-IiO"/>
-                        <outlet property="fakeUserMinSensorTextField" destination="fUI-br-cYe" id="sPe-3t-qeN"/>
+                        <outlet property="fakeUserMinStretchTextField" destination="fUI-br-cYe" id="gRJ-P7-f36"/>
                         <outlet property="fakeUserMinVolumeTextField" destination="XmF-uM-huV" id="236-qk-sEs"/>
                         <outlet property="fakeUserSwitch" destination="KGH-nT-CQV" id="Dld-mX-llt"/>
                     </connections>

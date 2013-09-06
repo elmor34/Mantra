@@ -1,10 +1,3 @@
-//
-//  MantraUser.h
-//  MantraV1.2
-//
-//  Created by David Crow on 6/16/13.
-//  Copyright (c) 2013 David Crow. All rights reserved.
-//
 #import <Foundation/Foundation.h>
 #import "BLE.h"
 
@@ -27,8 +20,8 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDelta;//Change breathing rate (0.5s delta)
 @property (strong, nonatomic) NSNumber *userCurrentBreathingDeltaDelta;//Change breathing rate rate (0.5s delta of 0.5s delta)
 
-@property (strong, nonatomic) NSNumber *userCurrentMaxSensorValue; //value between 0 and 9999 (usually 700-800)
-@property (strong, nonatomic) NSNumber *userCurrentMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCurrentMaxStretchValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userCurrentMinStretchValue; //value between 0 and 9999 (usually 700-800)
 @property (strong, nonatomic) NSNumber *userCurrentMaxVolume;//value between 0 and 1
 @property (strong, nonatomic) NSNumber *userCurrentMinVolume;//value between 0 and 1
 
@@ -43,8 +36,8 @@ return _sharedObject; \
 
 
 //calibrated global metrics (the global values are the highest and lowest recorded in per app run)
-@property (strong, nonatomic) NSNumber *userGlobalMaxSensorValue; //value between 0 and 9999 (usually 700-800)
-@property (strong, nonatomic) NSNumber *userGlobalMinSensorValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userGlobalMaxStretchValue; //value between 0 and 9999 (usually 700-800)
+@property (strong, nonatomic) NSNumber *userGlobalMinStretchValue; //value between 0 and 9999 (usually 700-800)
 @property (strong, nonatomic) NSNumber *userGlobalMaxVolume;//value between 0 and 1
 @property (strong, nonatomic) NSNumber *userGlobalMinVolume;//value between 0 and 1
 

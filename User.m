@@ -1,11 +1,3 @@
-//
-//  MantraUser.m
-//  MantraV1.2
-//
-//  Created by David Crow on 6/16/13.
-//  Copyright (c) 2013 David Crow. All rights reserved.
-//
-
 #import "User.h"
 
 
@@ -194,10 +186,10 @@
             
             
             //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = [self.userGlobalMinSensorValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMax = [self.userGlobalMinStretchValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
             
             //Sensor value is smallest when volume is Max
-            CGFloat refInMin = [self.userGlobalMaxSensorValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
+            CGFloat refInMin = [self.userGlobalMaxStretchValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
             //dynamic calibration block
@@ -284,15 +276,15 @@
 
 //gets called when calculateBreathCount hits a peak in lung volume
 -(void)calibrateMaxVolume{
-    [self setUserCurrentMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    [self setUserCurrentMaxStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     
-    //the global max should always be >= currentMax
-    if (self.rawStretchSensorValue > self.userGlobalMaxSensorValue.floatValue){
-        [self setUserGlobalMaxSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    //the global max should always be <= currentMax
+    if (self.rawStretchSensorValue < self.userGlobalMaxStretchValue.floatValue){
+        [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     }
-    //the global max should always be >= currentMax
-    if (self.userCurrentLungVolume > self.userGlobalMaxVolume.floatValue){
+    //the global max should always be <= currentMax
+    if (self.userCurrentLungVolume < self.userGlobalMaxVolume.floatValue){
         [self setUserGlobalMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     }
     
@@ -304,15 +296,15 @@
 }
 //gets called when calculateBreathCount hits a dip in lung volume
 -(void)calibrateMinVolume{
-    [self setUserCurrentMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    [self setUserCurrentMinStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     
-    //the global min should always be <= currentMax
-    if (self.rawStretchSensorValue < self.userGlobalMinSensorValue.floatValue){
-        [self setUserGlobalMinSensorValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
+    //the global min should always be >= currentMax
+    if (self.rawStretchSensorValue > self.userGlobalMinStretchValue.floatValue){
+        [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     }
-    //the global max should always be <= currentMax
-    if (self.userCurrentLungVolume < self.userGlobalMinVolume.floatValue){
+    //the global max should always be >= currentMax
+    if (self.userCurrentLungVolume > self.userGlobalMinVolume.floatValue){
         [self setUserGlobalMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     }
     

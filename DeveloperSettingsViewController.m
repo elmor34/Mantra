@@ -38,12 +38,12 @@
     //Set all the necessary FakeDataGenerator properties
     [[FakeDataGenerator shared] setFakeUserInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
     [[FakeDataGenerator shared] setFakeUserExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMaxSensorValue:[self.fakeUserMaxSensorTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMinSensorValue:[self.fakeUserMinSensorTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserCurrentMaxStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserCurrentMinStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
     [[FakeDataGenerator shared] setFakeUserCurrentMaxVolumeValue:[self.fakeUserMaxVolumeTextField.text floatValue]];
     [[FakeDataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMaxSensorValue:[self.fakeUserGlobalMaxSensorTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMinSensorValue:[self.fakeUserGlobalMinSensorTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
+    [[FakeDataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
     [[FakeDataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text floatValue]];
     [[FakeDataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text floatValue]];
 }

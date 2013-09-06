@@ -132,14 +132,14 @@
     double cVolPercent = [[User shared] userCurrentLungVolume] * 100;
     
     
-    double cSMax = [[User shared] userCurrentMaxSensorValue].doubleValue;
-    double cSMin = [[User shared] userCurrentMinSensorValue].doubleValue;
+    double cSMax = [[User shared] userCurrentMaxStretchValue].doubleValue;
+    double cSMin = [[User shared] userCurrentMinStretchValue].doubleValue;
     
     double cVMax = [[User shared] userCurrentMaxVolume].doubleValue;
     double cVMin = [[User shared] userCurrentMinVolume].doubleValue;
 
-    double gSMax = [[User shared] userGlobalMaxSensorValue].doubleValue;
-    double gSMin = [[User shared] userGlobalMinSensorValue].doubleValue;
+    double gSMax = [[User shared] userGlobalMaxStretchValue].doubleValue;
+    double gSMin = [[User shared] userGlobalMinStretchValue].doubleValue;
     
     double gVMax = [[User shared] userGlobalMaxVolume].doubleValue;
     double gVMin = [[User shared] userGlobalMinVolume].doubleValue;
@@ -149,12 +149,12 @@
     
     [self.shape1View setProgress:(1 -[[User shared] userCurrentLungVolume]) animated:YES]; //Inverted (more air is less fill)
     
-    NSString *sensorString = [NSString stringWithFormat: @"Raw: %1.1hu", [[User shared] rawStretchSensorValue]];
-    self.rawLabel.text = sensorString;
+    NSString *rawString = [NSString stringWithFormat: @"Raw: %1.1hu", [[User shared] rawStretchSensorValue]];
+    self.rawLabel.text = rawString;
     
     
-    NSString *lungString = [NSString stringWithFormat: @"Vol: %1.0f%%", cVolPercent];
-    self.volLabel.text = lungString;
+    NSString *volString = [NSString stringWithFormat: @"Vol: %1.0f%%", cVolPercent];
+    self.volLabel.text = volString;
    
 //    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
 //    self.connectedLabel.text = bleConnected;
@@ -166,13 +166,13 @@
     NSString *cMaxVol = [NSString stringWithFormat:@"cVMax/gVmin: %1.2f/%1.2f", cVMax, gVMax];
     self.cMaxVolLabel.text = cMaxVol;
     
-    NSString *cMinVol = [NSString stringWithFormat:@"cVMin/gVmin: %1.2f/%1.2f", cVMin , gVMin];
+    NSString *cMinVol = [NSString stringWithFormat:@"cVMin/gVmin: %1.2f/%1.2f", cVMin, gVMin];
     self.cMinVolLabel.text = cMinVol;
     
-    NSString *maxSens = [NSString stringWithFormat:@"cSMax/gSMax: %1.2f/%1.2f",cSMax , gSMax];
+    NSString *maxSens = [NSString stringWithFormat:@"cSMax/gSMax: %1.2f/%1.2f", cSMax, gSMax];
      self.maxSensLabel.text = maxSens;
     
-    NSString *minSens = [NSString stringWithFormat:@"cSMin/gSMin: %1.2f/%1.2f",cSMin, gSMin];
+    NSString *minSens = [NSString stringWithFormat:@"cSMin/gSMin: %1.2f/%1.2f", cSMin, gSMin];
     self.minSensLabel.text = minSens;
     
 //    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];

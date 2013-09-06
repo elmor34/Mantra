@@ -25,8 +25,8 @@
     self.fakeUserBreathingRate = 0;
     self.fakeUserExhaleTime = 0;
     self.fakeUserInhaleTime = 0;
-    self.fakeUserCurrentMaxSensorValue = 0;
-    self.fakeUserCurrentMinSensorValue = 0;
+    self.fakeUserCurrentMaxStretchValue = 0;
+    self.fakeUserCurrentMinStretchValue = 0;
     self.sensorVal = 0;
 
     return self;
@@ -42,7 +42,7 @@
     /*incrementSize needs to be calculated because the volume needs to increment at a more natural rate.  You must get to the maxVolume in inhaleTime - so the natural increment size is determined by taking (the amount you need to increment) / (the number of samples you will take)
      */
     //set initial inhale delta size
-    self.deltaSize  = (self.fakeUserCurrentMaxSensorValue-self.fakeUserCurrentSensorValue)/(self.fakeUserInhaleTime/self.sampleTime);
+    self.deltaSize  = (self.fakeUserCurrentMaxStretchValue-self.fakeUserCurrentSensorValue)/(self.fakeUserInhaleTime/self.sampleTime);
     [self fakeInhale];
 }
 
@@ -64,7 +64,7 @@
     if(self.fakeUserBreathingOn == YES){
         
         
-        if (self.fakeUserCurrentSensorValue < self.fakeUserCurrentMaxSensorValue) {
+        if (self.fakeUserCurrentSensorValue < self.fakeUserCurrentMaxStretchValue) {
             if (self.inhaleTimer == nil){
             //set a timer to call self until the above condition is no longer true
             self.inhaleTimer = [[NSTimer alloc] init];
@@ -76,7 +76,7 @@
         }
         else{
             //set exhale delta size
-            self.deltaSize  = (self.fakeUserCurrentMinSensorValue-self.fakeUserCurrentSensorValue)/(self.fakeUserExhaleTime/self.sampleTime);
+            self.deltaSize  = (self.fakeUserCurrentMinStretchValue-self.fakeUserCurrentSensorValue)/(self.fakeUserExhaleTime/self.sampleTime);
             
             //invalidate the secondary timer and call fakeExhale
             [self.inhaleTimer invalidate];
@@ -91,7 +91,7 @@
 
     if(self.fakeUserBreathingOn == YES){
         
-        if (self.fakeUserCurrentSensorValue > self.fakeUserCurrentMinSensorValue) {
+        if (self.fakeUserCurrentSensorValue > self.fakeUserCurrentMinStretchValue) {
             
             //set a timer to call self until the above condition is no longer true
             if (self.exhaleTimer == nil){
@@ -107,7 +107,7 @@
         }
         else{
             //set inhale delta size
-            self.deltaSize  = (self.fakeUserCurrentMaxSensorValue-self.fakeUserCurrentSensorValue)/(self.fakeUserInhaleTime/self.sampleTime);
+            self.deltaSize  = (self.fakeUserCurrentMaxStretchValue-self.fakeUserCurrentSensorValue)/(self.fakeUserInhaleTime/self.sampleTime);
             //invalidate the secondary timer and call fakeExhale
             [self.exhaleTimer invalidate];
             self.exhaleTimer = nil;
