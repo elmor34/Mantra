@@ -78,10 +78,11 @@ return _sharedObject; \
 -(void)calculateBreathingDeltaDeltaWithPastValue:(CGFloat)pastValue;
 
 
+-(CGFloat)mapValuesForInput:(CGFloat) input withRangeMin:(CGFloat)inMin andMax:(CGFloat)inMax andOutputRangeMin:(CGFloat)outMin andMax:(CGFloat)outMax;
 
 //breathing coherence calucations
 -(void)calculateTotalBreathCoherence;
--(void)calculateCurrentBreathCoherence;
+//-(void)calculateCurrentBreathCoherence;
 -(void)calculateBreathCount;
 -(void)calculateBreathCoherenceDeltaWithPastValue:(CGFloat)pastValue;
 -(void)calibrateMaxVolume;

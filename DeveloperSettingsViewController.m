@@ -7,7 +7,7 @@
 //
 
 #import "DeveloperSettingsViewController.h"
-#import "FakeDataGenerator.h"
+#import "DataGenerator.h"
 #import "User.h"
 
 @interface DeveloperSettingsViewController ()
@@ -36,16 +36,16 @@
 -(void)updateFakeDataGeneratorProperties{
     
     //Set all the necessary FakeDataGenerator properties
-    [[FakeDataGenerator shared] setFakeUserInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMaxStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMinStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMaxVolumeValue:[self.fakeUserMaxVolumeTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text floatValue]];
-    [[FakeDataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
+    [[DataGenerator shared] setFakeUserExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
+    [[DataGenerator shared] setFakeUserCurrentMaxStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserCurrentMinStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserCurrentMaxVolumeValue:[self.fakeUserMaxVolumeTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text floatValue]];
 }
 
 - (void)hideKeyboard{
@@ -56,7 +56,7 @@
         
         //restart fake data generation with updated values pulled from the UI
         [self updateFakeDataGeneratorProperties];
-        [[FakeDataGenerator shared] startFakeBreathing];
+        [[DataGenerator shared] startFakeBreathing];
 
     }
     else{
@@ -110,12 +110,12 @@
         
         [NSNumber numberWithInteger:[self.fakeUserInhaleTimeTextField.text integerValue]];
         [self updateFakeDataGeneratorProperties];
-        [[FakeDataGenerator shared] startFakeBreathing];
+        [[DataGenerator shared] startFakeBreathing];
     }
     if (self.fakeUserSwitch.isOn == NO) {
         [[User shared] setFakeDataIsOn:NO];
         NSLog(@"fake data OFF");
-        [[FakeDataGenerator shared] stopFakeBreathing];
+        [[DataGenerator shared] stopFakeBreathing];
     }
 }
 

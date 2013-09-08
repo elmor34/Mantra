@@ -1,24 +1,19 @@
-//
-//  FakeSensor.m
-//  MantraV1.2
-//
-//  Created by David Crow on 7/20/13.
-//  Copyright (c) 2013 David Crow. All rights reserved.
-//
-
-#import "FakeDataGenerator.h"
+#import "DataGenerator.h"
 #import "User.h"
 
-@implementation FakeDataGenerator {}
+
+@implementation DataGenerator {}
+
+
     
-+ (FakeDataGenerator *)shared
++ (DataGenerator *)shared
     {
         DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
             return [[self alloc] init];
         });
     }
     
--(FakeDataGenerator *)init{
+-(DataGenerator *)init{
     self = [super init];
     
     self.fakeUserBreathingOn = NO;
@@ -132,7 +127,7 @@
     //Post notification that sensor value changed
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"fakeSensorValueChanged"
-     object:[FakeDataGenerator shared]];
+     object:[DataGenerator shared]];
     
     CGFloat refInMax = 800;//self.fakeUserGlobalMaxSensorValue;
     CGFloat refInMin = 760;//self.fakeUserGlobalMinSensorValue;

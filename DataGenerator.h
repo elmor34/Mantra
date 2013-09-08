@@ -10,7 +10,7 @@ _sharedObject = block(); \
 return _sharedObject; \
 
 
-@interface FakeDataGenerator : NSObject {
+@interface DataGenerator : NSObject {
     int inhaleCheck;
     int exhaleCheck;
 }
@@ -53,7 +53,6 @@ return _sharedObject; \
 + (id)shared;
 
 //This method is ridiculous, refactor
--(void)startFakeBreathingWithFakeInhaleTime:(NSNumber*)fakeInhaleTime fakeExhaleTime:(NSNumber*)fakeExhaleTime fakeMaxSens:(NSNumber*)fakeMaxSens fakeMinSens:(NSNumber*)fakeMinSens fakeMaxVol:(NSNumber *) fakeMaxVol fakeMinVol:(NSNumber *) fakeMinVol;
 -(void)startFakeBreathing;
 -(void)stopFakeBreathing;
 -(void)fakeInhale;

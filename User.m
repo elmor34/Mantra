@@ -1,5 +1,6 @@
 #import "User.h"
 
+#define kPastValueDelay 0.5 //delay between the current sample and past sample
 
 @implementation User {
     CGFloat inhaleCheck;
@@ -187,25 +188,38 @@
             }
             
             
-            //plot value mapping (these values are a little counter intuitive because the min is high and the max is low
-            CGFloat refInMax = [self.userGlobalMinStretchValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
+            /*value mapping for volume calculation (these values are a little counter intuitive because the min stretch 
+            results in a high value and the max stretch results in a low value)
+            */
+             CGFloat refInMax = [self.userGlobalMinStretchValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
             
-            //Sensor value is smallest when volume is Max
+            /*value mapping for volume calculation (these values are a little counter intuitive because the min stretch
+             results in a high value and the max stretch results in a low value)
+             */
             CGFloat refInMin = [self.userGlobalMaxStretchValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
             
             
-            //dynamic calibration block
+            
             CGFloat pastValue;
+            
+            
+            
+            CGfloat out = [self mapValuesForInput:self.rawStretchSensorValue withRangeMin:[self.userGlobalMaxStretchValue floatValue] andMax:[self.userGlobalMinStretchValue floatValue] andOutputRangeMin:0 andMax:1.0];
             CGFloat outMax = 1.0;
             CGFloat outMin = 0;
-            CGFloat in = self.rawStretchSensorValue;
+            CGFloat input = self.rawStretchSensorValue;
             CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
             self.userCurrentLungVolume = 1 - out;//inverting this value because high volume = low sensor value
           
+            
+            
+            
             pastValue = out;
             
             
-            double delayInSeconds = 0.5;
+            
+            
+            double delayInSeconds = kPastValueDelay;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 //code to be executed on the main queue after delay
@@ -215,6 +229,10 @@
     }
 }
 
+-(CGFloat)mapValuesForInput:(CGFloat) input withRangeMin:(CGFloat)inMin andMax:(CGFloat)inMax andOutputRangeMin:(CGFloat)outMin andMax:(CGFloat) outMax{
+    CGFloat output = outMax + (outMin - outMax) * (input - inMax) / (inMin - inMax);;
+    return output;
+}
 
 //Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
 -(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
@@ -276,7 +294,7 @@
         NSLog(@"coherence delta = %f" , coherenceDelta);
 }
 
-//gets called when calculateBreathCount hits a peak in lung volume
+//gets called when calculateBreathCount hits a peak in lung volume (when the stretch sensor value is smallest)
 -(void)calibrateMaxVolume{
     [self setUserCurrentMaxStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
@@ -296,7 +314,8 @@
     //[self calculateTotalBreathCoherence];
 
 }
-//gets called when calculateBreathCount hits a dip in lung volume
+//gets called when calculateBreathCount hits a dip in lung volume (when the stretch sensor value is largest)
+
 -(void)calibrateMinVolume{
     [self setUserCurrentMinStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     [self setUserCurrentMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];

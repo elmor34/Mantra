@@ -149,7 +149,7 @@
     
     [self.shape1View setProgress:(1 -[[User shared] userCurrentLungVolume]) animated:YES]; //Inverted (more air is less fill)
     
-    NSString *rawString = [NSString stringWithFormat: @"Raw: %1.1hu", [[User shared] rawStretchSensorValue]];
+    NSString *rawString = [NSString stringWithFormat: @"Raw: %1.1f", raw];
     self.rawLabel.text = rawString;
     
     

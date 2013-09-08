@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-#import "FakeDataGenerator.h"
+#import "DataGenerator.h"
 #import "DPMeterView.h"
 
 
