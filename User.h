@@ -44,19 +44,19 @@ return _sharedObject; \
 
 
 //target user breathing metrics (set in settings view)
-@property (strong, nonatomic) NSNumber *userTargetDepth; //breathing depth in percent of total calibrated lung volume
+@property (strong, nonatomic) NSNumber *userTargetVolume; //breathing depth in percent of total calibrated lung volume
 @property (strong, nonatomic) NSNumber *userTargetInhaleTime;
 @property (strong, nonatomic) NSNumber *userTargetExhaleTime;
 
 
 //Bluetooth Low Energy Connection properties
 @property (strong, nonatomic) NSNumber *connectionStrength;
-@property (readwrite) BOOL meterGravityEnabled;
 @property (strong, nonatomic) BLE *ble;
 
 //User Settings
 @property BOOL bleIsConnected;
 @property BOOL fakeDataIsOn;
+@property (readwrite) BOOL meterGravityEnabled;
 
 -(void)loadDefaults;
 
@@ -78,7 +78,7 @@ return _sharedObject; \
 -(void)calculateBreathingDeltaDeltaWithPastValue:(CGFloat)pastValue;
 
 
--(CGFloat)mapValuesForInput:(CGFloat) input withRangeMin:(CGFloat)inMin andMax:(CGFloat)inMax andOutputRangeMin:(CGFloat)outMin andMax:(CGFloat)outMax;
+-(CGFloat)mapValuesForInput:(CGFloat) input withInputRangeMin:(CGFloat)inMin andMax:(CGFloat)inMax andOutputRangeMin:(CGFloat)outMin andMax:(CGFloat)outMax;
 
 //breathing coherence calucations
 -(void)calculateTotalBreathCoherence;

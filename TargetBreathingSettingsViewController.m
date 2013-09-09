@@ -47,7 +47,7 @@
     
     [[User shared] setUserTargetInhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
     [[User shared] setUserTargetExhaleTime:[NSNumber numberWithFloat:exhaleTimeField.text.floatValue]];
-    [[User shared] setUserTargetDepth:[NSNumber numberWithFloat:1.0 - targetDepthSlider.value]];
+    [[User shared] setUserTargetVolume:[NSNumber numberWithFloat:1.0 - targetDepthSlider.value]];
     [self.view endEditing:YES];
 }
 
@@ -98,7 +98,7 @@
 - (void)sliderChanged:(UISlider *)slider {
     targetDepthLabel.text = [NSString stringWithFormat:@"%1.0f%%", slider.value * 100];
     //update target breathingdepth
-    [[User shared] setUserTargetDepth:[NSNumber numberWithFloat:targetDepthSlider.value]];
+    [[User shared] setUserTargetVolume:[NSNumber numberWithFloat:targetDepthSlider.value]];
 }
 
 - (void)didReceiveMemoryWarning

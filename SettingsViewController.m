@@ -96,7 +96,7 @@
 - (void)sliderChanged:(UISlider *)slider {
     self.targetDepthLabel.text = [NSString stringWithFormat:@"%1.0f%%", slider.value * 100];
     //update target breathingdepth 
-    [[User shared] setUserTargetDepth:[NSNumber numberWithFloat:targetDepthSlider.value]];
+    [[User shared] setUserTargetVolume:[NSNumber numberWithFloat:targetDepthSlider.value]];
 }
 
 

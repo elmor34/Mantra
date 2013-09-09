@@ -143,6 +143,9 @@
     
     double gVMax = [[User shared] userGlobalMaxVolume].doubleValue;
     double gVMin = [[User shared] userGlobalMinVolume].doubleValue;
+    
+    double uTBC = [[User shared] userTotalBreathCoherence].doubleValue;
+    double uTBCD = [[User shared] userTotalBreathCoherenceDelta].doubleValue;
   
     double bCount = [[User shared] userBreathCount];
 
@@ -163,10 +166,10 @@
     self.breathCountLabel.text = breathCount;
     
 
-    NSString *cMaxVol = [NSString stringWithFormat:@"cVMax/gVmin: %1.2f/%1.2f", cVMax, gVMax];
+    NSString *cMaxVol = [NSString stringWithFormat:@"cVMax/gVMax: %1.2f/%1.2f", cVMax, gVMax];
     self.cMaxVolLabel.text = cMaxVol;
     
-    NSString *cMinVol = [NSString stringWithFormat:@"cVMin/gVmin: %1.2f/%1.2f", cVMin, gVMin];
+    NSString *cMinVol = [NSString stringWithFormat:@"cVMin/gVMin: %1.2f/%1.2f", cVMin, gVMin];
     self.cMinVolLabel.text = cMinVol;
     
     NSString *maxSens = [NSString stringWithFormat:@"cSMax/gSMax: %1.2f/%1.2f", cSMax, gSMax];
@@ -174,6 +177,12 @@
     
     NSString *minSens = [NSString stringWithFormat:@"cSMin/gSMin: %1.2f/%1.2f", cSMin, gSMin];
     self.minSensLabel.text = minSens;
+    
+    NSString *uTBCS = [NSString stringWithFormat:@"Coherence: %1.2f", uTBC];
+    self.coherenceLabel.text = uTBCS;
+    
+    NSString *uTBCDS = [NSString stringWithFormat:@"Coherence delta: %1.2f", uTBCD];
+    self.coherenceDeltaLabel.text = uTBCDS;
     
 //    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];
 }

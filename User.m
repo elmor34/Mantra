@@ -1,6 +1,6 @@
 #import "User.h"
 
-#define kPastValueDelay 0.5 //delay between the current sample and past sample
+#define kPastValueDelay 0.1 //delay between the current sample and past sample
 
 @implementation User {
     CGFloat inhaleCheck;
@@ -23,7 +23,7 @@
     
 
     //set global values to something non-zero (they will be overwritten by the highest current values during autocalibration)
-    [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:999]];
+    [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:0]];
     [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:0]];
     
     
@@ -186,39 +186,25 @@
             if (Value > 100 && Value < 700){
                 self.rawStretchSensorValue = Value;
             }
-            
-            
+
             /*value mapping for volume calculation (these values are a little counter intuitive because the min stretch 
             results in a high value and the max stretch results in a low value)
             */
              CGFloat refInMax = [self.userGlobalMinStretchValue floatValue];//reference max determined by experimentation with sensor bands (this will calibrate dynamically)
-            
             /*value mapping for volume calculation (these values are a little counter intuitive because the min stretch
              results in a high value and the max stretch results in a low value)
              */
             CGFloat refInMin = [self.userGlobalMaxStretchValue floatValue];//reference min determined by experimentation with sensor bands (this will calibrate dynamically)
-            
-            
-            
             CGFloat pastValue;
-            
-            
-            
-            CGfloat out = [self mapValuesForInput:self.rawStretchSensorValue withRangeMin:[self.userGlobalMaxStretchValue floatValue] andMax:[self.userGlobalMinStretchValue floatValue] andOutputRangeMin:0 andMax:1.0];
-            CGFloat outMax = 1.0;
-            CGFloat outMin = 0;
-            CGFloat input = self.rawStretchSensorValue;
-            CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
-            self.userCurrentLungVolume = 1 - out;//inverting this value because high volume = low sensor value
-          
-            
-            
-            
-            pastValue = out;
-            
-            
-            
-            
+//            CGFloat outMax = 1.0;
+//            CGFloat outMin = 0;
+//            CGFloat input = self.rawStretchSensorValue;
+//            CGFloat output = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
+            CGFloat output = [self mapValuesForInput:self.rawStretchSensorValue withInputRangeMin:refInMin andMax:refInMax andOutputRangeMin:0 andMax:1.0];
+            self.userCurrentLungVolume = 1 - output;//inverting this value because high volume = low sensor value
+
+            pastValue = output;
+            [self calculateTotalBreathCoherence];
             double delayInSeconds = kPastValueDelay;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -229,12 +215,12 @@
     }
 }
 
--(CGFloat)mapValuesForInput:(CGFloat) input withRangeMin:(CGFloat)inMin andMax:(CGFloat)inMax andOutputRangeMin:(CGFloat)outMin andMax:(CGFloat) outMax{
+-(CGFloat)mapValuesForInput:(CGFloat) input withInputRangeMin:(CGFloat)inMin andMax:(CGFloat)inMax andOutputRangeMin:(CGFloat)outMin andMax:(CGFloat) outMax{
     CGFloat output = outMax + (outMin - outMax) * (input - inMax) / (inMin - inMax);;
     return output;
 }
 
-//Calculate the delta by comparing the passed in sample from ~0.5 seconds ago to the current sample
+//Calculate the delta by comparing the passed in sample from ~kPastValueDelay seconds ago to the current sample
 -(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
     CGFloat delta = pastValue - [[User shared] userCurrentLungVolume];
     NSLog(@"\n Delta:%f \n", delta);
@@ -243,7 +229,7 @@
     
     CGFloat pastValueDelta = delta;
     //Subsample the fake value for calculating the delta
-    double delayInSeconds = 0.5;
+    double delayInSeconds = kPastValueDelay;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
@@ -260,27 +246,26 @@
 
 
 -(void)calculateTotalBreathCoherence{
-    CGFloat tempbreathCount = [[User shared] userBreathCount];
-    CGFloat tempUserTargetDepth = [[User shared] userTargetDepth].floatValue;
-    CGFloat tempTotalCoherence;
-    CGFloat tempCurrentCoherence;
     CGFloat pastValue;
-    CGFloat userCurrentMaxVolumeCalibratedVolume = self.userCurrentMaxVolume.floatValue;
+    CGFloat breathCount = [[User shared] userBreathCount];
+    CGFloat userTargetMaxVolume = [[User shared] userTargetVolume].floatValue;
+    CGFloat userCurrentMaxVolume = self.userCurrentMaxVolume.floatValue;
     
-    CGFloat targetTotalVolume = tempbreathCount * tempUserTargetDepth;
-    //make sure calibratedMaxVolume is getting caluclated first so this isn't nil
-    CGFloat currentVolume = tempbreathCount * self.userCurrentMaxVolume.floatValue;
     
-    //Total coherence = target volume vs. volume breathed (check every complete inhale)
-    //Current coherence = delta target volume vs. delta volume breathed (check every half complete breath)
+    CGFloat userTargetTotalVolume = breathCount * userTargetMaxVolume;
+    CGFloat userCurrentTotalVolume = breathCount * userCurrentMaxVolume;
     
-    //make sure current user calibrated
-    tempTotalCoherence = targetTotalVolume/userCurrentMaxVolumeCalibratedVolume;
+    //totalCoherence = target volume vs. volume breathed (check every complete inhale)
+    CGFloat totalCoherence = userTargetTotalVolume/userCurrentTotalVolume;
     
-    self.userTotalBreathCoherence = [NSNumber numberWithFloat:tempTotalCoherence];
+   
     
-    pastValue = tempTotalCoherence;
-    double delayInSeconds = 0.5;
+    
+    
+    self.userTotalBreathCoherence = [NSNumber numberWithFloat:totalCoherence];
+    
+    pastValue = totalCoherence;
+    double delayInSeconds = kPastValueDelay;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
@@ -300,11 +285,11 @@
     [self setUserCurrentMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     
     //the global max stretch should always be <= current max stretch is low
-    if (self.rawStretchSensorValue < self.userGlobalMaxStretchValue.floatValue){
+    if (self.rawStretchSensorValue < self.userGlobalMaxStretchValue.floatValue || self.userGlobalMaxStretchValue.floatValue == 0){
         [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     }
     //the global max volume should always be >= current max volume
-    if (self.userCurrentLungVolume < self.userGlobalMaxVolume.floatValue){
+    if (self.userCurrentLungVolume > self.userGlobalMaxVolume.floatValue || self.userGlobalMaxVolume.floatValue == 0){
         [self setUserGlobalMaxVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     }
     
@@ -321,11 +306,11 @@
     [self setUserCurrentMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     
     //the global min stretch should always be >= currentMin min stretch is high
-    if (self.rawStretchSensorValue > self.userGlobalMinStretchValue.floatValue){
+    if (self.rawStretchSensorValue > self.userGlobalMinStretchValue.floatValue || self.userGlobalMinStretchValue.floatValue == 0){
         [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:self.rawStretchSensorValue]];
     }
     //the global min volume should always be <= current min volume
-     if (self.userCurrentLungVolume > self.userGlobalMinVolume.floatValue){
+     if (self.userCurrentLungVolume < self.userGlobalMinVolume.floatValue || self.userGlobalMinVolume == 0){
         [self setUserGlobalMinVolume:[NSNumber numberWithFloat:self.userCurrentLungVolume]];
     }
     

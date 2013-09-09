@@ -1,6 +1,9 @@
 #import "DataGenerator.h"
 #import "User.h"
 
+#define kSampleRate 0.05
+#define kPastValueDelay 0.05 //delay between the current sample and past sample
+
 
 @implementation DataGenerator {}
 
@@ -29,10 +32,10 @@
 
 -(void)startFakeBreathing{
     
-    self.sensorVal = 770;
+    self.sensorVal = 770;//have to supply a sensor value to start
     self.fakeUserCurrentSensorValue = self.sensorVal;
     self.fakeUserBreathingOn = YES;
-    self.sampleTime = .05; //sample rate for the fake sensor is 100 ms
+    self.sampleTime = kSampleRate; //sample rate for the fake sensor is 100 ms
     
     /*incrementSize needs to be calculated because the volume needs to increment at a more natural rate.  You must get to the maxVolume in inhaleTime - so the natural increment size is determined by taking (the amount you need to increment) / (the number of samples you will take)
      */
@@ -129,24 +132,30 @@
      postNotificationName:@"fakeSensorValueChanged"
      object:[DataGenerator shared]];
     
-    CGFloat refInMax = 800;//self.fakeUserGlobalMaxSensorValue;
-    CGFloat refInMin = 760;//self.fakeUserGlobalMinSensorValue;
-    
-
+    CGFloat refInMax = self.fakeUserGlobalMaxStretchValue;
+    CGFloat refInMin = self.fakeUserGlobalMinStretchValue;
     CGFloat pastValue;
-    CGFloat outMax = 1.0;
-    CGFloat outMin = 0;
-    CGFloat in = self.fakeUserCurrentSensorValue;
-    [[User shared] setRawStretchSensorValue:self.fakeUserCurrentSensorValue];
-    CGFloat out = outMax + (outMin - outMax) * (in - refInMax) / (refInMin - refInMax);
+    
+    CGFloat output = [[User shared] mapValuesForInput:self.fakeUserCurrentSensorValue withInputRangeMin:refInMin andMax:refInMax andOutputRangeMin:0 andMax:1.0];
+
+
+//    CGFloat outMax = 1.0;
+//    CGFloat outMin = 0;
+//    CGFloat input = self.fakeUserCurrentSensorValue;
+    
+//    CGFloat output = outMax + (outMin - outMax) * (input - refInMax) / (refInMin - refInMax);
   
-    self.fakeUserCurrentVolume = 1 - out;//inverting this value because high volume = low sensor value
+    
+    
+    [[User shared] setRawStretchSensorValue:self.fakeUserCurrentSensorValue];
+    self.fakeUserCurrentVolume = 1 - output;//inverting this value because high volume = low sensor value
     [[User shared] setUserCurrentLungVolume:self.fakeUserCurrentVolume];
     [[User shared] calculateBreathCount];
-    //Store a value to compare to the subsample ~0.5 seconds later
-    pastValue = out;
+    [[User shared] calculateTotalBreathCoherence];
+    //Store a value to compare to the subsample ~kPastValueDelay seconds later
+    pastValue = output;
     //Subsample the fake value for calculating the delta
-    double delayInSeconds = 0.5;
+    double delayInSeconds = kPastValueDelay;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay

@@ -42,6 +42,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *maxSensLabel;
 @property (strong, nonatomic) IBOutlet UILabel *minSensLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *developerMenu;
+@property (strong, nonatomic) IBOutlet UILabel *coherenceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *coherenceDeltaLabel;
 
 
 -(void)setGravity;
