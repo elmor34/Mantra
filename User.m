@@ -250,13 +250,15 @@
     CGFloat breathCount = [[User shared] userBreathCount];
     CGFloat userTargetMaxVolume = [[User shared] userTargetVolume].floatValue;
     CGFloat userCurrentMaxVolume = self.userCurrentMaxVolume.floatValue;
-    
+    CGFloat userCurrentMinVolume = self.userCurrentMinVolume.floatValue;
+    CGFloat userGlobalMaxVolume = self.userGlobalMaxVolume.floatValue;
+
     
     CGFloat userTargetTotalVolume = breathCount * userTargetMaxVolume;
     CGFloat userCurrentTotalVolume = breathCount * userCurrentMaxVolume;
     
     //totalCoherence = target volume vs. volume breathed (check every complete inhale)
-    CGFloat totalCoherence = userTargetTotalVolume/userCurrentTotalVolume;
+    CGFloat totalCoherence = userCurrentTotalVolume/userTargetTotalVolume;
     
    
 
@@ -354,6 +356,5 @@
     [[User shared] setUserBreathCount:tmpBreathCount];
     NSLog(@"\nbreath count = %f\n", [[User shared] userBreathCount]);
 }
-
 
 @end

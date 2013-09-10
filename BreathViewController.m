@@ -41,8 +41,8 @@
 
     
     //Set initial apperance (white)
-    [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:0.7f]];
-    [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.5f]];
+    [[DPMeterView appearance] setTrackTintColor:[UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.0f]];
+    [[DPMeterView appearance] setProgressTintColor:[UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.0f]];
     
     //Lungs shape
     [self.shape1View setShape:[UIBezierPath heartShape:self.shape1View.frame].CGPath];
@@ -184,7 +184,11 @@
     NSString *uTBCDS = [NSString stringWithFormat:@"Coherence delta: %1.2f", uTBCD];
     self.coherenceDeltaLabel.text = uTBCDS;
     
-//    self.connectionStrengthLabel.text = [[[User shared] connectionStrength] stringValue];
+    
+    //Set lung color
+    [[DPMeterView appearance] setTrackTintColor:[self setLungColor]];
+    [[DPMeterView appearance] setProgressTintColor:[self setLungColor]];
+
 }
 
 
@@ -204,8 +208,12 @@
     CGFloat red = 255;
     CGFloat green = 0;
     CGFloat blue = 0;
+    CGFloat coherence = [[User shared] userTotalBreathCoherence].floatValue;
+    CGFloat coherenceDelta = [[User shared] userTotalBreathCoherenceDelta].floatValue;
     
- 
+    green = 1 - coherence * 255;
+    blue = 1 - coherence * 255;
+    red = 255 * coherence;
     
         // Timer check 
     
