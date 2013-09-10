@@ -54,7 +54,7 @@
         //hide keyboard
         [self.view endEditing:YES];
         
-        //restart fake data generation with updated values pulled from the UI
+        //restart data generation with updated values pulled from the UI
         [self updateFakeDataGeneratorProperties];
         [[DataGenerator shared] startFakeBreathing];
 

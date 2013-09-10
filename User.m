@@ -165,10 +165,10 @@
         if (data[i] == 0x0A)
         {
             if (data[i+1] == 0x01)
-                NSLog(@"coo");
+                NSLog(@"digital in on");
             //   swDigitalIn.on = true;
             else
-                NSLog(@"lol");
+                NSLog(@"digital in off");
             //   swDigitalIn.on = false;
         }
         else if (data[i] == 0x0B)
@@ -259,10 +259,16 @@
     CGFloat totalCoherence = userTargetTotalVolume/userCurrentTotalVolume;
     
    
-    
-    
+
     
     self.userTotalBreathCoherence = [NSNumber numberWithFloat:totalCoherence];
+    
+    //filter out glitches in coherence less than zero or more than 1
+//    if (self.userTotalBreathCoherence.floatValue > 1.0)
+//        self.userTotalBreathCoherence = [NSNumber numberWithFloat:1.0];
+//    if (self.userTotalBreathCoherence.floatValue < 0)
+//        self.userTotalBreathCoherence = [NSNumber numberWithFloat:0];
+    
     
     pastValue = totalCoherence;
     double delayInSeconds = kPastValueDelay;
@@ -318,25 +324,26 @@
     NSLog(@"Min sensor = %hu" , self.rawStretchSensorValue);
 }
 
-
-
 //number of breaths taken with some target breathing pattern
 -(void)calculateBreathCount{
     double tmpBreathCount = [[User shared] userBreathCount];
     
     if (exhaleCheck == 0) {
-        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue >= 0.05){
-            NSLog(@"Max inhale");
+        //change in the rate of the rate of breathing will be positive and non-zero peak Inhale
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue > 0){
+            NSLog(@"Max Inhale");
+            //increment breath count by a half breath
             tmpBreathCount = tmpBreathCount + 0.5;
             exhaleCheck++;//increment to prevent re-counting inhale
             inhaleCheck = 0;//set to zero to allow counting of exhale
             [self calibrateMinVolume];
         }
     }
-    
     if (inhaleCheck == 0){
-        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue <= -0.05){
+        //change in the rate of the rate of breathing will be negative and non-zero peak exhale
+        if ([[User shared] userCurrentBreathingDeltaDelta].floatValue < 0){
             NSLog(@"Max Exhale");
+            //increment breath count by a half breath
             tmpBreathCount = tmpBreathCount + 0.5;
             inhaleCheck++;//increment to prevent re-counting exhale
             exhaleCheck = 0;//set to zero to allow counting of exhale

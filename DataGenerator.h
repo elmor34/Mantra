@@ -58,7 +58,7 @@ return _sharedObject; \
 -(void)fakeInhale;
 -(void)fakeExhale;
 -(void)printFakeDataToConsole;
--(void)loadFakeLungValIntoMantraUser;
+-(void)loadGeneratedDataIntoUser;
 
     
 @end

@@ -8,7 +8,6 @@
 @implementation DataGenerator {}
 
 
-    
 + (DataGenerator *)shared
     {
         DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
@@ -44,7 +43,6 @@
     [self fakeInhale];
 }
 
-
 -(void)stopFakeBreathing{
     //this might be a problem later, might not want to set these to 0
     [self.inhaleTimer invalidate];
@@ -70,7 +68,7 @@
             }
             self.fakeUserCurrentSensorValue = self.fakeUserCurrentSensorValue + self.deltaSize;
             [self printFakeDataToConsole];
-            [self loadFakeLungValIntoMantraUser];
+            [self loadGeneratedDataIntoUser];
         }
         else{
             //set exhale delta size
@@ -100,7 +98,7 @@
                         
             self.fakeUserCurrentSensorValue = self.fakeUserCurrentSensorValue + self.deltaSize;
             [self printFakeDataToConsole];
-            [self loadFakeLungValIntoMantraUser];
+            [self loadGeneratedDataIntoUser];
 
         }
         else{
@@ -126,7 +124,7 @@
 }
 
 
--(void)loadFakeLungValIntoMantraUser{//refactor, this is not lungVal anymore
+-(void)loadGeneratedDataIntoUser{//refactor, this is not lungVal anymore
     //Post notification that sensor value changed
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"fakeSensorValueChanged"
@@ -138,15 +136,6 @@
     
     CGFloat output = [[User shared] mapValuesForInput:self.fakeUserCurrentSensorValue withInputRangeMin:refInMin andMax:refInMax andOutputRangeMin:0 andMax:1.0];
 
-
-//    CGFloat outMax = 1.0;
-//    CGFloat outMin = 0;
-//    CGFloat input = self.fakeUserCurrentSensorValue;
-    
-//    CGFloat output = outMax + (outMin - outMax) * (input - refInMax) / (refInMin - refInMax);
-  
-    
-    
     [[User shared] setRawStretchSensorValue:self.fakeUserCurrentSensorValue];
     self.fakeUserCurrentVolume = 1 - output;//inverting this value because high volume = low sensor value
     [[User shared] setUserCurrentLungVolume:self.fakeUserCurrentVolume];
