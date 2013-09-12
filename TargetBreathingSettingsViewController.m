@@ -8,6 +8,7 @@
 
 #import "TargetBreathingSettingsViewController.h"
 #import "User.h"
+#import "NMRangeSlider.h"
 
 @interface TargetBreathingSettingsViewController ()
 

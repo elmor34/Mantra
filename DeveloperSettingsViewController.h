@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NMRangeSlider.h"
 
 @interface DeveloperSettingsViewController : UITableViewController
 
@@ -22,6 +23,14 @@
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMaxVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
+
+
+    @property (strong, nonatomic) IBOutlet NMRangeSlider *generatedVolumeRangeSlider;
+    @property (strong, nonatomic) IBOutlet UILabel *generatedVolumeRangeLowLabel;
+    @property (strong, nonatomic) IBOutlet UILabel *generatedVolumeRangeHighLabel;
+
+
+
 
     -(IBAction)fakeUserSwitchTouched:(id)sender;
     -(void)updateFakeDataGeneratorProperties;

@@ -30,8 +30,17 @@
     [self.view addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
     
-    [super viewDidLoad];	
+    [self configureRangeSliders];
+    [super viewDidLoad];
 }
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    
+}
+
 
 -(void)updateFakeDataGeneratorProperties{
     
@@ -46,6 +55,54 @@
     [[DataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
     [[DataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text floatValue]];
     [[DataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text floatValue]];
+    
+}
+
+- (void) configureRangeSliders
+{
+    self.generatedVolumeRangeSlider.minimumValue = 0;
+    self.generatedVolumeRangeSlider.maximumValue = 100;
+    
+    self.generatedVolumeRangeSlider.lowerValue = 0;
+
+    self.generatedVolumeRangeSlider.upperValue = 100;
+    
+    self.generatedVolumeRangeSlider.minimumRange = 10;
+    
+    self.generatedSensorRangeSlider.minimumValue = 750;
+    self.generatedSensorRangeSlider.maximumValue = 800;
+    
+    self.generatedSensorRangeSlider.lowerValue = 750;
+    self.generatedSensorRangeSlider.upperValue = 800;
+    
+    self.generatedSensorRangeSlider.minimumRange = 10;
+}
+
+- (IBAction)sliderRangeSliderChanged:(NMRangeSlider*)sender {
+    CGPoint lowerCenter;
+    lowerCenter.x = (sender.lowerCenter.x + sender.frame.origin.x);
+    lowerCenter.y = (sender.center.y - 20.0f);
+    
+    
+    UILabel *tempLowLabel;
+    UILabel *tempHighLabel;
+    if (sender.tag == 1){
+        tempLowLabel = self.generatedVolumeRangeLowLabel;
+        tempHighLabel = self.generatedVolumeRangeHighLabel;
+    }
+    if (sender.tag == 2){
+        tempLowLabel = self.generatedSensorRangeLowLabel;
+        tempHighLabel = self.generatedSensorRangeHighLabel;
+    }
+    
+    tempLowLabel.center = lowerCenter;
+    tempLowLabel.text = [NSString stringWithFormat:@"%d", (int)sender.lowerValue];
+    
+    CGPoint upperCenter;
+    upperCenter.x = (sender.upperCenter.x + sender.frame.origin.x);
+    upperCenter.y = (sender.center.y - 20.0f);
+    tempHighLabel.center = upperCenter;
+    tempHighLabel.text = [NSString stringWithFormat:@"%d", (int)sender.upperValue];
 }
 
 - (void)hideKeyboard{
