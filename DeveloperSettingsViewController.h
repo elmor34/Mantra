@@ -20,8 +20,6 @@
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMaxStretchTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinStretchTextField;
-    @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMaxVolumeTextField;
-    @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;
 
 

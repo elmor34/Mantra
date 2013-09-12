@@ -53,8 +53,6 @@
     [[DataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text floatValue]];
     [[DataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
     [[DataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserGlobalMaxVolume:[self.fakeUserGlobalMaxVolumeTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserGlobalMinVolume:[self.fakeUserGlobalMinVolumeTextField.text floatValue]];
     
 }
 
@@ -68,14 +66,6 @@
     self.generatedVolumeRangeSlider.upperValue = 100;
     
     self.generatedVolumeRangeSlider.minimumRange = 10;
-    
-    self.generatedSensorRangeSlider.minimumValue = 750;
-    self.generatedSensorRangeSlider.maximumValue = 800;
-    
-    self.generatedSensorRangeSlider.lowerValue = 750;
-    self.generatedSensorRangeSlider.upperValue = 800;
-    
-    self.generatedSensorRangeSlider.minimumRange = 10;
 }
 
 - (IBAction)sliderRangeSliderChanged:(NMRangeSlider*)sender {
@@ -83,27 +73,33 @@
     lowerCenter.x = (sender.lowerCenter.x + sender.frame.origin.x);
     lowerCenter.y = (sender.center.y - 20.0f);
     
-    
-    UILabel *tempLowLabel;
-    UILabel *tempHighLabel;
-    if (sender.tag == 1){
-        tempLowLabel = self.generatedVolumeRangeLowLabel;
-        tempHighLabel = self.generatedVolumeRangeHighLabel;
-    }
-    if (sender.tag == 2){
-        tempLowLabel = self.generatedSensorRangeLowLabel;
-        tempHighLabel = self.generatedSensorRangeHighLabel;
-    }
-    
-    tempLowLabel.center = lowerCenter;
-    tempLowLabel.text = [NSString stringWithFormat:@"%d", (int)sender.lowerValue];
+    self.generatedVolumeRangeLowLabel.center = lowerCenter;
+    self.generatedVolumeRangeLowLabel.text = [NSString stringWithFormat:@"%d", (int)sender.lowerValue];
+
+  
     
     CGPoint upperCenter;
     upperCenter.x = (sender.upperCenter.x + sender.frame.origin.x);
     upperCenter.y = (sender.center.y - 20.0f);
-    tempHighLabel.center = upperCenter;
-    tempHighLabel.text = [NSString stringWithFormat:@"%d", (int)sender.upperValue];
+    self.generatedVolumeRangeHighLabel.center = upperCenter;
+    self.generatedVolumeRangeHighLabel.text = [NSString stringWithFormat:@"%d", (int)sender.upperValue];
+    
+    //recalculate sensor range
+    int lowPercent = (int)sender.lowerValue/100;
+    int highPercent = (int)sender.upperValue/100;
+    
+    int minStretch = [self.fakeUserMinStretchTextField.text integerValue];
+    int maxStretch = [self.fakeUserMaxStretchTextField.text integerValue];
+    
+    
+    int dif = (int)(maxStretch - minStretch);
+    
+    [self.fakeUserMinStretchTextField setText: [NSString stringWithFormat:@"%d",minStretch + (dif * lowPercent)]];
+    [self.fakeUserMaxStretchTextField setText: [NSString stringWithFormat:@"%d",maxStretch - (dif * (1-highPercent))]];
+
 }
+
+
 
 - (void)hideKeyboard{
     
@@ -123,31 +119,25 @@
 
 -(BOOL)checkTextFieldValues{
     
-//    if (([self.fakeUserInhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserInhaleTimeTextField.text floatValue] > 300))
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alertView show];
-//        return NO;
-//    }
-//    if (([self.fakeUserExhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserExhaleTimeTextField.text floatValue] > 300))
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a exhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alertView show];
-//        return NO;
-//    }
-//    if (([self.fakeUserMinVolumeTextField.text floatValue] < [[User shared] userCalibratedMinSensorValue].floatValue) || ([self.fakeUserMinVolumeTextField.text floatValue] > [[User shared] userCalibratedMaxSensorValue].floatValue))
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a minimum sensor value between %1.0f and %1.0f", [[User shared] userCalibratedMinSensorValue].floatValue, [[User shared] userCalibratedMaxSensorValue].floatValue] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alertView show];
-//        return NO;
-//    }
-//    if (([self.fakeUserMaxVolumeTextField.text floatValue] < [[User shared] userCalibratedMinSensorValue].floatValue) || ([self.fakeUserMaxVolumeTextField.text floatValue] > [[User shared] userCalibratedMaxSensorValue].floatValue))
-//    {
-//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a maximum sensor value between %1.0f and %1.0f", [[User shared] userCalibratedMinSensorValue].floatValue, [[User shared] userCalibratedMaxSensorValue].floatValue] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alertView show];
-//        return NO;
-//    }
-     return YES;
+    if (([self.fakeUserInhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserInhaleTimeTextField.text floatValue] > 300))
+    {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a inhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+        return NO;
+    }
+    if (([self.fakeUserExhaleTimeTextField.text floatValue] < 0.5) || ([self.fakeUserExhaleTimeTextField.text floatValue] > 300))
+    {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a exhale time between 0.5 seconds and 300 seconds"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+        return NO;
+    }
+    if ([self.fakeUserMinStretchTextField.text floatValue] < [self.fakeUserGlobalMinStretchTextField.text floatValue] || [self.fakeUserMaxStretchTextField.text floatValue] > [self.fakeUserGlobalMaxStretchTextField.text floatValue] )
+    {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"Please choose a minimum sensor value between %1.0f and %1.0f", [self.fakeUserGlobalMinStretchTextField.text floatValue], [self.fakeUserGlobalMaxStretchTextField.text floatValue]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+        return NO;
+    }
+         return YES;
 
 }
 
