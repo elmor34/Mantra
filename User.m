@@ -19,18 +19,16 @@
 
     self = [super init];
     
-   //init with values to avoid calibration on nil properties (these will quickly be cleared with real values)
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.userSettings = userDefaults;
     
+    [self loadUserSettings];
 
-    //set global values to something non-zero (they will be overwritten by the highest current values during autocalibration)
     [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:0]];
     [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:0]];
     
-    
-    //set the defaults or load MantraUser from storage
-    self.userBreathCount = 0;
-    self.meterGravityEnabled = YES;
     self.fakeDataIsOn = NO;
+    
     //set up the BLE
     self.ble = [[BLE alloc] init];
     [self.ble controlSetup:1];
@@ -39,16 +37,37 @@
     return self;
 }
 
--(void)loadDefaults{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *key = [NSString stringWithFormat:@"userCurrentInhaleTime"];
-    [userDefaults setObject:self.userCurrentInhaleTime forKey:key];
+-(void)saveUserSettings{
+    NSLog(@"ello");
+    [self.userSettings setBool:self.targetBreathingIsOn forKey:@"targetBreathingIsOn"];
+    [self.userSettings setObject:self.userTargetExhaleTime forKey:@"userTargetExhaleTime"];
+    [self.userSettings setObject:self.userTargetInhaleTime forKey:@"userTargetInhaleTime"];
+    [self.userSettings setObject:self.userTargetVolume forKey:@"userTargetVolume"];
+    
+}
+
+-(void)loadUserSettings{
+    [self.userSettings synchronize];
+
+    [self setTargetBreathingIsOn:[[self userSettings] boolForKey:@"targetBreathingIsOn"]];
+    [self setUserTargetExhaleTime:[[self userSettings] objectForKey:@"userTargetExhaleTime"]];
+    [self setUserTargetInhaleTime:[[self userSettings] objectForKey:@"userTargetInhaleTime"]];
+    [self.userSettings setObject:self.userTargetVolume forKey:@"userTargetVolume"];
+    
     
 }
 
 
 - (BOOL) isFirstRun
 {
+    //set the first run User defaults
+    self.userBreathCount = 0;
+    self.targetBreathingIsOn = NO;
+    self.userTargetVolume = [NSNumber numberWithFloat:1];
+    self.userTargetExhaleTime = [NSNumber numberWithFloat:4];
+    self.userTargetInhaleTime = [NSNumber numberWithFloat:4];
+    self.meterGravityIsOn = YES;
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"isFirstRun"])
     {

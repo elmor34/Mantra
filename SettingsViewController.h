@@ -18,22 +18,16 @@
 //might want to copy connection view controller and not have these be properties
 @property (strong, nonatomic) IBOutlet UILabel *connectionLabel;
 @property (strong, nonatomic) IBOutlet UISwitch *gravityMeterSwitch;
-@property (strong, nonatomic) IBOutlet UISwitch *targetBreathingSwitch;
-@property (strong, nonatomic) IBOutlet UIButton *targetBreathingInfoButton;
-@property (strong, nonatomic) IBOutlet UITextField *inhaleTimeField;
-@property (strong, nonatomic) IBOutlet UITextField *exhaleTimeField;
-@property (strong, nonatomic) IBOutlet UITextField *breathingRateField;
-@property (strong, nonatomic) IBOutlet UILabel *targetDepthLabel;
-@property (strong, nonatomic) IBOutlet UISlider *targetDepthSlider;
+
 
 @property (strong, nonatomic) IBOutlet UITableViewCell *targetBreathingCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *inhaleTimeCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *exhaleTimeCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *breathingRateCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *targetDepthCell;
+
 
 - (IBAction)gravitySwitchTouched:(id)sender;
 - (IBAction)targetBreathingSwitchTouched:(id)sender;
 - (IBAction)targetBreathingInfoButtonTouched:(id)sender;
+
+//Update persistent user settings
+-(void)updateUserSettings;
 
 @end

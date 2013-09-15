@@ -33,5 +33,9 @@
     -(IBAction)fakeUserSwitchTouched:(id)sender;
     -(void)updateFakeDataGeneratorProperties;
 
+
+//Update persistent user settings
+-(void)updateUserSettings;
+
     
 @end

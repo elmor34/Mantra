@@ -194,7 +194,7 @@
 
 - (void)setGravity
 {
-    if ([[User shared] meterGravityEnabled] == YES) {
+    if ([[User shared] meterGravityIsOn] == YES) {
         [self.shape1View startGravity];
         NSLog(@"Gravity has started");
     }

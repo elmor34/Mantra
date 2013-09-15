@@ -31,4 +31,10 @@
 -(void)bleDisconnected;
 - (IBAction)toggleGravity;
 -(void)updateConnectionButtonState;
+
+
+//Update persistent user settings
+-(void)updateUserSettings;
+
+
 @end

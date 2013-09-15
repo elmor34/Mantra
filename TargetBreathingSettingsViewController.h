@@ -34,4 +34,8 @@
 - (IBAction)targetBreathingInfoButtonTouched:(id)sender;
 - (IBAction)targetBreathingSwitchTouched:(id)sender;
 
+//Manage user settings from NSUserDefaults
+-(void)saveUserSettings;
+-(void)loadUserSettings;
+
 @end

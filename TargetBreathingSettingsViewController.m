@@ -29,26 +29,54 @@
 {
     [super viewDidLoad];
 
+    
+    [self loadUserSettings];
+
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
     
     self.view.userInteractionEnabled = TRUE;
     [super viewDidLoad];
-    inhaleTimeCell.hidden = YES;
-    exhaleTimeCell.hidden = YES;
-    breathingRateCell.hidden = YES;
-    targetDepthCell.hidden =YES;
+    
     
     [targetDepthSlider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+
+}
+
+-(void)saveUserSettings{
+    //Target breathing settings to User properties
+    [[User shared] setTargetBreathingIsOn:targetBreathingSwitch.isOn];
+    [[User shared] setUserTargetExhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
+    [[User shared] setUserTargetInhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
+    [[User shared] setUserTargetVolume:[NSNumber numberWithFloat:1.0 - targetDepthSlider.value]];
+
+    //Save to NSUserDefaults
+    [[User shared] saveUserSettings];
+}
+
+-(void)loadUserSettings{
+    
+    //Load User settings into User properties from NSUserDefaults
+    [[User shared] loadUserSettings];
+    
+    [targetBreathingSwitch setOn:[[User shared] targetBreathingIsOn]];
+    [exhaleTimeField setText:[NSString stringWithFormat:@"%@", [[User shared] userTargetExhaleTime]]];
+    [inhaleTimeField setText:[NSString stringWithFormat:@"%@", [[User shared] userTargetInhaleTime]]];
+    [targetDepthSlider setValue:[[User shared] userTargetVolume].floatValue];
+    [targetDepthLabel setText:[NSString stringWithFormat:@"%1.0f%%", targetDepthSlider.value*100]];
+    [self updateUIState];
+    
 }
 
 - (void)hideKeyboard{
     //update field values on keyboard hide
-    
-    [[User shared] setUserTargetInhaleTime:[NSNumber numberWithFloat:inhaleTimeField.text.floatValue]];
-    [[User shared] setUserTargetExhaleTime:[NSNumber numberWithFloat:exhaleTimeField.text.floatValue]];
-    [[User shared] setUserTargetVolume:[NSNumber numberWithFloat:1.0 - targetDepthSlider.value]];
+    [self saveUserSettings];
     [self.view endEditing:YES];
 }
 
@@ -56,9 +84,8 @@
     //sexy modal with instructions
 }
 
-- (IBAction)targetBreathingSwitchTouched:(id)sender
-{
-    if ([sender isOn]) {
+-(void)updateUIState{
+    if ([targetBreathingSwitch isOn]) {
         inhaleTimeCell.hidden = NO;
         exhaleTimeCell.hidden = NO;
         breathingRateCell.hidden = NO;
@@ -70,6 +97,11 @@
         breathingRateCell.hidden = YES;
         targetDepthCell.hidden = YES;
     }
+}
+- (IBAction)targetBreathingSwitchTouched:(id)sender
+{
+    [self updateUIState];
+    [self saveUserSettings];
 }
 
 -(BOOL)checkTextFieldValues{

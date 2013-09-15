@@ -13,7 +13,25 @@ return _sharedObject; \
 @interface User : NSObject <BLEDelegate>
 
 //Storage for user settings
-@property (strong, nonatomic) NSUserDefaults *userDefaults;
+@property (strong, nonatomic) NSUserDefaults *userSettings;
+
+-(void)loadUserSettings;
+-(void)saveUserSettings;
+
+
+
+//User Settings
+@property BOOL bleIsConnected;
+
+@property BOOL fakeDataIsOn;
+
+@property BOOL meterGravityIsOn;
+
+@property BOOL targetBreathingIsOn;
+@property (strong, nonatomic) NSNumber *userTargetVolume; //breathing depth in percent of total calibrated lung volume
+@property (strong, nonatomic) NSNumber *userTargetInhaleTime;
+@property (strong, nonatomic) NSNumber *userTargetExhaleTime;
+
 
 
 //current user breathing metrics
@@ -45,23 +63,9 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userGlobalMinVolume;//value between 0 and 1
 
 
-
-//target user breathing metrics (set in settings view)
-@property (strong, nonatomic) NSNumber *userTargetVolume; //breathing depth in percent of total calibrated lung volume
-@property (strong, nonatomic) NSNumber *userTargetInhaleTime;
-@property (strong, nonatomic) NSNumber *userTargetExhaleTime;
-
-
 //Bluetooth Low Energy Connection properties
 @property (strong, nonatomic) NSNumber *connectionStrength;
 @property (strong, nonatomic) BLE *ble;
-
-//User Settings
-@property BOOL bleIsConnected;
-@property BOOL fakeDataIsOn;
-@property (readwrite) BOOL meterGravityEnabled;
-
--(void)loadDefaults;
 
 
 //Bluetooth Low Energy delegate methods
@@ -93,6 +97,7 @@ return _sharedObject; \
 
 + (id)shared;
 - (BOOL) isFirstRun;
+
 
 
 @end
