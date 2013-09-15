@@ -16,8 +16,8 @@
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserExhaleTimeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxStretchTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinStretchTextField;
-    @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxVolumeTextField;
-    @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
+//    @property (strong, nonatomic) IBOutlet UITextField *fakeUserMaxVolumeTextField;
+//    @property (strong, nonatomic) IBOutlet UITextField *fakeUserMinVolumeTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMaxStretchTextField;
     @property (strong, nonatomic) IBOutlet UITextField *fakeUserGlobalMinStretchTextField;
     @property (strong, nonatomic) IBOutlet UISwitch *fakeUserSwitch;

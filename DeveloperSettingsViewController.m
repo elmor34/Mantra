@@ -47,12 +47,12 @@
     //Set all the necessary FakeDataGenerator properties
     [[DataGenerator shared] setFakeUserInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
     [[DataGenerator shared] setFakeUserExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
-    [[DataGenerator shared] setFakeUserCurrentMaxStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserCurrentMinStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserCurrentMaxVolumeValue:[self.fakeUserMaxVolumeTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserCurrentMinVolumeValue:[self.fakeUserMinVolumeTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserCurrentMaxStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserCurrentMinStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserCurrentMaxVolumeValue:self.generatedVolumeRangeSlider.upperValue/100];
+    [[DataGenerator shared] setFakeUserCurrentMinVolumeValue:self.generatedVolumeRangeSlider.lowerValue/100];
+    [[DataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
     
 }
 
@@ -85,21 +85,27 @@
     self.generatedVolumeRangeHighLabel.text = [NSString stringWithFormat:@"%d", (int)sender.upperValue];
     
     //recalculate sensor range
-    int lowPercent = (int)sender.lowerValue/100;
-    int highPercent = (int)sender.upperValue/100;
+    double lowPercent = sender.lowerValue/100;
+    double highPercent = sender.upperValue/100;
     
-    int minStretch = [self.fakeUserMinStretchTextField.text integerValue];
-    int maxStretch = [self.fakeUserMaxStretchTextField.text integerValue];
+    double minStretch = [self.fakeUserMinStretchTextField.text doubleValue];
+    double maxStretch = [self.fakeUserMaxStretchTextField.text doubleValue];
     
+    double minGlobalStretch = [self.fakeUserGlobalMinStretchTextField.text doubleValue];
+    double maxGlobalStretch = [self.fakeUserGlobalMaxStretchTextField.text doubleValue];
+   
+    double dif = (maxGlobalStretch - minGlobalStretch);
     
-    int dif = (int)(maxStretch - minStretch);
+    [self.fakeUserMinStretchTextField setText: [NSString stringWithFormat:@"%1.0f", minGlobalStretch + (dif * lowPercent)]];
+    [self.fakeUserMaxStretchTextField setText: [NSString stringWithFormat:@"%1.0f", maxGlobalStretch - (dif * (1 - highPercent))]];
     
-    [self.fakeUserMinStretchTextField setText: [NSString stringWithFormat:@"%d",minStretch + (dif * lowPercent)]];
-    [self.fakeUserMaxStretchTextField setText: [NSString stringWithFormat:@"%d",maxStretch - (dif * (1-highPercent))]];
+    [self updateFakeDataGeneratorProperties];
 
 }
 
+-(void)recalulateFields{
 
+}
 
 - (void)hideKeyboard{
     
@@ -113,7 +119,7 @@
 
     }
     else{
-    [self.view endEditing:YES];
+    [self.view endEditing:NO];
     }
 }
 
@@ -137,7 +143,7 @@
         [alertView show];
         return NO;
     }
-         return YES;
+    else     return YES;
 
 }
 
