@@ -129,6 +129,7 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"fakeSensorValueChanged"
      object:[DataGenerator shared]];
+
     
     CGFloat refInMax = self.fakeUserGlobalMaxStretchValue;
     CGFloat refInMin = self.fakeUserGlobalMinStretchValue;

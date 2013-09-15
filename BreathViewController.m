@@ -211,9 +211,26 @@
     CGFloat coherence = [[User shared] userTotalBreathCoherence].floatValue;
     CGFloat coherenceDelta = [[User shared] userTotalBreathCoherenceDelta].floatValue;
     
-    green = 1 - coherence * 255;
-    blue = 1 - coherence * 255;
-    red = 255 * coherence;
+    //coherence "sweet spot"
+    if (coherence < 1.15 || coherence > .90){
+        
+        green = 0;
+        blue = 0;
+        red = 255;
+    }
+    //breathing is too deep for target pattern
+    if (coherence > 1.15){
+        green = 0;
+        blue = red - red/coherence;
+        red = 255;
+    }
+    //beathing is too shallow for target pattern
+    if (coherence < .90){
+        
+        green = red - red*coherence;
+        blue = 0;
+        red = 255 * coherence;
+    }
     
         // Timer check 
     

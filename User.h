@@ -12,6 +12,9 @@ return _sharedObject; \
 
 @interface User : NSObject <BLEDelegate>
 
+//Storage for user settings
+@property (strong, nonatomic) NSUserDefaults *userDefaults;
+
 
 //current user breathing metrics
 @property (strong, nonatomic) NSNumber *userCurrentBreathingRate;
