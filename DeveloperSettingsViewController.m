@@ -58,14 +58,14 @@
 
 - (void) configureRangeSliders
 {
-    self.generatedVolumeRangeSlider.minimumValue = 0;
-    self.generatedVolumeRangeSlider.maximumValue = 100;
-    
-    self.generatedVolumeRangeSlider.lowerValue = 0;
-
-    self.generatedVolumeRangeSlider.upperValue = 100;
-    
-    self.generatedVolumeRangeSlider.minimumRange = 10;
+//    self.generatedVolumeRangeSlider.minimumValue = 0;
+//    self.generatedVolumeRangeSlider.maximumValue = 100;
+//    
+//    self.generatedVolumeRangeSlider.lowerValue = 0;
+//
+//    self.generatedVolumeRangeSlider.upperValue = 100;
+//    
+//    self.generatedVolumeRangeSlider.minimumRange = 10;
 }
 
 - (IBAction)sliderRangeSliderChanged:(NMRangeSlider*)sender {

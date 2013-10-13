@@ -259,8 +259,11 @@
 
 -(void)calculateBreathingDeltaDeltaWithPastValue: (CGFloat) pastValue{
     CGFloat deltadelta = pastValue - [[User shared] userCurrentBreathingDelta].floatValue;
+    CGFloat coherenceDelta = pastValue - self.userTotalBreathCoherence.floatValue;
+    self.userTotalBreathCoherenceDelta = [NSNumber numberWithFloat:coherenceDelta];
+    self.userCurrentBreathingDeltaDelta = [NSNumber numberWithFloat:deltadelta];
+    NSLog(@"coherence delta = %f" , coherenceDelta);
     NSLog(@"\n Deltadelta:%f \n", deltadelta);
-    [[User shared] setUserCurrentBreathingDeltaDelta:[NSNumber numberWithFloat:deltadelta]];
 }
 
 
@@ -284,27 +287,21 @@
     
     self.userTotalBreathCoherence = [NSNumber numberWithFloat:totalCoherence];
     
-    //filter out glitches in coherence less than zero or more than 1
-//    if (self.userTotalBreathCoherence.floatValue > 1.0)
-//        self.userTotalBreathCoherence = [NSNumber numberWithFloat:1.0];
-//    if (self.userTotalBreathCoherence.floatValue < 0)
-//        self.userTotalBreathCoherence = [NSNumber numberWithFloat:0];
     
-    
-    pastValue = totalCoherence;
-    double delayInSeconds = kPastValueDelay;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        //code to be executed on the main queue after delay
-        [self calculateBreathCoherenceDeltaWithPastValue:pastValue];
-    });
+//    pastValue = totalCoherence;
+//    double delayInSeconds = kPastValueDelay;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        //code to be executed on the main queue after delay
+//        [self calculateBreathCoherenceDeltaWithPastValue:pastValue];
+//    });
 }
 
--(void)calculateBreathCoherenceDeltaWithPastValue:(CGFloat)pastValue{
-    CGFloat coherenceDelta = pastValue - self.userTotalBreathCoherence.floatValue;
-    self.userTotalBreathCoherenceDelta = [NSNumber numberWithFloat:coherenceDelta];
-        NSLog(@"coherence delta = %f" , coherenceDelta);
-}
+//-(void)calculateBreathCoherenceDeltaWithPastValue:(CGFloat)pastValue{
+//    CGFloat coherenceDelta = pastValue - self.userTotalBreathCoherence.floatValue;
+//    self.userTotalBreathCoherenceDelta = [NSNumber numberWithFloat:coherenceDelta];
+//        NSLog(@"coherence delta = %f" , coherenceDelta);
+//}
 
 //gets called when calculateBreathCount hits a peak in lung volume (when the stretch sensor value is smallest)
 -(void)calibrateMaxVolume{
