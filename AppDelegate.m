@@ -20,7 +20,9 @@
 #import "DeveloperSettingsViewController.h"
 #import "User.h"
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    bool wasScanning;
+}
 
 + (void)initialize
 {
@@ -93,7 +95,7 @@
     [[UAPush shared] handleNotification:[launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey]
                        applicationState:application.applicationState];
     
-    //initialize user
+    //initialize user singleton
     [User shared];
     return YES;
 }
@@ -103,6 +105,12 @@
     
     // Set the icon badge to zero on resume (optional)
     [[UAPush shared] resetBadge];
+    
+    
+    if ([[User shared ] rfduinoManager].isScanning) {
+        wasScanning = false;
+        [[[User shared ] rfduinoManager] startScan];
+    }
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -155,6 +163,14 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    wasScanning = false;
+    
+    if ([[User shared ] rfduinoManager].isScanning) {
+        wasScanning = true;
+        [[[User shared ] rfduinoManager] stopScan];
+    }
+    
 }
 
 

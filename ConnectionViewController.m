@@ -18,10 +18,69 @@
 }
 
 
+- (void)didDiscoverRFduino
+{
+
+}
+- (void)didUpdateDiscoveredRFduino
+{
+
+}
+- (void)didConnectRFduino
+{
+
+}
+- (void)didLoadServiceRFduino
+{
+
+}
+- (void)didDisconnectRFduino
+{
+
+}
 - (void)viewDidLoad
 {
      self.view.userInteractionEnabled = TRUE;
     
+    //RFduino manager notifications from User singleton
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didDiscoverRFduino)
+     name:@"didDiscoverRFduino"
+     object:nil];
+                        
+    
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didUpdateDiscoveredRFduino)
+     name:@"didUpdateDiscoveredRFduino"
+     object:nil];
+    
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didConnectRFduino)
+     name:@"didConnectRFduino"
+     object:nil];
+    
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didLoadServiceRFduino)
+     name:@"didLoadServiceRFduino"
+     object:nil];
+    
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(didDisconnectRFduino)
+     name:@"didDisconnectRFduino"
+     object:nil];
+    
+    
+    //Old BLE notifications
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]
      addObserver:self

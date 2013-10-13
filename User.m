@@ -5,6 +5,7 @@
 @implementation User {
     CGFloat inhaleCheck;
     CGFloat exhaleCheck;
+    BOOL wasScanning;
 }
 
 
@@ -27,16 +28,71 @@
     [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:0]];
     [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:0]];
     
-    
-    
     self.fakeDataIsOn = NO;
     
-    //set up RFDuino
+    //set up RFduino
+    self.rfduinoManager = [RFduinoManager sharedRFduinoManager];
+    self.rfduinoManager.delegate = self;
     
-    
+    //set up the BLE
+    self.ble = [[BLE alloc] init];
+    [self.ble controlSetup:1];
+    self.ble.delegate = self;
     
     return self;
 }
+
+- (void)didDiscoverRFduino:(RFduino *)rfduino
+{
+    
+    self.rfduino = rfduino;
+    NSLog(@"did Discover RFduino");
+    self.bleIsConnected = YES;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"didDiscoverRFduino"
+     object:[User shared]];
+}
+
+- (void)didUpdateDiscoveredRFduino:(RFduino *)rfduino
+{
+    self.rfduino = rfduino;
+    NSLog(@"did Update Discovered RFduino");
+    self.bleIsConnected = YES;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"didUpdateDiscoveredRFduino"
+     object:[User shared]];
+}
+
+- (void)didConnectRFduino:(RFduino *)rfduino
+{
+    self.rfduino = rfduino;
+    NSLog(@"did Connect RFduino");
+    self.bleIsConnected = YES;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"didConnectRFduino"
+     object:[User shared]];
+}
+
+- (void)didLoadServiceRFduino:(RFduino *)rfduino
+{
+    self.rfduino = rfduino;
+    NSLog(@"did Load Service RFduino");
+    self.bleIsConnected = YES;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"didLoadServiceRFduino"
+     object:[User shared]];
+}
+
+- (void)didDisconnectRFduino:(RFduino *)rfduino
+{
+    self.rfduino = rfduino;
+    NSLog(@"did Disconnect RFduino");
+    self.bleIsConnected = YES;
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"didDisconnectRFduino"
+     object:[User shared]];
+}
+
 
 -(void)saveUserSettings{
     NSLog(@"ello");

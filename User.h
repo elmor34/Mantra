@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "BLE.h"
 #import "RFduinoDelegate.h"
+#import "RfduinoManager.h"
 
 
 #define DEFINE_SHARED_INSTANCE_USING_BLOCK(block) \
@@ -11,7 +12,7 @@ _sharedObject = block(); \
 }); \
 return _sharedObject; \
 
-@interface User : NSObject <RFduinoDelegate>
+@interface User : NSObject <RFduinoDelegate, RFduinoManagerDelegate>
 
 //Storage for user settings
 @property (strong, nonatomic) NSUserDefaults *userSettings;
@@ -69,7 +70,16 @@ return _sharedObject; \
 @property (strong, nonatomic) BLE *ble;
 
 
-//RFduinoDelegate methods
+//RFduino properties
+@property (strong, nonatomic) RFduinoManager *rfduinoManager;
+@property (strong, nonatomic) RFduino *rfduino;
+
+//RFDuino delegate callbacks
+- (void)didDiscoverRFduino:(RFduino *)rfduino;
+- (void)didUpdateDiscoveredRFduino:(RFduino *)rfduino;
+- (void)didConnectRFduino:(RFduino *)rfduino;
+- (void)didLoadServiceRFduino:(RFduino *)rfduino;
+- (void)didDisconnectRFduino:(RFduino *)rfduino;
 
 
 //old BLE methods
