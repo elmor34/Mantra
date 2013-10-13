@@ -27,12 +27,13 @@
     [self setUserGlobalMaxStretchValue:[NSNumber numberWithFloat:0]];
     [self setUserGlobalMinStretchValue:[NSNumber numberWithFloat:0]];
     
+    
+    
     self.fakeDataIsOn = NO;
     
-    //set up the BLE
-    self.ble = [[BLE alloc] init];
-    [self.ble controlSetup:1];
-    self.ble.delegate = self;
+    //set up RFDuino
+    
+    
     
     return self;
 }

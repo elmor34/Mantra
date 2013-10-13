@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BLE.h"
 #import "User.h"
+#import "RFduinoManagerDelegate.h"
 
-@interface ConnectionViewController : UITableViewController
+@interface ConnectionViewController : UITableViewController <RFduinoManagerDelegate>
 {
     IBOutlet UIButton *btnConnect;
     IBOutlet UISwitch *swDigitalIn;

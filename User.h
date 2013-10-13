@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "BLE.h"
+#import "RFduinoDelegate.h"
 
 
 #define DEFINE_SHARED_INSTANCE_USING_BLOCK(block) \
@@ -10,7 +11,7 @@ _sharedObject = block(); \
 }); \
 return _sharedObject; \
 
-@interface User : NSObject <BLEDelegate>
+@interface User : NSObject <RFduinoDelegate>
 
 //Storage for user settings
 @property (strong, nonatomic) NSUserDefaults *userSettings;
@@ -63,12 +64,15 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userGlobalMinVolume;//value between 0 and 1
 
 
-//Bluetooth Low Energy Connection properties
+//RFDuino Bluetooth Low Energy Connection properties
 @property (strong, nonatomic) NSNumber *connectionStrength;
 @property (strong, nonatomic) BLE *ble;
 
 
-//Bluetooth Low Energy delegate methods
+//RFduinoDelegate methods
+
+
+//old BLE methods
 -(void) bleDidConnect;
 -(void) bleDidDisconnect;
 -(void) bleDidUpdateRSSI:(NSNumber *) rssi;

@@ -18,6 +18,7 @@
 #import "UAUser.h"
 #import "UAInboxMessageList.h"
 #import "DeveloperSettingsViewController.h"
+#import "User.h"
 
 @implementation AppDelegate
 
@@ -92,8 +93,8 @@
     [[UAPush shared] handleNotification:[launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey]
                        applicationState:application.applicationState];
     
-
-    
+    //initialize user
+    [User shared];
     return YES;
 }
 
