@@ -2,6 +2,7 @@
 #import "BLE.h"
 #import "RFduinoDelegate.h"
 #import "RfduinoManager.h"
+#import "RFduino.h"
 
 
 #define DEFINE_SHARED_INSTANCE_USING_BLOCK(block) \

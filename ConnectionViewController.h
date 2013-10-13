@@ -10,6 +10,7 @@
 #import "BLE.h"
 #import "User.h"
 #import "RFduinoManagerDelegate.h"
+#import "CustomCellBackground.h"
 
 @interface ConnectionViewController : UITableViewController <RFduinoManagerDelegate>
 {

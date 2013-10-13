@@ -50,6 +50,14 @@
 
     
     
+//    //Connect the closest rfduino
+//    RFduino *rfduino = [[User shared] rfduino];
+//    
+//    if (! rfduino.outOfRange) {
+//        [[[User shared] rfduinoManager] connectRFduino:rfduino];
+//    } else {
+//        NSLog(@"no Mantra bands in range");
+//    }
     
     // Display a UIAlertView warning developers that push notifications do not work in the simulator
     // You should remove this in your app.
