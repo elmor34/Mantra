@@ -34,10 +34,6 @@
     self.rfduinoManager = [RFduinoManager sharedRFduinoManager];
     self.rfduinoManager.delegate = self;
     
-    //set up the BLE
-    self.ble = [[BLE alloc] init];
-    [self.ble controlSetup:1];
-    self.ble.delegate = self;
     
     return self;
 }
@@ -47,7 +43,6 @@
     
     self.rfduino = rfduino;
     NSLog(@"did Discover RFduino");
-    self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"didDiscoverRFduino"
      object:[User shared]];
@@ -57,7 +52,6 @@
 {
     self.rfduino = rfduino;
     NSLog(@"did Update Discovered RFduino");
-    self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"didUpdateDiscoveredRFduino"
      object:[User shared]];
@@ -67,7 +61,6 @@
 {
     self.rfduino = rfduino;
     NSLog(@"did Connect RFduino");
-    self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"didConnectRFduino"
      object:[User shared]];
@@ -77,7 +70,6 @@
 {
     self.rfduino = rfduino;
     NSLog(@"did Load Service RFduino");
-    self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"didLoadServiceRFduino"
      object:[User shared]];
@@ -87,7 +79,6 @@
 {
     self.rfduino = rfduino;
     NSLog(@"did Disconnect RFduino");
-    self.bleIsConnected = YES;
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"didDisconnectRFduino"
      object:[User shared]];
@@ -135,96 +126,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     return YES;
-}
-
-- (void)scanForPeripherals:(id)sender
-{
-    
-    if (self.ble.activePeripheral)
-        if(self.ble.activePeripheral.isConnected)
-        {
-            [[self.ble centralManager] cancelPeripheralConnection:[self.ble activePeripheral]];
-            return;
-        }
-    
-    if (self.ble.peripherals)
-        self.ble.peripherals = nil;
-    
-    [self.ble findBLEPeripherals:2];
-    
-    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
-}
-
-- (void)scanForPeripherals
-{
-    if (self.ble.activePeripheral)
-        if(self.ble.activePeripheral.isConnected)
-        {
-            [[self.ble centralManager] cancelPeripheralConnection:[self.ble activePeripheral]];
-            return;
-        }
-    
-    if (self.ble.peripherals)
-        self.ble.peripherals = nil;
-    
-    [self.ble findBLEPeripherals:2];
-
-}
-
--(void) connectionTimer:(NSTimer *)timer
-{
-//    [btnConnect setEnabled:true];
-//    [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
-//    
-    if (self.ble.peripherals.count > 0)
-    {
-        [self.ble connectPeripheral:[self.ble.peripherals objectAtIndex:0]];
-    }
-//    else
-//    {
-//        [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-//        [indConnecting stopAnimating];
-//    }
-}
-
-// When connected, this will be called
--(void) bleDidConnect
-{
-    NSLog(@"BLE->Connected");
-    self.bleIsConnected = YES;
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"bleConnected"
-     object:[User shared]];
-}
-
--(void) bleDidDisconnect{
-    NSLog(@"BLE->Disconnected");
-    self.bleIsConnected = NO;
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"bleDisconnected"
-     object:[User shared]];
-}
-
--(void) bleDidUpdateRSSI:(NSNumber *) rssi{
-    self.connectionStrength = rssi;
-    //Post notification that sensor value changed
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"connectionStrengthChanged"
-     object:[User shared]];
-}
-
-//not sure if this is required to start analog input
--(void)sendAnalogIn:(BOOL)swAnalogIn
-{
-    UInt8 buf[3] = {0xA0, 0x00, 0x00};
-    
-    if (swAnalogIn == YES)
-        buf[1] = 0x01;
-    else
-        buf[1] = 0x00;
-    
-    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [self.ble write:data];
 }
 
 

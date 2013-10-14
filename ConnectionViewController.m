@@ -21,48 +21,6 @@
 }
 
 
-- (void)didDiscoverRFduino
-{
-    NSLog(@"didDiscoverRFduino");
-    if (! editingRow) {
-        NSLog(@"reloadData");
-        [self.tableView reloadData];
-    }
-}
-- (void)didUpdateDiscoveredRFduino
-{
-    // NSLog(@"didUpdateRFduino");
-    if (! editingRow) {
-        [self.tableView reloadData];
-    }
-}
-- (void)didConnectRFduino
-{
-    NSLog(@"didConnectRFduino");
-    
-    [[[User shared] rfduinoManager] stopScan];
-    
-    loadService = false;
-}
-- (void)didLoadServiceRFduino
-{
-//    AppViewController *viewController = [[AppViewController alloc] init];
-//    viewController.rfduino = rfduino;
-//    
-//    loadService = true;
-//    [[self navigationController] pushViewController:viewController animated:YES];
-}
-- (void)didDisconnectRFduino
-{
-    NSLog(@"didDisconnectRFduino");
-    
-    if (loadService) {
-        [[self navigationController] popViewControllerAnimated:YES];
-    }
-    
-    [[[User shared] rfduinoManager] startScan];
-    [self.tableView reloadData];
-}
 - (void)viewDidLoad
 {
      self.view.userInteractionEnabled = TRUE;
@@ -121,37 +79,11 @@
      object:nil];
     
     
-    //Old BLE notifications
-    [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(sensorValueChanged)
-     name:@"sensorValueChanged"
-     object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(connectionStrengthChanged)
-     name:@"connectionStrengthChanged"
-     object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(bleConnected)
-     name:@"bleConnected"
-     object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(bleDisconnected)
-     name:@"bleDisconnected"
-     object:nil];
-    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;
     
-    [self updateConnectionButtonState];
+   // [self updateConnectionButtonState];
    
    
 }
@@ -168,14 +100,14 @@
 }
 
 
--(void)updateConnectionButtonState{
-    if ([[User shared] bleIsConnected] == false){
-        [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-    }
-    else {
-        [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
-    }
-}
+//-(void)updateConnectionButtonState{
+//    if ([[User shared] bleIsConnected] == false){
+//        [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
+//    }
+//    else {
+//        [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -183,149 +115,52 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - BLE delegate
--(void)sensorValueChanged
+
+
+#pragma mark - RFDuino Manager notifications via User
+- (void)didDiscoverRFduino
 {
-    NSLog(@"sensor value changed!");
-}
-    
--(void)connectionStrengthChanged{
-    NSLog(@"connection strength changed!");
-    lblRSSI.text = [[User shared] connectionStrength].stringValue;
-}
-
-// When disconnected, this will be called
-- (void)bleDisconnected
-{
-    NSLog(@"->Disconnected");
-
-    [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-    [indConnecting stopAnimating];
-    
-    lblAnalogIn.enabled = false;
-    swDigitalOut.enabled = false;
-    swDigitalIn.enabled = false;
-    swAnalogIn.enabled = false;
-    sldPWM.enabled = false;
-    sldServo.enabled = false;
-    
-    lblRSSI.text = @"---";
-    lblAnalogIn.text = @"----";
-}
-
-// When Connected, this will be called
--(void) bleConnected
-{
-    NSLog(@"->Connected");
-
-    [indConnecting stopAnimating];
-    
-    lblAnalogIn.enabled = true;
-    swDigitalOut.enabled = true;
-    swDigitalIn.enabled = true;
-    swAnalogIn.enabled = true;
-    sldPWM.enabled = true;
-    sldServo.enabled = true;
-    
-    swDigitalOut.on = false;
-    swDigitalIn.on = false;
-    swAnalogIn.on = false;
-    sldPWM.value = 0;
-    sldServo.value = 0;
-}
-
-
-#pragma mark - Actions
-
-// Connect button will call to this
-- (IBAction)btnScanForPeripherals:(id)sender
-{
-  
-    [btnConnect setEnabled:false];
-
-    
-    [[User shared] scanForPeripherals];
-        
-    
-    //make the call to MantraUser's scanForPeripherals here
-   
-    
-    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
-   
-    [indConnecting startAnimating];
-}
-
--(void) connectionTimer:(NSTimer *)timer
-{
-    
-    [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
-    [btnConnect setEnabled:true];
-    
-    if ([[User shared] ble].peripherals.count > 0)
-    {
-        [[[User shared] ble] connectPeripheral:[[[User shared] ble].peripherals objectAtIndex:0]];
-    }
-    else
-    {
-        [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-        [indConnecting stopAnimating];
+    NSLog(@"didDiscoverRFduino");
+    if (! editingRow) {
+        NSLog(@"reloadData");
+        [self.tableView reloadData];
     }
 }
-
--(IBAction)sendDigitalOut:(id)sender
+- (void)didUpdateDiscoveredRFduino
 {
-    UInt8 buf[3] = {0x01, 0x00, 0x00};
+    // NSLog(@"didUpdateRFduino");
+    if (! editingRow) {
+        [self.tableView reloadData];
+    }
+}
+- (void)didConnectRFduino
+{
+    NSLog(@"didConnectRFduino");
     
+    [[[User shared] rfduinoManager] stopScan];
     
-    if (swDigitalOut.on)
-        buf[1] = 0x01;
-    else
-        buf[1] = 0x00;
+    loadService = false;
+}
+- (void)didLoadServiceRFduino
+{
+    //    AppViewController *viewController = [[AppViewController alloc] init];
+    //    viewController.rfduino = rfduino;
+    //
+    //    loadService = true;
+    //    [[self navigationController] pushViewController:viewController animated:YES];
+}
+- (void)didDisconnectRFduino
+{
+    NSLog(@"didDisconnectRFduino");
     
-    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[User shared] ble] write:data];
+    if (loadService) {
+        [[self navigationController] popViewControllerAnimated:YES];
+    }
+    
+    [[[User shared] rfduinoManager] startScan];
+    [self.tableView reloadData];
 }
 
-/* Send command to Arduino to enable analog reading */
--(IBAction)sendAnalogIn:(id)sender
-{
-    UInt8 buf[3] = {0xA0, 0x00, 0x00};
-    
-    NSLog(@"you touched the switch");
-    if (swAnalogIn.on){
-        buf[1] = 0x01;
-        NSLog(@"wrote data");}
-    else{
-        buf[1] = 0x00;
-        NSLog(@"wrote no data");}
-    
-    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[User shared] ble] write:data];
-}
-
-// PWM slide will call this to send its value to Arduino
--(IBAction)sendPWM:(id)sender
-{
-    UInt8 buf[3] = {0x02, 0x00, 0x00};
-    
-    buf[1] = sldPWM.value;
-    buf[2] = (int)sldPWM.value >> 8;
-    
-    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[User shared] ble] write:data];
-}
-
-// Servo slider will call this to send its value to Arduino
--(IBAction)sendServo:(id)sender
-{
-    UInt8 buf[3] = {0x03, 0x00, 0x00};
-    
-    buf[1] = sldServo.value;
-    buf[2] = (int)sldServo.value >> 8;
-    
-    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
-    [[[User shared] ble] write:data];
-}
 
 #pragma mark - Table view data source
 

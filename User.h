@@ -24,7 +24,7 @@ return _sharedObject; \
 
 
 //User Settings
-@property BOOL bleIsConnected;
+//@property BOOL bleIsConnected;
 
 @property BOOL fakeDataIsOn;
 
@@ -66,9 +66,9 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userGlobalMinVolume;//value between 0 and 1
 
 
-//RFDuino Bluetooth Low Energy Connection properties
-@property (strong, nonatomic) NSNumber *connectionStrength;
-@property (strong, nonatomic) BLE *ble;
+////Bluetooth Low Energy Connection properties
+//@property (strong, nonatomic) NSNumber *connectionStrength;
+//@property (strong, nonatomic) BLE *ble;
 
 
 //RFduino properties
@@ -83,13 +83,13 @@ return _sharedObject; \
 - (void)didDisconnectRFduino:(RFduino *)rfduino;
 
 
-//old BLE methods
--(void) bleDidConnect;
--(void) bleDidDisconnect;
--(void) bleDidUpdateRSSI:(NSNumber *) rssi;
--(void) bleDidReceiveData:(unsigned char *) data length:(int) length;
--(void) scanForPeripherals:(id)sender;
--(void) scanForPeripherals;
+////old BLE methods
+//-(void) bleDidConnect;
+//-(void) bleDidDisconnect;
+//-(void) bleDidUpdateRSSI:(NSNumber *) rssi;
+//-(void) bleDidReceiveData:(unsigned char *) data length:(int) length;
+//-(void) scanForPeripherals:(id)sender;
+//-(void) scanForPeripherals;
 
 
 

@@ -48,8 +48,8 @@
     [self.shape1View setShape:[UIBezierPath heartShape:self.shape1View.frame].CGPath];
     self.shape1View.progressTintColor = [UIColor colorWithRed:255/255.f green:255/255.f blue:255/255.f alpha:0.5f];
     
-    
-    [[User shared] scanForPeripherals:self];
+    //May want to scan for rfduino here
+
 }
 
 
@@ -159,8 +159,6 @@
     NSString *volString = [NSString stringWithFormat: @"Vol: %1.0f%%", cVolPercent];
     self.volLabel.text = volString;
    
-//    NSString *bleConnected = [NSString stringWithFormat:@"%hhd", [[User shared] bleIsConnected]];
-//    self.connectedLabel.text = bleConnected;
     
     NSString *breathCount = [NSString stringWithFormat:@"%1.1f", bCount];
     self.breathCountLabel.text = breathCount;
