@@ -86,7 +86,7 @@
 
 
 -(void)saveUserSettings{
-    NSLog(@"ello");
+
     [self.userSettings setBool:self.targetBreathingIsOn forKey:@"targetBreathingIsOn"];
     [self.userSettings setObject:self.userTargetExhaleTime forKey:@"userTargetExhaleTime"];
     [self.userSettings setObject:self.userTargetInhaleTime forKey:@"userTargetInhaleTime"];
@@ -96,7 +96,6 @@
 
 -(void)loadUserSettings{
     [self.userSettings synchronize];
-
     [self setTargetBreathingIsOn:[[self userSettings] boolForKey:@"targetBreathingIsOn"]];
     [self setUserTargetExhaleTime:[[self userSettings] objectForKey:@"userTargetExhaleTime"]];
     [self setUserTargetInhaleTime:[[self userSettings] objectForKey:@"userTargetInhaleTime"]];
