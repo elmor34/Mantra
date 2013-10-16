@@ -9,12 +9,16 @@
 }
 
 
+#pragma Initialization
+
+
 + (User *)shared
 {
     DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
         return [[self alloc] init];
     });
 }
+
 
 -(User *)init{
 
@@ -37,6 +41,58 @@
     
     return self;
 }
+
+
+- (BOOL) isFirstRun
+{
+    //set the first run User defaults
+    self.userBreathCount = 0;
+    self.targetBreathingIsOn = NO;
+    self.userTargetVolume = [NSNumber numberWithFloat:1];
+    self.userTargetExhaleTime = [NSNumber numberWithFloat:4];
+    self.userTargetInhaleTime = [NSNumber numberWithFloat:4];
+    self.meterGravityIsOn = YES;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"isFirstRun"])
+    {
+        return NO;
+    }
+    
+    [defaults setObject:[NSDate date] forKey:@"isFirstRun"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    return YES;
+}
+
+
+
+
+#pragma User Settings
+
+-(void)saveUserSettings{
+
+    [self.userSettings setBool:self.targetBreathingIsOn forKey:@"targetBreathingIsOn"];
+    [self.userSettings setObject:self.userTargetExhaleTime forKey:@"userTargetExhaleTime"];
+    [self.userSettings setObject:self.userTargetInhaleTime forKey:@"userTargetInhaleTime"];
+    [self.userSettings setObject:self.userTargetVolume forKey:@"userTargetVolume"];
+    
+}
+
+-(void)loadUserSettings{
+    [self.userSettings synchronize];
+    [self setTargetBreathingIsOn:[[self userSettings] boolForKey:@"targetBreathingIsOn"]];
+    [self setUserTargetExhaleTime:[[self userSettings] objectForKey:@"userTargetExhaleTime"]];
+    [self setUserTargetInhaleTime:[[self userSettings] objectForKey:@"userTargetInhaleTime"]];
+    [self.userSettings setObject:self.userTargetVolume forKey:@"userTargetVolume"];
+    
+    
+}
+
+
+
+
+#pragma Bluetooth Low Energy module
 
 - (void)didDiscoverRFduino:(RFduino *)rfduino
 {
@@ -83,50 +139,6 @@
      postNotificationName:@"didDisconnectRFduino"
      object:[User shared]];
 }
-
-
--(void)saveUserSettings{
-
-    [self.userSettings setBool:self.targetBreathingIsOn forKey:@"targetBreathingIsOn"];
-    [self.userSettings setObject:self.userTargetExhaleTime forKey:@"userTargetExhaleTime"];
-    [self.userSettings setObject:self.userTargetInhaleTime forKey:@"userTargetInhaleTime"];
-    [self.userSettings setObject:self.userTargetVolume forKey:@"userTargetVolume"];
-    
-}
-
--(void)loadUserSettings{
-    [self.userSettings synchronize];
-    [self setTargetBreathingIsOn:[[self userSettings] boolForKey:@"targetBreathingIsOn"]];
-    [self setUserTargetExhaleTime:[[self userSettings] objectForKey:@"userTargetExhaleTime"]];
-    [self setUserTargetInhaleTime:[[self userSettings] objectForKey:@"userTargetInhaleTime"]];
-    [self.userSettings setObject:self.userTargetVolume forKey:@"userTargetVolume"];
-    
-    
-}
-
-
-- (BOOL) isFirstRun
-{
-    //set the first run User defaults
-    self.userBreathCount = 0;
-    self.targetBreathingIsOn = NO;
-    self.userTargetVolume = [NSNumber numberWithFloat:1];
-    self.userTargetExhaleTime = [NSNumber numberWithFloat:4];
-    self.userTargetInhaleTime = [NSNumber numberWithFloat:4];
-    self.meterGravityIsOn = YES;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"isFirstRun"])
-    {
-        return NO;
-    }
-    
-    [defaults setObject:[NSDate date] forKey:@"isFirstRun"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    return YES;
-}
-
 
 // When data is coming, this will be called
 -(void) bleDidReceiveData:(unsigned char *)data length:(int)length
@@ -195,6 +207,11 @@
     CGFloat output = outMax + (outMin - outMax) * (input - inMax) / (inMin - inMax);;
     return output;
 }
+
+
+
+
+#pragma Breath Calculations
 
 //Calculate the delta by comparing the passed in sample from ~kPastValueDelay seconds ago to the current sample
 -(void)calculateBreathingDeltaWithPastValue: (CGFloat) pastValue{
