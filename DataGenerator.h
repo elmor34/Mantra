@@ -17,27 +17,27 @@ return _sharedObject; \
     
     
 //Fake user data
-@property CGFloat fakeUserBreathingRate;
-@property CGFloat fakeUserInhaleTime;
-@property CGFloat fakeUserExhaleTime;
+@property CGFloat generatedBreathingRate;
+@property CGFloat generatedInhaleTime;
+@property CGFloat generatedExhaleTime;
 
-@property CGFloat fakeUserCurrentVolume;//number from 0 to 1
-@property CGFloat fakeUserCurrentSensorValue;//raw sensor value (usually between 700 and 900)
+@property CGFloat generatedCurrentVolume;//number from 0 to 1
+@property CGFloat generatedCurrentSensorValue;//raw sensor value (usually between 700 and 900)
 
-@property CGFloat fakeUserCurrentMaxStretchValue;
-@property CGFloat fakeUserCurrentMinStretchValue;
-@property CGFloat fakeUserCurrentMaxVolumeValue;
-@property CGFloat fakeUserCurrentMinVolumeValue;
+@property CGFloat generatedCurrentMaxStretchValue;
+@property CGFloat generatedCurrentMinStretchValue;
+@property CGFloat generatedCurrentMaxVolumeValue;
+@property CGFloat generatedCurrentMinVolumeValue;
 
 @property CGFloat sampleTime;
 @property CGFloat deltaSize;
 
 
 //calibrated global metrics (the global values are the highest and lowest recorded in per app run)
-@property CGFloat fakeUserGlobalMaxStretchValue; //value between 0 and 9999 (usually 700-800)
-@property CGFloat fakeUserGlobalMinStretchValue; //value between 0 and 9999 (usually 700-800)
-@property CGFloat fakeUserGlobalMaxVolume;//value between 0 and 1
-@property CGFloat fakeUserGlobalMinVolume;//value between 0 and 1
+@property CGFloat generatedGlobalMaxStretchValue; //value between 0 and 9999 (usually 700-800)
+@property CGFloat generatedGlobalMinStretchValue; //value between 0 and 9999 (usually 700-800)
+@property CGFloat generatedGlobalMaxVolume;//value between 0 and 1
+@property CGFloat generatedGlobalMinVolume;//value between 0 and 1
 
 
 
@@ -46,7 +46,7 @@ return _sharedObject; \
 @property NSTimer *exhaleTimer;
 
 
-@property BOOL fakeUserBreathingOn;
+@property BOOL generatedBreathingOn;
 @property CGFloat lungVal;//sensor value between 0 and 1 representing lung volume
 @property UInt16 sensorVal; //raw sensor value as received from BLE
     

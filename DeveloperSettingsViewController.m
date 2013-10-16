@@ -45,14 +45,14 @@
 -(void)updateFakeDataGeneratorProperties{
     
     //Set all the necessary FakeDataGenerator properties
-    [[DataGenerator shared] setFakeUserInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
-    [[DataGenerator shared] setFakeUserExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
-    [[DataGenerator shared] setFakeUserCurrentMaxStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserCurrentMinStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserCurrentMaxVolumeValue:self.generatedVolumeRangeSlider.upperValue/100];
-    [[DataGenerator shared] setFakeUserCurrentMinVolumeValue:self.generatedVolumeRangeSlider.lowerValue/100];
-    [[DataGenerator shared] setFakeUserGlobalMaxStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
-    [[DataGenerator shared] setFakeUserGlobalMinStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
+    [[DataGenerator shared] setGeneratedInhaleTime:[self.fakeUserInhaleTimeTextField.text integerValue]];
+    [[DataGenerator shared] setGeneratedExhaleTime:[self.fakeUserExhaleTimeTextField.text integerValue]];
+    [[DataGenerator shared] setGeneratedCurrentMaxStretchValue:[self.fakeUserMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setGeneratedCurrentMinStretchValue:[self.fakeUserMaxStretchTextField.text floatValue]];
+    [[DataGenerator shared] setGeneratedCurrentMaxVolumeValue:self.generatedVolumeRangeSlider.upperValue/100];
+    [[DataGenerator shared] setGeneratedCurrentMinVolumeValue:self.generatedVolumeRangeSlider.lowerValue/100];
+    [[DataGenerator shared] setGeneratedGlobalMaxStretchValue:[self.fakeUserGlobalMinStretchTextField.text floatValue]];
+    [[DataGenerator shared] setGeneratedGlobalMinStretchValue:[self.fakeUserGlobalMaxStretchTextField.text floatValue]];
     
 }
 
