@@ -21,21 +21,15 @@ return _sharedObject; \
 -(void)loadUserSettings;
 -(void)saveUserSettings;
 
-
-
 //User Settings
 //@property BOOL bleIsConnected;
 
 @property BOOL fakeDataIsOn;
-
 @property BOOL meterGravityIsOn;
-
 @property BOOL targetBreathingIsOn;
 @property (strong, nonatomic) NSNumber *userTargetVolume; //breathing depth in percent of total calibrated lung volume
 @property (strong, nonatomic) NSNumber *userTargetInhaleTime;
 @property (strong, nonatomic) NSNumber *userTargetExhaleTime;
-
-
 
 //current user breathing metrics
 @property (strong, nonatomic) NSNumber *userCurrentBreathingRate;
@@ -53,11 +47,9 @@ return _sharedObject; \
 @property (strong, nonatomic) NSNumber *userTotalBreathCoherenceDelta;
 @property (strong, nonatomic) NSNumber *userCurrentBreathCoherence;
 
-
 @property double userBreathCount; //number of breaths made under this specific target
 @property CGFloat userCurrentLungVolume; // CHANGE TO DEPTH value between 0 and 1 representing 0% to 100% lung volume
 @property UInt16 rawStretchSensorValue; //raw sensor value as received from BLE
-
 
 //calibrated global metrics (the global values are the highest and lowest recorded in per app run)
 @property (strong, nonatomic) NSNumber *userGlobalMaxStretchValue; //value between 0 and 9999 (usually 700-800)
@@ -70,7 +62,6 @@ return _sharedObject; \
 //@property (strong, nonatomic) NSNumber *connectionStrength;
 //@property (strong, nonatomic) BLE *ble;
 
-
 //RFduino properties
 @property (strong, nonatomic) RFduinoManager *rfduinoManager;
 @property (strong, nonatomic) RFduino *rfduino;
@@ -82,7 +73,6 @@ return _sharedObject; \
 - (void)didLoadServiceRFduino:(RFduino *)rfduino;
 - (void)didDisconnectRFduino:(RFduino *)rfduino;
 
-
 ////old BLE methods
 //-(void) bleDidConnect;
 //-(void) bleDidDisconnect;
@@ -90,7 +80,6 @@ return _sharedObject; \
 //-(void) bleDidReceiveData:(unsigned char *) data length:(int) length;
 //-(void) scanForPeripherals:(id)sender;
 //-(void) scanForPeripherals;
-
 
 
 //Breathing delta and deltadelta calculations
