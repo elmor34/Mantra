@@ -100,14 +100,6 @@
 }
 
 
-//-(void)updateConnectionButtonState{
-//    if ([[User shared] bleIsConnected] == false){
-//        [btnConnect setTitle:@"Connect" forState:UIControlStateNormal];
-//    }
-//    else {
-//        [btnConnect setTitle:@"Disconnect" forState:UIControlStateNormal];
-//    }
-//}
 
 - (void)didReceiveMemoryWarning
 {
