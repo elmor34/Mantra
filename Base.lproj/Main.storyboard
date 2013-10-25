@@ -17,10 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="lungs.png" translatesAutoresizingMaskIntoConstraints="NO" id="PNq-4B-Swg">
-                                <rect key="frame" x="-78" y="-146" width="462" height="596"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s1V-Xy-pXD">
                                 <rect key="frame" x="0.0" y="-7" width="320" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -96,8 +92,12 @@
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lungs_splash_screen.png" translatesAutoresizingMaskIntoConstraints="NO" id="XtT-sy-ve2">
+                                <rect key="frame" x="0.0" y="-27" width="320" height="574"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mei-Te-wRk" customClass="DPMeterView">
-                                <rect key="frame" x="7" y="86" width="306" height="320"/>
+                                <rect key="frame" x="94" y="192" width="132" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -133,8 +133,9 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" dataMode="static" style="grouped" separatorStyle="singleLineEtched" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="OW2-w9-nBU">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="0.25" colorSpace="deviceRGB"/>
                         <color key="separatorColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                         <sections>
                             <tableViewSection id="7ub-s3-uLe">
                                 <cells>
@@ -171,6 +172,8 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="thJ-xE-7uO">
                                                     <rect key="frame" x="251" y="6" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="onTintColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                                     <connections>
                                                         <action selector="gravitySwitchTouched:" destination="32w-L6-qpZ" eventType="valueChanged" id="k0X-qC-sI4"/>
                                                     </connections>
@@ -257,10 +260,11 @@
         <scene sceneID="BnN-es-AqZ">
             <objects>
                 <tableViewController id="LuC-50-OAx" customClass="TargetBreathingSettingsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="A3n-mx-avc">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="A3n-mx-avc">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                         <sections>
                             <tableViewSection id="f2i-mC-9lL">
                                 <cells>
@@ -280,6 +284,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="87D-gn-Byy">
                                                     <rect key="frame" x="254" y="6" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="onTintColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                                                     <connections>
                                                         <action selector="targetBreathingSwitchTouched:" destination="32w-L6-qpZ" eventType="valueChanged" id="K6i-m1-ihV"/>
                                                         <action selector="targetBreathingSwitchTouched:" destination="LuC-50-OAx" eventType="valueChanged" id="KNt-d9-A3R"/>
@@ -457,11 +462,12 @@
         <scene sceneID="wjK-ea-lo2">
             <objects>
                 <tableViewController id="t1H-Lb-4q5" customClass="DeveloperSettingsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="v3c-XE-sEx">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="v3c-XE-sEx">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                         <color key="separatorColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.8980392814" green="0.15294118230000001" blue="0.22352942819999999" alpha="1" colorSpace="deviceRGB"/>
                         <sections>
                             <tableViewSection id="wNK-VS-kCm">
                                 <cells>
@@ -753,7 +759,7 @@
         <image name="HelpIcon.png" width="35" height="35"/>
         <image name="LungsIcon.png" width="35" height="35"/>
         <image name="SettingsIcon.png" width="35" height="35"/>
-        <image name="lungs.png" width="462" height="596"/>
+        <image name="lungs_splash_screen.png" width="640" height="1136"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
