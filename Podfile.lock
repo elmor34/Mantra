@@ -1,0 +1,23 @@
+PODS:
+  - DPMeterView (0.0.1)
+  - InAppSettingsKit (1.1)
+  - iRate (1.7.5)
+  - NMRangeSlider (1.0.1)
+
+DEPENDENCIES:
+  - DPMeterView (from `./Pods`)
+  - InAppSettingsKit (~> 1.1)
+  - iRate (~> 1.7.5)
+  - NMRangeSlider (~> 1.0.1)
+
+EXTERNAL SOURCES:
+  DPMeterView:
+    :local: ./Pods
+
+SPEC CHECKSUMS:
+  DPMeterView: 0cfa41936a00d60938cdfd8a298ce399bc1bbd53
+  InAppSettingsKit: cf2c4193c3269d6acf996f7975f310d18a5e1e3c
+  iRate: 8de5eaeca627c7708c8aec279eeb8daf2551c774
+  NMRangeSlider: 5a380eabf3d71d26bc8dca2e4f425d7ae7424349
+
+COCOAPODS: 0.18.1
