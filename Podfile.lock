@@ -16,8 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DPMeterView: 0cfa41936a00d60938cdfd8a298ce399bc1bbd53
-  InAppSettingsKit: cf2c4193c3269d6acf996f7975f310d18a5e1e3c
-  iRate: 8de5eaeca627c7708c8aec279eeb8daf2551c774
-  NMRangeSlider: 5a380eabf3d71d26bc8dca2e4f425d7ae7424349
+  InAppSettingsKit: 1f44683e18b2aaf93639de029eeebae9475bb8f0
+  iRate: bdeeff6fcc0251c13492f9aa6b96b01ab5c52c3c
+  NMRangeSlider: a1265e94670bf5b21e567d04234e143e9f67a9e1
 
-COCOAPODS: 0.18.1
+COCOAPODS: 0.33.1
