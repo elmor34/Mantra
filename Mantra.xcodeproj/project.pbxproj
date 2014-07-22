@@ -34,7 +34,6 @@
 		61BA9D681975E6C800C65111 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9D121975E6C800C65111 /* AppDelegate.m */; };
 		61BA9D691975E6C800C65111 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9D141975E6C800C65111 /* AppViewController.m */; };
 		61BA9D6A1975E6C800C65111 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61BA9D151975E6C800C65111 /* Main.storyboard */; };
-		61BA9D6B1975E6C800C65111 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9D181975E6C800C65111 /* BLE.m */; };
 		61BA9D6C1975E6C800C65111 /* BreathViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9D1B1975E6C800C65111 /* BreathViewController.m */; };
 		61BA9D6D1975E6C800C65111 /* ConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9D1D1975E6C800C65111 /* ConnectionViewController.m */; };
 		61BA9D6E1975E6C800C65111 /* CustomCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA9D1F1975E6C800C65111 /* CustomCellBackground.m */; };
@@ -104,7 +103,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4438A278177A16E800C8F32A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4438A27A177A16F900C8F32A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		4438A27C177A170100C8F32A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4438A27E177A170C00C8F32A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -135,9 +133,6 @@
 		61BA9D131975E6C800C65111 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
 		61BA9D141975E6C800C65111 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
 		61BA9D161975E6C800C65111 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		61BA9D171975E6C800C65111 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
-		61BA9D181975E6C800C65111 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
-		61BA9D191975E6C800C65111 /* BLEDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDefines.h; sourceTree = "<group>"; };
 		61BA9D1A1975E6C800C65111 /* BreathViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreathViewController.h; sourceTree = "<group>"; };
 		61BA9D1B1975E6C800C65111 /* BreathViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BreathViewController.m; sourceTree = "<group>"; };
 		61BA9D1C1975E6C800C65111 /* ConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionViewController.h; sourceTree = "<group>"; };
@@ -213,6 +208,7 @@
 		61BA9DA31975E6CF00C65111 /* Mantra Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mantra Tests-Prefix.pch"; sourceTree = "<group>"; };
 		61BA9DA41975E6CF00C65111 /* MantraV1_2_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MantraV1_2_Tests.m; sourceTree = "<group>"; };
 		61D02A01197D949500F6E26C /* Mantra-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mantra-Prefix.pch"; sourceTree = "<group>"; };
+		61D02A06197D9B9B00F6E26C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		B0967D1C81A24B9CA02FC46B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3A7771BE6F4E44988528EE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -279,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				44DE3EB0180B26A00037CC91 /* libPods.a */,
+				61D02A06197D9B9B00F6E26C /* CFNetwork.framework */,
 				4438A28C177A174E00C8F32A /* MapKit.framework */,
 				4438A28A177A174700C8F32A /* AudioToolbox.framework */,
 				4438A288177A173F00C8F32A /* MessageUI.framework */,
@@ -289,7 +286,6 @@
 				4438A27E177A170C00C8F32A /* SystemConfiguration.framework */,
 				4438A27C177A170100C8F32A /* Security.framework */,
 				4438A27A177A16F900C8F32A /* MobileCoreServices.framework */,
-				4438A278177A16E800C8F32A /* CFNetwork.framework */,
 				448DAF22176FCBB200B920E2 /* CoreBluetooth.framework */,
 				448DAF20176FCB9E00B920E2 /* QuartzCore.framework */,
 				4444540917692C8D00EAFA5B /* Foundation.framework */,
@@ -306,46 +302,11 @@
 			children = (
 				61BA9D111975E6C800C65111 /* AppDelegate.h */,
 				61BA9D121975E6C800C65111 /* AppDelegate.m */,
-				61BA9D131975E6C800C65111 /* AppViewController.h */,
-				61BA9D141975E6C800C65111 /* AppViewController.m */,
 				61BA9D151975E6C800C65111 /* Main.storyboard */,
-				61BA9D171975E6C800C65111 /* BLE.h */,
-				61BA9D181975E6C800C65111 /* BLE.m */,
-				61BA9D191975E6C800C65111 /* BLEDefines.h */,
-				61BA9D1A1975E6C800C65111 /* BreathViewController.h */,
-				61BA9D1B1975E6C800C65111 /* BreathViewController.m */,
-				61BA9D1C1975E6C800C65111 /* ConnectionViewController.h */,
-				61BA9D1D1975E6C800C65111 /* ConnectionViewController.m */,
-				61BA9D1E1975E6C800C65111 /* CustomCellBackground.h */,
-				61BA9D1F1975E6C800C65111 /* CustomCellBackground.m */,
-				61BA9D201975E6C800C65111 /* DataGenerator.h */,
-				61BA9D211975E6C800C65111 /* DataGenerator.m */,
-				61BA9D221975E6C800C65111 /* DeveloperSettingsViewController.h */,
-				61BA9D231975E6C800C65111 /* DeveloperSettingsViewController.m */,
-				61BA9D241975E6C800C65111 /* DPMeterView.h */,
-				61BA9D251975E6C800C65111 /* DPMeterView.m */,
-				61BA9D481975E6C800C65111 /* MYIntroductionPanel.h */,
-				61BA9D491975E6C800C65111 /* MYIntroductionPanel.m */,
-				61BA9D4A1975E6C800C65111 /* MYIntroductionView.h */,
-				61BA9D4B1975E6C800C65111 /* MYIntroductionView.m */,
-				61BA9D4C1975E6C800C65111 /* RFduino.h */,
-				61BA9D4D1975E6C800C65111 /* RFduino.m */,
-				61BA9D4E1975E6C800C65111 /* RFduinoDelegate.h */,
-				61BA9D4F1975E6C800C65111 /* RfduinoManager.h */,
-				61BA9D501975E6C800C65111 /* RfduinoManager.m */,
-				61BA9D511975E6C800C65111 /* RFduinoManagerDelegate.h */,
-				61BA9D561975E6C800C65111 /* ScanViewController.h */,
-				61BA9D571975E6C800C65111 /* ScanViewController.m */,
-				61BA9D581975E6C800C65111 /* SettingsViewController.h */,
-				61BA9D591975E6C800C65111 /* SettingsViewController.m */,
-				61BA9D5A1975E6C800C65111 /* TabBarViewController.h */,
-				61BA9D5B1975E6C800C65111 /* TabBarViewController.m */,
-				61BA9D5C1975E6C800C65111 /* TargetBreathingSettingsViewController.h */,
-				61BA9D5D1975E6C800C65111 /* TargetBreathingSettingsViewController.m */,
-				61BA9D5E1975E6C800C65111 /* UIBezierPath+BasicShapes.h */,
-				61BA9D5F1975E6C800C65111 /* UIBezierPath+BasicShapes.m */,
-				61BA9D601975E6C800C65111 /* User.h */,
-				61BA9D611975E6C800C65111 /* User.m */,
+				61D02A08197DCE2100F6E26C /* RFDuino */,
+				61D02A0A197DCE8100F6E26C /* Controller */,
+				61D02A0C197DCEC200F6E26C /* Model */,
+				61D02A0B197DCEA800F6E26C /* View */,
 				61D02A01197D949500F6E26C /* Mantra-Prefix.pch */,
 				61BA9D461975E6C800C65111 /* Mantra-Info.plist */,
 				61BA9D261975E6C800C65111 /* InfoPlist.strings */,
@@ -411,6 +372,70 @@
 				61BA9D551975E6C800C65111 /* SampleImage2.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		61D02A08197DCE2100F6E26C /* RFDuino */ = {
+			isa = PBXGroup;
+			children = (
+				61BA9D4C1975E6C800C65111 /* RFduino.h */,
+				61BA9D4D1975E6C800C65111 /* RFduino.m */,
+				61BA9D4E1975E6C800C65111 /* RFduinoDelegate.h */,
+				61BA9D4F1975E6C800C65111 /* RfduinoManager.h */,
+				61BA9D501975E6C800C65111 /* RfduinoManager.m */,
+				61BA9D511975E6C800C65111 /* RFduinoManagerDelegate.h */,
+			);
+			name = RFDuino;
+			sourceTree = "<group>";
+		};
+		61D02A0A197DCE8100F6E26C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				61BA9D131975E6C800C65111 /* AppViewController.h */,
+				61BA9D141975E6C800C65111 /* AppViewController.m */,
+				61BA9D1A1975E6C800C65111 /* BreathViewController.h */,
+				61BA9D1B1975E6C800C65111 /* BreathViewController.m */,
+				61BA9D1C1975E6C800C65111 /* ConnectionViewController.h */,
+				61BA9D1D1975E6C800C65111 /* ConnectionViewController.m */,
+				61BA9D221975E6C800C65111 /* DeveloperSettingsViewController.h */,
+				61BA9D231975E6C800C65111 /* DeveloperSettingsViewController.m */,
+				61BA9D561975E6C800C65111 /* ScanViewController.h */,
+				61BA9D571975E6C800C65111 /* ScanViewController.m */,
+				61BA9D581975E6C800C65111 /* SettingsViewController.h */,
+				61BA9D591975E6C800C65111 /* SettingsViewController.m */,
+				61BA9D5A1975E6C800C65111 /* TabBarViewController.h */,
+				61BA9D5B1975E6C800C65111 /* TabBarViewController.m */,
+				61BA9D5C1975E6C800C65111 /* TargetBreathingSettingsViewController.h */,
+				61BA9D5D1975E6C800C65111 /* TargetBreathingSettingsViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		61D02A0B197DCEA800F6E26C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61BA9D1E1975E6C800C65111 /* CustomCellBackground.h */,
+				61BA9D1F1975E6C800C65111 /* CustomCellBackground.m */,
+				61BA9D481975E6C800C65111 /* MYIntroductionPanel.h */,
+				61BA9D491975E6C800C65111 /* MYIntroductionPanel.m */,
+				61BA9D241975E6C800C65111 /* DPMeterView.h */,
+				61BA9D251975E6C800C65111 /* DPMeterView.m */,
+				61BA9D4A1975E6C800C65111 /* MYIntroductionView.h */,
+				61BA9D4B1975E6C800C65111 /* MYIntroductionView.m */,
+				61BA9D5E1975E6C800C65111 /* UIBezierPath+BasicShapes.h */,
+				61BA9D5F1975E6C800C65111 /* UIBezierPath+BasicShapes.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61D02A0C197DCEC200F6E26C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				61BA9D601975E6C800C65111 /* User.h */,
+				61BA9D611975E6C800C65111 /* User.m */,
+				61BA9D201975E6C800C65111 /* DataGenerator.h */,
+				61BA9D211975E6C800C65111 /* DataGenerator.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -595,7 +620,6 @@
 				61BA9D931975E6C800C65111 /* RFduino.m in Sources */,
 				61BA9D6E1975E6C800C65111 /* CustomCellBackground.m in Sources */,
 				61BA9D991975E6C800C65111 /* ScanViewController.m in Sources */,
-				61BA9D6B1975E6C800C65111 /* BLE.m in Sources */,
 				61BA9D691975E6C800C65111 /* AppViewController.m in Sources */,
 				61BA9D9D1975E6C800C65111 /* UIBezierPath+BasicShapes.m in Sources */,
 				61BA9D6F1975E6C800C65111 /* DataGenerator.m in Sources */,
